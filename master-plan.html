@@ -56,20 +56,21 @@
     border: none;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    font-size: 9px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 16px 0;
+    padding: 14px 2px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 5px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     flex: 1;
     min-width: 0;
+    white-space: nowrap;
   }
 
   .nav-btn.active {
@@ -717,15 +718,15 @@
 <div class="top-nav">
   <button class="nav-btn active" onclick="showSection('training', this)">
     <div class="nav-dot" style="background:#c8f55a"></div>
-    Training
+    Train
   </button>
   <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
-    Nutrition
+    Fuel
   </button>
   <button class="nav-btn" onclick="showSection('tracker', this)">
     <div class="nav-dot" style="background:#f55a5a"></div>
-    Workout
+    Track
   </button>
 </div>
 
