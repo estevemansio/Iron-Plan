@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#0d0d0d" rx="80"/>
+  
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#f5a85a" stroke-width="16"/>
+  <!-- Inner accent ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#f5a85a" stroke-width="2" opacity="0.3"/>
+
+  <!-- IRON -->
+  <text font-family="Arial Black, Impact, sans-serif" font-size="148" font-weight="900"
+        fill="#f2ede6" text-anchor="middle" x="256" y="218">IRON</text>
+
+  <!-- PLAN -->
+  <text font-family="Arial Black, Impact, sans-serif" font-size="148" font-weight="900"
+        fill="#f5a85a" text-anchor="middle" x="256" y="368">PLAN</text>
+
+  <!-- Curved text path along bottom arc -->
+  <defs>
+    <path id="bottomArc" d="M 58,256 A 198,198 0 0,0 454,256"/>
+  </defs>
+  <text font-family="Arial, sans-serif" font-size="28" font-weight="700"
+        fill="#f5a85a" letter-spacing="3" opacity="0.9">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
+      HYROX · MUSCLE · FUEL
+    </textPath>
+  </text>
+</svg>
