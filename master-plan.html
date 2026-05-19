@@ -723,6 +723,10 @@
     <div class="nav-dot" style="background:#f5a85a"></div>
     Nutrition
   </button>
+  <button class="nav-btn" onclick="showSection('tracker', this)">
+    <div class="nav-dot" style="background:#f55a5a"></div>
+    Workout
+  </button>
 </div>
 
 <!-- ==================== TRAINING SECTION ==================== -->
@@ -1386,12 +1390,321 @@
 </div>
 
 <script>
+<!-- ==================== TRACKER SECTION ==================== -->
+<div class="section" id="section-tracker">
+<div class="container">
+
+  <header style="margin-bottom:32px; animation: fadeUp 0.6s ease both;">
+    <div class="label">Workout Tracker</div>
+    <h1>START<br><span>WORKOUT</span></h1>
+    <p class="subtitle">Marca tu sesión. La app lleva el registro y te avisa cuándo subir peso o reps.</p>
+  </header>
+
+  <!-- Day selector -->
+  <div id="tracker-day-select">
+    <div class="label" style="margin-bottom:16px">¿Qué día es hoy?</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); border:1px solid var(--border); margin-bottom:32px;">
+      <button class="tracker-day-btn" onclick="selectDay('monday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#c8f55a;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Monday</div><div style="font-size:10px;margin-top:2px">KB Strength + Hyrox</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('tuesday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#f5e15a;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Tuesday</div><div style="font-size:10px;margin-top:2px">Gym Upper Body</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('wednesday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#f55a5a;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Wednesday</div><div style="font-size:10px;margin-top:2px">Intervals / Long Z2</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('thursday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#f5e15a;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Thursday</div><div style="font-size:10px;margin-top:2px">Gym Lower Body</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('friday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#a85af5;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Friday</div><div style="font-size:10px;margin-top:2px">KB Hipertrofia + Snatch</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('saturday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#f55a5a;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Saturday</div><div style="font-size:10px;margin-top:2px">Z2 Run / Rest</div></div>
+      </button>
+      <button class="tracker-day-btn" onclick="selectDay('sunday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#5ab4f5;flex-shrink:0"></div>
+        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Sunday</div><div style="font-size:10px;margin-top:2px">Hyrox Sim / Mobility</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Workout confirmation screen -->
+  <div id="tracker-workout" style="display:none">
+    <div id="tracker-day-header" style="margin-bottom:24px"></div>
+    <div id="tracker-exercises"></div>
+    <button onclick="logWorkout()" style="width:100%; background:var(--accent); border:none; color:var(--black); font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:8px; -webkit-tap-highlight-color:transparent;">
+      ✓ SESIÓN COMPLETADA
+    </button>
+    <button onclick="cancelWorkout()" style="width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">
+      ← Cambiar día
+    </button>
+  </div>
+
+  <!-- History -->
+  <div style="margin-top:40px">
+    <div class="label" style="margin-bottom:16px">Historial reciente</div>
+    <div id="tracker-history"></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  // ─── DATA ───────────────────────────────────────────────────────────────────
+
+  const DAYS = {
+    monday: {
+      label: 'Monday', color: '#c8f55a', type: 'kb',
+      threshold: 3,
+      exercises: [
+        { id: 'weighted_pullups', name: 'Weighted Pull Ups', progression: 'weight' },
+        { id: 'reverse_lunges', name: 'Reverse Lunges KB', progression: 'weight' },
+        { id: 'clean_press_thruster', name: 'Clean → Press → Thruster', progression: 'weight' },
+        { id: 'wall_hack_squat', name: 'Wall Hack Squat', progression: 'reps' },
+        { id: 'wall_balls_mon', name: 'Wall Balls', progression: 'reps' },
+      ]
+    },
+    tuesday: {
+      label: 'Tuesday', color: '#f5e15a', type: 'gym',
+      threshold: 2,
+      exercises: [
+        { id: 'bench_press', name: 'Barbell Bench Press', progression: 'weight' },
+        { id: 'incline_db', name: 'Incline DB Press', progression: 'weight' },
+        { id: 'lat_pulldown', name: 'Lat Pulldown', progression: 'weight' },
+        { id: 'row', name: 'Barbell / Cable Row', progression: 'weight' },
+        { id: 'lateral_raises_tue', name: 'Lateral Raises', progression: 'weight' },
+        { id: 'ez_curl', name: 'EZ Bar Curl', progression: 'weight' },
+        { id: 'tricep_pushdown', name: 'Tricep Pushdown', progression: 'weight' },
+      ]
+    },
+    wednesday: {
+      label: 'Wednesday', color: '#f55a5a', type: 'cardio',
+      threshold: 4,
+      exercises: [
+        { id: 'intervals_400', name: 'Intervalos 400m', progression: 'pace' },
+        { id: 'burpee_jumps', name: 'Burpee Broad Jumps', progression: 'reps' },
+      ]
+    },
+    thursday: {
+      label: 'Thursday', color: '#f5e15a', type: 'gym',
+      threshold: 2,
+      exercises: [
+        { id: 'leg_curl', name: 'Leg Curl', progression: 'weight' },
+        { id: 'rdl_rackpull', name: 'RDL / Rack Pull', progression: 'weight' },
+        { id: 'hack_squat', name: 'Hack Squat / Back Squat', progression: 'weight' },
+        { id: 'leg_press', name: 'Leg Press', progression: 'weight' },
+        { id: 'lunges_bike', name: 'Bike + Lunges', progression: 'reps' },
+        { id: 'calf_raises', name: 'Calf Raises', progression: 'weight' },
+      ]
+    },
+    friday: {
+      label: 'Friday', color: '#a85af5', type: 'kb',
+      threshold: 3,
+      exercises: [
+        { id: 'floor_press', name: 'KB Floor Press', progression: 'weight' },
+        { id: 'ring_dips', name: 'Ring Dips', progression: 'reps' },
+        { id: 'aussie_pullups', name: 'Australian Ring Pull Ups', progression: 'reps' },
+        { id: 'lateral_raises_fri', name: 'Lateral Raises', progression: 'weight' },
+        { id: 'kb_curl_tricep', name: 'KB Curl / Ring Tricep Ext', progression: 'weight' },
+        { id: 'snatch_emom', name: 'KB Snatch EMOM', progression: 'weight' },
+      ]
+    },
+    saturday: {
+      label: 'Saturday', color: '#f55a5a', type: 'cardio',
+      threshold: 4,
+      exercises: [
+        { id: 'z2_run_sat', name: 'Z2 Run', progression: 'duration' },
+      ]
+    },
+    sunday: {
+      label: 'Sunday', color: '#5ab4f5', type: 'hyrox',
+      threshold: 4,
+      exercises: [
+        { id: 'hyrox_sim', name: 'Hyrox Simulation', progression: 'time' },
+        { id: 'mobility_sun', name: 'Mobility Session', progression: 'none' },
+      ]
+    }
+  };
+
+  const PROGRESSION_LABELS = {
+    weight: { up: '↑ Sube 2.5kg', maintain: '= Mantén peso' },
+    reps: { up: '↑ +2 reps por set', maintain: '= Mantén reps' },
+    pace: { up: '↑ Reduce 5s por 400m', maintain: '= Mantén ritmo' },
+    duration: { up: '↑ +5 mins', maintain: '= Mantén duración' },
+    time: { up: '↑ Intenta bajar tiempo', maintain: '= Mantén intensidad' },
+    none: { up: '', maintain: '' }
+  };
+
+  let selectedDay = null;
+
+  // ─── STORAGE ─────────────────────────────────────────────────────────────────
+
+  function getLog() {
+    try { return JSON.parse(localStorage.getItem('ironplan_log') || '{}'); } catch { return {}; }
+  }
+
+  function saveLog(log) {
+    try { localStorage.setItem('ironplan_log', JSON.stringify(log)); } catch {}
+  }
+
+  function logSession(dayKey) {
+    const log = getLog();
+    if (!log[dayKey]) log[dayKey] = [];
+    log[dayKey].push({ date: new Date().toISOString(), ts: Date.now() });
+    saveLog(log);
+  }
+
+  function getSessionCount(dayKey) {
+    const log = getLog();
+    return (log[dayKey] || []).length;
+  }
+
+  function getLastSession(dayKey) {
+    const log = getLog();
+    const sessions = log[dayKey] || [];
+    return sessions.length ? sessions[sessions.length - 1] : null;
+  }
+
+  function shouldProgressExercise(dayKey) {
+    const count = getSessionCount(dayKey);
+    const threshold = DAYS[dayKey].threshold;
+    return count > 0 && count % threshold === 0;
+  }
+
+  // ─── UI ──────────────────────────────────────────────────────────────────────
+
+  function selectDay(dayKey) {
+    selectedDay = dayKey;
+    const day = DAYS[dayKey];
+    const count = getSessionCount(dayKey);
+    const shouldProgress = shouldProgressExercise(dayKey);
+
+    // Header
+    document.getElementById('tracker-day-header').innerHTML = `
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px">
+        <div style="width:12px;height:12px;border-radius:50%;background:${day.color}"></div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:${day.color}; letter-spacing:0.05em">${day.label}</div>
+      </div>
+      <div style="background:var(--card-bg); border:1px solid var(--border); padding:14px 18px; margin-bottom:20px; font-size:12px; color:var(--muted)">
+        Sesiones completadas: <span style="color:var(--off-white); font-weight:500">${count}</span>
+        &nbsp;·&nbsp; Próximo aviso en sesión: <span style="color:var(--accent); font-weight:500">${day.threshold - (count % day.threshold)}</span>
+      </div>
+    `;
+
+    // Exercises
+    let exHTML = '';
+    day.exercises.forEach(ex => {
+      const progLabel = PROGRESSION_LABELS[ex.progression];
+      const badge = shouldProgress && ex.progression !== 'none'
+        ? `<div style="background:#c8f55a22; border:1px solid #c8f55a44; color:var(--accent); font-size:11px; padding:4px 10px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; margin-top:6px; display:inline-block">${progLabel.up}</div>`
+        : ex.progression !== 'none'
+          ? `<div style="background:#2a2a2a; border:1px solid var(--border); color:var(--muted); font-size:11px; padding:4px 10px; letter-spacing:0.1em; text-transform:uppercase; margin-top:6px; display:inline-block">${progLabel.maintain}</div>`
+          : '';
+
+      exHTML += `
+        <div style="background:var(--card-bg); border:1px solid var(--border); border-left:3px solid ${shouldProgress && ex.progression !== 'none' ? 'var(--accent)' : 'var(--border)'}; padding:16px 18px; margin-bottom:2px">
+          <div style="font-size:14px; font-weight:500; color:var(--off-white)">${ex.name}</div>
+          ${badge}
+        </div>`;
+    });
+
+    if (shouldProgress) {
+      exHTML = `<div style="background:#c8f55a11; border:1px solid #c8f55a33; padding:14px 18px; margin-bottom:12px; font-size:13px; color:var(--accent); font-weight:500">
+        🔥 ¡Toca progresar! Llevas ${count} sesiones. Sube en los ejercicios marcados.
+      </div>` + exHTML;
+    }
+
+    document.getElementById('tracker-exercises').innerHTML = exHTML;
+    document.getElementById('tracker-day-select').style.display = 'none';
+    document.getElementById('tracker-workout').style.display = 'block';
+    renderHistory();
+  }
+
+  function logWorkout() {
+    if (!selectedDay) return;
+    logSession(selectedDay);
+
+    const count = getSessionCount(selectedDay);
+    const day = DAYS[selectedDay];
+
+    document.getElementById('tracker-workout').innerHTML = `
+      <div style="text-align:center; padding:48px 24px">
+        <div style="font-size:64px; margin-bottom:16px">💪</div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--accent); letter-spacing:0.05em">DONE!</div>
+        <div style="color:var(--muted); font-size:14px; margin-top:8px">${day.label} · Sesión ${count}</div>
+        <div style="margin-top:32px; background:var(--card-bg); border:1px solid var(--border); padding:16px; font-size:12px; color:var(--muted)">
+          Próximo aviso de progresión en <span style="color:var(--off-white); font-weight:500">${day.threshold - (count % day.threshold) === 0 ? day.threshold : day.threshold - (count % day.threshold)}</span> sesión${day.threshold - (count % day.threshold) === 1 ? '' : 'es'} más
+        </div>
+        <button onclick="resetTracker()" style="margin-top:16px; width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; -webkit-tap-highlight-color:transparent;">
+          ← Volver
+        </button>
+      </div>`;
+    renderHistory();
+  }
+
+  function cancelWorkout() {
+    selectedDay = null;
+    document.getElementById('tracker-day-select').style.display = 'block';
+    document.getElementById('tracker-workout').style.display = 'none';
+  }
+
+  function resetTracker() {
+    selectedDay = null;
+    document.getElementById('tracker-day-select').style.display = 'block';
+    document.getElementById('tracker-workout').style.display = 'none';
+    document.getElementById('tracker-workout').innerHTML = `
+      <div id="tracker-day-header"></div>
+      <div id="tracker-exercises"></div>
+      <button onclick="logWorkout()" style="width:100%; background:var(--accent); border:none; color:var(--black); font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:8px; -webkit-tap-highlight-color:transparent;">✓ SESIÓN COMPLETADA</button>
+      <button onclick="cancelWorkout()" style="width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">← Cambiar día</button>`;
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const log = getLog();
+    const allSessions = [];
+    Object.entries(log).forEach(([dayKey, sessions]) => {
+      sessions.forEach(s => allSessions.push({ dayKey, ...s }));
+    });
+    allSessions.sort((a, b) => b.ts - a.ts);
+    const recent = allSessions.slice(0, 8);
+
+    if (!recent.length) {
+      document.getElementById('tracker-history').innerHTML = `<div style="color:var(--muted); font-size:13px; padding:16px 0">Aún no hay sesiones registradas.</div>`;
+      return;
+    }
+
+    let html = '';
+    recent.forEach(s => {
+      const day = DAYS[s.dayKey];
+      const date = new Date(s.date);
+      const dateStr = date.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+      html += `
+        <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--card-bg); border:1px solid var(--border); margin-bottom:2px">
+          <div style="width:8px;height:8px;border-radius:50%;background:${day.color};flex-shrink:0"></div>
+          <div style="flex:1; font-size:13px; color:var(--off-white)">${day.label}</div>
+          <div style="font-size:11px; color:var(--muted)">${dateStr}</div>
+        </div>`;
+    });
+    document.getElementById('tracker-history').innerHTML = html;
+  }
+
+  // ─── NAV + EXISTING FUNCTIONS ────────────────────────────────────────────────
+
   function showSection(id, btn) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('section-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'training') showDay(0);
+    if (id === 'tracker') renderHistory();
   }
 
   function showDay(index) {
@@ -1421,6 +1734,8 @@
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
   }
+
+  renderHistory();
 </script>
 
 </body>
