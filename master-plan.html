@@ -54,18 +54,20 @@
     border: none;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 18px 8px;
+    padding: 14px 4px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    width: 100%;
+    overflow: hidden;
   }
 
   .nav-btn.active {
@@ -695,6 +697,15 @@
     .stations-grid { grid-template-columns: 1fr; }
     .prog-grid { grid-template-columns: 1fr; }
     .legend { gap: 10px; }
+    .overload-table { font-size: 11px; }
+    .overload-table td, .overload-table th { padding: 8px 6px; }
+    .day-type-badge, .location-badge { font-size: 9px; padding: 3px 8px; }
+    .section-title { font-size: 17px; }
+    .week-day-btn { padding: 10px 4px; }
+    .day-abbr { font-size: 9px; }
+    .day-location { font-size: 7px; }
+    * { max-width: 100%; box-sizing: border-box; }
+    table { width: 100%; table-layout: fixed; word-wrap: break-word; }
   }
 </style>
 </head>
@@ -702,13 +713,13 @@
 
 <!-- TOP NAV -->
 <div class="top-nav">
-  <button class="nav-btn active" onclick="showSection('training')">
+  <button class="nav-btn active" onclick="showSection('training', this)">
     <div class="nav-dot" style="background:#c8f55a"></div>
-    Training Protocol
+    Training
   </button>
-  <button class="nav-btn" onclick="showSection('diet')">
+  <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
-    Fuel Protocol
+    Nutrition
   </button>
 </div>
 
@@ -1373,12 +1384,11 @@
 </div>
 
 <script>
-  function showSection(id) {
+  function showSection(id, btn) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('section-' + id).classList.add('active');
-    event.currentTarget.classList.add('active');
-    // Reset to Monday when switching to training
+    btn.classList.add('active');
     if (id === 'training') showDay(0);
   }
 
