@@ -1389,7 +1389,6 @@
 </div>
 </div>
 
-<script>
 <!-- ==================== TRACKER SECTION ==================== -->
 <div class="section" id="section-tracker">
 <div class="container">
@@ -1731,8 +1730,11 @@
     document.querySelectorAll('.rest-item').forEach(el => el.style.display = isTraining ? 'none' : '');
   }
 
+  // Kill any existing service workers that are caching old versions
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      regs.forEach(reg => reg.unregister());
+    });
   }
 
   renderHistory();
