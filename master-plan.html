@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Iron Plan">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>Iron Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --off-white: #f2ede6;
+    --accent: #c8f55a;
+    --muted: #4a4a4a;
+    --card-bg: #161616;
+    --border: #2a2a2a;
+    --strength: #c8f55a;
+    --hyrox: #f55a5a;
+    --power: #f5a85a;
+    --hypertrophy: #a85af5;
+    --z2: #5ab4f5;
+    --gym: #f5e15a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* TOP NAV */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-btn {
+    background: #111;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nav-btn.active {
+    background: var(--card-bg);
+    color: var(--off-white);
+  }
+
+  .nav-btn .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  /* SECTIONS */
+  .section { display: none; padding: 48px 24px; }
+  .section.active { display: block; }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* SHARED TYPOGRAPHY */
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .version-badge {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+
+  /* DIET STYLES */
+  .macros-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .macro {
+    background: var(--card-bg);
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .macro-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .macro-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .toggle-btn {
+    background: var(--card-bg);
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .toggle-btn.active {
+    background: var(--accent);
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  .meal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+
+  .meal-card.highlight { border-color: #c8f55a33; }
+  .meal-card.highlight .meal-title { color: var(--accent); }
+
+  .meal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meal-meta { display: flex; align-items: baseline; gap: 16px; }
+
+  .meal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .meal-time {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .meal-cals {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  .meal-cals span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .meal-body {
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .food-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .food-name { font-size: 15px; font-weight: 500; color: var(--off-white); }
+
+  .food-detail {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .food-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-top: 4px;
+    width: fit-content;
+  }
+
+  .food-tag.protein { border-color: #c8f55a44; color: var(--accent); }
+  .food-tag.carb { border-color: #f5a85a44; color: #f5a85a; }
+  .food-tag.fat { border-color: #5ab4f544; color: #5ab4f5; }
+  .food-tag.fiber { border-color: #a85af544; color: #a85af5; }
+
+  .meal-note {
+    padding: 14px 28px;
+    background: #111;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .meal-note strong { color: var(--accent); font-style: normal; }
+
+  .notes-section { margin-top: 48px; }
+  .notes-section .label { margin-bottom: 20px; }
+
+  .note-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .note-item:last-child { border-bottom: none; }
+
+  .note-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .note-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .note-text strong { color: var(--off-white); font-weight: 500; }
+
+  /* TRAINING STYLES */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .phase-banner {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+  }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .week-day-btn {
+    background: var(--card-bg);
+    border: none;
+    padding: 14px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .week-day-btn:hover { background: #1e1e1e; }
+  .week-day-btn.active { background: #1e1e1e; }
+  .week-day-btn.active .day-abbr { color: var(--off-white); }
+
+  .day-abbr {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .day-dot-strip { width: 8px; height: 8px; border-radius: 50%; }
+  .week-day-btn.active .day-dot-strip { transform: scale(1.3); }
+
+  .day-location {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .day-panel { display: none; }
+  .day-panel.active { display: block; animation: fadeUp 0.35s ease both; }
+
+  .day-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .day-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 7vw, 60px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .day-type-badge {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-left: 8px;
+    margin-bottom: 6px;
+  }
+
+  .location-badge.gym { border-color: #f5e15a44; color: var(--gym); }
+  .location-badge.home { border-color: #c8f55a44; color: var(--accent); }
+
+  .goal-pills { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+
+  .goal-pill {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .goal-pill.muscle { border-color: #c8f55a44; color: var(--accent); }
+  .goal-pill.hyrox { border-color: #f55a5a44; color: #f55a5a; }
+  .goal-pill.power { border-color: #f5a85a44; color: #f5a85a; }
+  .goal-pill.recovery { border-color: #5ab4f544; color: #5ab4f5; }
+  .goal-pill.gym-tag { border-color: #f5e15a44; color: var(--gym); }
+
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+
+  .section-card.gym-card { border-color: #f5e15a22; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    flex: 1;
+  }
+
+  .section-toggle { font-size: 18px; color: var(--muted); }
+
+  .section-body { padding: 20px 24px; border-top: 1px solid var(--border); }
+  .section-body.collapsed { display: none; }
+
+  .sub-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    margin-top: 20px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sub-label:first-child { margin-top: 0; }
+
+  .exercise-list { list-style: none; display: flex; flex-direction: column; }
+
+  .exercise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .exercise-item:last-child { border-bottom: none; }
+
+  .ex-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .ex-content { flex: 1; }
+
+  .ex-name { font-size: 14px; font-weight: 500; color: var(--off-white); line-height: 1.4; }
+
+  .ex-detail { font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 2px; line-height: 1.5; }
+
+  .ex-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border: 1px solid;
+    margin-top: 4px;
+  }
+
+  .ex-tag.hyrox-tag { border-color: #f55a5a44; color: #f55a5a; }
+  .ex-tag.muscle-tag { border-color: #c8f55a44; color: var(--accent); }
+  .ex-tag.gym-tag-ex { border-color: #f5e15a44; color: var(--gym); }
+
+  .complex-note {
+    background: #111;
+    border-left: 2px solid var(--accent);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .hyrox-note {
+    background: #111;
+    border-left: 2px solid #f55a5a;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .gym-note {
+    background: #111;
+    border-left: 2px solid var(--gym);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .stations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 12px 0;
+  }
+
+  .station { background: var(--card-bg); padding: 12px 14px; }
+
+  .station-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #f55a5a;
+    line-height: 1;
+  }
+
+  .station-name { font-size: 12px; font-weight: 500; color: var(--off-white); margin-top: 2px; }
+  .station-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .overload-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; }
+
+  .overload-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+
+  .overload-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1a1a1a;
+    color: var(--off-white);
+    vertical-align: top;
+  }
+
+  .overload-table td:last-child { color: var(--muted); }
+  .overload-table tr:last-child td { border-bottom: none; }
+
+  .sets-badge {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--gym);
+    margin-right: 4px;
+  }
+
+  .rest-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .rest-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: #2a2a2a;
+    line-height: 1;
+    letter-spacing: 0.05em;
+  }
+
+  .rest-sub { font-size: 12px; color: var(--muted); margin-top: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .progression-block { margin-top: 48px; }
+
+  .prog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  .prog-phase { background: var(--card-bg); padding: 20px 16px; }
+
+  .prog-phase-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .prog-phase-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .prog-phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 500px) {
+    .meal-body { grid-template-columns: 1fr; }
+    .macros-bar { grid-template-columns: repeat(2, 1fr); }
+    .stations-grid { grid-template-columns: 1fr; }
+    .prog-grid { grid-template-columns: 1fr; }
+    .legend { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <button class="nav-btn active" onclick="showSection('training')">
+    <div class="nav-dot" style="background:#c8f55a"></div>
+    Training Protocol
+  </button>
+  <button class="nav-btn" onclick="showSection('diet')">
+    <div class="nav-dot" style="background:#f5a85a"></div>
+    Fuel Protocol
+  </button>
+</div>
+
+<!-- ==================== TRAINING SECTION ==================== -->
+<div class="section active" id="section-training">
+<div class="container">
+
+  <header style="margin-bottom:48px; margin-top: 0; padding-top: 0; animation: fadeUp 0.6s ease both;">
+    <div class="label">Weekly Training Protocol · Hybrid · v3 Final</div>
+    <h1>IRON<br><span>WEEK</span></h1>
+    <p class="subtitle">Kettlebells en casa para Hyrox y potencia. Gimnasio 2 días para máxima hipertrofia. 50/50 rendimiento y estética. Objetivo: 1:05 Hyrox parejas + 5kg músculo.</p>
+    <div class="version-badge">v3 Final · Hybrid KB + Gym · Sin boxeo</div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#c8f55a"></div>Strength / KB</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f55a5a"></div>Hyrox / Run</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f5e15a"></div>Gym</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a85af5"></div>Hipertrofia</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5ab4f5"></div>Recovery / Z2</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2a2a2a"></div>Rest</div>
+  </div>
+
+  <div class="phase-banner">
+    <div class="phase-title">Phase 1 — Base Build (Weeks 1–6)</div>
+    <div class="phase-desc">Establece calidad de movimiento, base aeróbica y hábitos de sobrecarga progresiva en el gym. Ganancia muscular y acondicionamiento Hyrox en paralelo. No fuerces la intensidad — construye el motor primero.</div>
+  </div>
+
+  <div class="week-strip">
+    <button class="week-day-btn active" onclick="showDay(0)">
+      <div class="day-abbr">Mon</div>
+      <div class="day-dot-strip" style="background:#c8f55a"></div>
+      <div class="day-location">Home</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(1)">
+      <div class="day-abbr">Tue</div>
+      <div class="day-dot-strip" style="background:#f5e15a"></div>
+      <div class="day-location">Gym</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(2)">
+      <div class="day-abbr">Wed</div>
+      <div class="day-dot-strip" style="background:#f55a5a"></div>
+      <div class="day-location">Run</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(3)">
+      <div class="day-abbr">Thu</div>
+      <div class="day-dot-strip" style="background:#f5e15a"></div>
+      <div class="day-location">Gym</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(4)">
+      <div class="day-abbr">Fri</div>
+      <div class="day-dot-strip" style="background:#a85af5"></div>
+      <div class="day-location">Home</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(5)">
+      <div class="day-abbr">Sat</div>
+      <div class="day-dot-strip" style="background:#f55a5a"></div>
+      <div class="day-location">Z2/Rest</div>
+    </button>
+    <button class="week-day-btn" onclick="showDay(6)">
+      <div class="day-abbr">Sun</div>
+      <div class="day-dot-strip" style="background:#5ab4f5"></div>
+      <div class="day-location">Sim/Mob</div>
+    </button>
+  </div>
+
+  <!-- MONDAY -->
+  <div class="day-panel active" id="day-0">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#c8f55a">Monday</div>
+        <span class="day-type-badge" style="color:#c8f55a; border-color:#c8f55a44">KB Strength + Hyrox</span>
+        <span class="location-badge home">🏠 Home</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill muscle">Strength</div>
+      <div class="goal-pill hyrox">Hyrox Stations</div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#c8f55a22">🔄</div>
+        <div class="section-title">Mobility — 10 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Hip Airplanes</div><div class="ex-detail">2×8 each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Prone Y/T/W</div><div class="ex-detail">2×10</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Ankle Dorsiflexion Stretch (banded)</div><div class="ex-detail">2×1 min each leg</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Single Leg Calf Raise lento 🦵</div><div class="ex-detail">2×12 cada pierna — 3 seg subiendo, 3 seg bajando. Tendón de Aquiles. Longevidad.</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#c8f55a22">💪</div>
+        <div class="section-title">KB Strength — 25 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="sub-label">Superset A — Pull + Unilateral Legs · 5 Rondas</div>
+        <div class="complex-note">→ Cero descanso entre Weighted Pull Ups y Reverse Lunges. 60s después de ambos. 5 rondas.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">SS A: Weighted Pull Ups</div><div class="ex-detail">6 reps — añade peso progresivamente cada semana.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">SS A: Reverse Lunges (KB)</div><div class="ex-detail">8 reps cada pierna — paso atrás controlado. Activa estabilizadores de rodilla y cadera.</div></div></li>
+        </ul>
+        <div class="sub-label">Complex — 3 Rondas</div>
+        <div class="complex-note">→ 3 rondas el Lunes — llegas procesando el Domingo. Rondas 1–2 mismo peso, sube en ronda 3.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Clean → Press → Thruster</div><div class="ex-detail">5 reps cada movimiento por ronda</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🏁</div>
+        <div class="section-title">Hyrox Station Work — 15 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Lunes es activación, no destrucción. 3 series por estación, calidad sobre volumen.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Wall Hack Squat (Sled Push sub)</div><div class="ex-detail">3×10 — caderas bajas, empuje desde las piernas contra la pared.</div><div class="ex-tag hyrox-tag">Station 1</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Wall Balls</div><div class="ex-detail">3×15 — squat profundo, explosión arriba. Movimiento exacto de la estación.</div><div class="ex-tag hyrox-tag">Station 7 — Real</div></div></li>
+        </ul>
+        <div class="sub-label">Core / Carries</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Unilateral Farmer March</div><div class="ex-detail">2×40m — activación de core y estabilizadores</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day-panel" id="day-1">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#f5e15a">Tuesday</div>
+        <span class="day-type-badge" style="color:#f5e15a; border-color:#f5e15a44">Gym — Upper Body</span>
+        <span class="location-badge gym">🏋️ Gym</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill gym-tag">Gym Day 1</div>
+      <div class="goal-pill muscle">Hipertrofia</div>
+      <div class="goal-pill muscle">~60 mins</div>
+    </div>
+    <div class="section-card gym-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f5e15a22">🔄</div>
+        <div class="section-title">Warm-Up — 8 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Shoulder Dislocates / Banded Pull-Aparts</div><div class="ex-detail">2×10</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Scapula Push-Ups</div><div class="ex-detail">2×12</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Thoracic Rotations</div><div class="ex-detail">2×8</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Rotación externa de manguito (banda) 🦺</div><div class="ex-detail">2×15 cada lado — longevidad del hombro con el volumen de press semanal.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets Bench Press</div><div class="ex-detail">50% y 75% del peso de trabajo</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card gym-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f5e15a22">🏋️</div>
+        <div class="section-title">Upper Body — Pecho, Espalda, Hombros, Brazos</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="gym-note">→ Sobrecarga progresiva cada sesión. Añade 2.5kg cuando completes todos los sets en el rango alto. Anota los pesos — así se construyen los 5kg.</div>
+        <div class="sub-label">Main Lifts</div>
+        <table class="overload-table">
+          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
+          <tr><td><strong>Barbell Bench Press</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>3 seg eccentric. El movimiento de empuje más pesado de la semana.</td></tr>
+          <tr><td><strong>Incline DB Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Pecho alto. 2 seg bajando, squeeze arriba.</td></tr>
+          <tr><td><strong>Lat Pulldown (Wide Grip)</strong></td><td><span class="sets-badge">4×</span>10–12</td><td>Estiramiento completo arriba, tira al pecho. El V-taper viene de aquí.</td></tr>
+          <tr><td><strong>Barbell / Cable Row</strong></td><td><span class="sets-badge">4×</span>8–10</td><td>Overhand grip. Codos hacia atrás. Grosor de espalda.</td></tr>
+          <tr><td><strong>Lateral Raises (DB o Cable)</strong></td><td><span class="sets-badge">3×</span>15–20</td><td>Ligero, estricto, lento. Ancho de hombros. No lo acceleres.</td></tr>
+        </table>
+        <div class="sub-label">Superset — Bíceps + Tríceps</div>
+        <div class="gym-note">→ Cero descanso entre bíceps y tríceps. 60s después de ambos. 3 rondas.</div>
+        <table class="overload-table">
+          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
+          <tr><td><strong>SS: EZ Bar / Barbell Curl</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Eccentric lento, sin balanceo.</td></tr>
+          <tr><td><strong>SS: Cable Tricep Pushdown</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>Extensión completa. Directo después del curl.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day-panel" id="day-2">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#f55a5a">Wednesday</div>
+        <span class="day-type-badge" style="color:#f55a5a; border-color:#f55a5a44">Run — Calidad / Long Z2</span>
+        <span class="location-badge home">🏃 Outside</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill hyrox">Hyrox Específico</div>
+      <div class="goal-pill power">VO2max</div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🔄</div>
+        <div class="section-title">Calentamiento — 10 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 cada lado</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Good Mornings</div><div class="ex-detail">2×10 — abre isquios antes de correr</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×45s cada lado</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Trote suave 5 mins</div><div class="ex-detail">Llega al primer intervalo ya caliente</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">⚡</div>
+        <div class="section-title">Opción A — Intervalos Clásicos (semanas con sim)</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Objetivo: 2:10 min/400m semanas 1–4 → 2:00 semanas 5–8 → 1:50 semanas 9–12. Sin objetivo de tiempo los intervalos no tienen dirección.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">6–8 × 400m</div><div class="ex-detail">Sem 1–4: 6×400m a 2:10. Sem 5–8: 7×400m a 2:00. Sem 9–12: 8×400m a 1:50. 90s caminando entre reps.</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🏁</div>
+        <div class="section-title">Opción B — Hyrox Intervals (semanas con sim)</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ 500m fuerte + estación KB inmediatamente. 4–5 rondas. Practica llegar a una estación con el pecho ardiendo.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">500m Z3–Z4 → estación KB sin parar</div><div class="ex-detail">Ronda 1: 15 Wall Balls. Ronda 2: 20m KB Lunges. Ronda 3: 10 Burpee Broad Jumps. Rotar. 2 mins descanso entre rondas.</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">💥</div>
+        <div class="section-title">Opción C — Intervalos + Burpee Broad Jumps (semanas con sim)</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ La más específica. 400m fuerte → 10 Burpee Broad Jumps sin parar → 90s descanso. 5–6 rondas.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">400m Z3–Z4 → 10 Burpee Broad Jumps</div><div class="ex-detail">Sin pausa entre carrera y burpees. Mantén la FC alta. 5–6 rondas totales.</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🏃</div>
+        <div class="section-title">Opción D — Long Run Z2 (semanas SIN sim)</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note" style="border-left-color:#5ab4f5">→ Semanas sin simulación el Domingo: Miércoles Long Run + Sábado Z2 = semana de volumen aeróbico alto. Construye el suelo que los intervalos no dan solos.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Z2 largo — 45 a 60 mins</div><div class="ex-detail">Ritmo conversacional. FC 60–70% máx. Añade 5 mins cada ciclo.</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">📅</div>
+        <div class="section-title">Rotación por Semanas</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Ejemplo 4 semanas: Sem 1 (sim) → A · Sem 2 (no sim) → D · Sem 3 (sim) → B · Sem 4 (no sim) → D. La simulación ancla el ciclo.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Semanas CON simulación → A, B o C en ciclo</div><div class="ex-detail">La simulación ya es el estímulo de volumen — el Miércoles necesita calidad.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Semanas SIN simulación → Opción D siempre</div><div class="ex-detail">Doble Z2 largo esa semana — máxima base aeróbica.</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day-panel" id="day-3">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#f5e15a">Thursday</div>
+        <span class="day-type-badge" style="color:#f5e15a; border-color:#f5e15a44">Gym — Lower Body</span>
+        <span class="location-badge gym">🏋️ Gym</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill gym-tag">Gym Day 2</div>
+      <div class="goal-pill muscle">Hipertrofia</div>
+      <div class="goal-pill hyrox">Hyrox Pierna</div>
+    </div>
+    <div class="section-card gym-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f5e15a22">🔄</div>
+        <div class="section-title">Warm-Up + Longevidad — 12 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Hip Flexor Rock Back</div><div class="ex-detail">2×8</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Copenhagen Raises</div><div class="ex-detail">2×8 — activación de aductores antes de squats pesados</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×30–60s cada lado</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Tibialis Raise 🦵</div><div class="ex-detail">2×15 — espalda contra la pared, levanta la punta del pie. Previene shin splints. Longevidad de rodilla.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Good Mornings (semanas de Rack Pull)</div><div class="ex-detail">3×10 — activa espalda baja y trapecios antes del Rack Pull</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets en el primer ejercicio</div><div class="ex-detail">50% y 75% del peso de trabajo</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card gym-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f5e15a22">🦵</div>
+        <div class="section-title">Lower Body — Isquios, Glúteos, Cuádriceps, Gemelos</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="gym-note">→ Pierna el Jueves — llegas fresco al fin de semana para correr. Leg Curl primero para calentar isquios antes del RDL.</div>
+        <table class="overload-table">
+          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
+          <tr><td><strong>Leg Curl (Machine)</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>Primero. Activa isquios. 3 seg eccentric.</td></tr>
+          <tr><td><strong>RDL / Rack Pull desde bloques (alternar)</strong></td><td><span class="sets-badge">4×</span>8–10</td><td>Sem A: RDL — isquios y glúteos, eccentric controlado. Sem B: Rack Pull — cadena posterior alta, explosión concéntrica, carga máxima.</td></tr>
+          <tr><td><strong>Hack Squat / Back Squat (alternar)</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>Sem A: Hack Squat — cuádricep puro. Sem B: Back Squat — patrón completo. 3 seg eccentric en ambos.</td></tr>
+          <tr><td><strong>Leg Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Cuádricep sin carga espinal después del squat.</td></tr>
+          <tr><td><strong>SS: Bike (por tiempo)</strong></td><td><span class="sets-badge">4×</span>45–60s</td><td>Ritmo alto sostenible. Sin descanso — directo a Lunges. Simula piernas quemadas de carrera.</td></tr>
+          <tr><td><strong>SS: Lunges (con peso)</strong></td><td><span class="sets-badge">4×</span>20m</td><td>Mancuernas o barra. Directo desde Bike. Estación Hyrox específica. 90s descanso después.</td></tr>
+          <tr><td><strong>Calf Raises (Machine o Smith)</strong></td><td><span class="sets-badge">4×</span>15–20</td><td>Rango completo, pausa abajo. Gemelos aguantan el impacto de correr.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day-panel" id="day-4">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#a85af5">Friday</div>
+        <span class="day-type-badge" style="color:#a85af5; border-color:#a85af544">KB Hipertrofia + Técnica</span>
+        <span class="location-badge home">🏠 Home</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill muscle">Hipertrofia</div>
+      <div class="goal-pill muscle">+5kg</div>
+      <div class="goal-pill hyrox">Técnica KB</div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#a85af522">🔄</div>
+        <div class="section-title">Mobility — 10 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Hip Airplanes</div><div class="ex-detail">2×8</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">RDL to Racked March</div><div class="ex-detail">2×10</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Wrist Mobility Drills</div><div class="ex-detail">2×10</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#a85af522">💪</div>
+        <div class="section-title">KB + Anillas — Hipertrofia · Tiempo bajo tensión</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="complex-note">→ 3 seg eccentric en todo. No es velocidad, es músculo. Las anillas activan más fibras estabilizadoras que barra o mancuerna.</div>
+        <div class="sub-label">Empuje</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">KB Floor Press</div><div class="ex-detail">4×10 — 3 seg eccentric. Pecho y tríceps sin estrés en el hombro.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Ring Dips</div><div class="ex-detail">3×8–10 — rango completo, anillas inestables. 3 seg eccentric. Pecho bajo y tríceps al máximo.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
+        </ul>
+        <div class="sub-label">Tirón</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Australian Ring Pull Ups</div><div class="ex-detail">3×10–12 — cuerpo inclinado, tira al pecho. Espalda media, bíceps, retractores escapulares. Rotación natural de muñeca.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
+        </ul>
+        <div class="sub-label">Superset Aislamiento — alternar semanas</div>
+        <div class="complex-note">→ Sem A: Lateral Raises + KB Curl. Sem B: Lateral Raises + Ring Tricep Extension. Lateral Raises siempre — máximo impacto en ancho de hombros.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS: Lateral Raises</div><div class="ex-detail">3×15 — ligero, estricto, lento. Codo ligeramente adelantado, control total.</div><div class="ex-tag muscle-tag">Estético</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS Sem A: KB Curl</div><div class="ex-detail">3×12 — eccentric lento, sin balanceo.</div><div class="ex-tag muscle-tag">Bíceps</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS Sem B: Ring Tricep Extension</div><div class="ex-detail">3×12 — anillas al pecho, extiende. Rango completo con inestabilidad.</div><div class="ex-tag muscle-tag">Tríceps</div></div></li>
+        </ul>
+        <div class="sub-label">Core</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Hollow Hold</div><div class="ex-detail">3×35s — core de longevidad. Aumenta a 45s cuando sea fácil.</div><div class="ex-tag muscle-tag">Longevidad</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#a85af522">🎯</div>
+        <div class="section-title">Finisher — KB Snatch EMOM · 10 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="complex-note">→ EMOM = Every Minute On the Minute. Minutos impares derecha, pares izquierda. El resto del minuto es descanso.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Minutos impares (1,3,5,7,9) — Snatch derecha</div><div class="ex-detail">8–10 reps. Cadera, no brazo. Si la técnica cede, baja a 6.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Minutos pares (2,4,6,8,10) — Snatch izquierda</div><div class="ex-detail">8–10 reps. Mismo peso ambos lados. Trabaja el lado débil.</div></div></li>
+        </ul>
+        <div class="complex-note">→ Progresión: 8 reps → cuando sobre tiempo sube a 10 → cuando 10 deje 20 seg libres, sube el peso.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATURDAY -->
+  <div class="day-panel" id="day-5">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#f55a5a">Saturday</div>
+        <span class="day-type-badge" style="color:#f55a5a; border-color:#f55a5a44">Descanso / Z2 Run</span>
+        <span class="location-badge home">😴 / 🏃</span>
+      </div>
+    </div>
+    <div class="goal-pills"><div class="goal-pill recovery">Depende de la semana</div></div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">📅</div>
+        <div class="section-title">Semana CON simulación el Domingo → Descanso completo</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Llegas fresco a la simulación — es la sesión más dura de la semana. Come bien, hidratate, duerme.</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🏃</div>
+        <div class="section-title">Semana SIN simulación → Z2 Run 45–60 mins</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Z2 puro — ritmo conversacional, FC 60–70% máx. Añade 5 mins cada semana hasta llegar a 60 mins cómodo. Pierna fue el Jueves — llegas fresco.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUNDAY -->
+  <div class="day-panel" id="day-6">
+    <div class="day-header">
+      <div class="day-title-wrap">
+        <div class="day-title" style="color:#5ab4f5">Sunday</div>
+        <span class="day-type-badge" style="color:#5ab4f5; border-color:#5ab4f544">Hyrox Sim / Rest + Movilidad</span>
+        <span class="location-badge home">🏃 / 🏠</span>
+      </div>
+    </div>
+    <div class="goal-pills">
+      <div class="goal-pill hyrox">Hyrox Específico</div>
+      <div class="goal-pill recovery">Recuperación</div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#f55a5a22">🏁</div>
+        <div class="section-title">Semana CON simulación → Hyrox Sim</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="hyrox-note">→ Sábado descansaste — cuerpo fresco para la simulación. 4 carreras de 500m con 2 estaciones entre cada una. Transición carrera-estación sin parar.</div>
+        <div class="stations-grid">
+          <div class="station"><div class="station-num">1</div><div class="station-name">KB Swings (SkiErg sub)</div><div class="station-detail">50 swings</div></div>
+          <div class="station"><div class="station-num">2</div><div class="station-name">Wall Hack Squat (Sled Push sub)</div><div class="station-detail">4×10 heavy</div></div>
+          <div class="station"><div class="station-num">3</div><div class="station-name">Burpee Broad Jumps</div><div class="station-detail">4×10m exacto</div></div>
+          <div class="station"><div class="station-num">4</div><div class="station-name">KB Deadlifts (Sled Pull sub)</div><div class="station-detail">20 reps heavy</div></div>
+          <div class="station"><div class="station-num">5</div><div class="station-name">Single-Arm KB Carry</div><div class="station-detail">2×50m cada brazo</div></div>
+          <div class="station"><div class="station-num">6</div><div class="station-name">KB Racked Lunges</div><div class="station-detail">2×20m</div></div>
+          <div class="station"><div class="station-num">7</div><div class="station-name">Wall Balls</div><div class="station-detail">100 reps — real</div></div>
+          <div class="station"><div class="station-num">8</div><div class="station-name">KB Clean + Press</div><div class="station-detail">100 reps total</div></div>
+        </div>
+        <div class="complex-note">→ El Lunes siguiente: superset se mantiene, complex baja a 3 rondas, estaciones al mínimo.</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#5ab4f522">🔄</div>
+        <div class="section-title">Semana SIN simulación → Rest + Movilidad</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="complex-note">→ Corriste el Sábado — hoy recuperación. Proteína alta, magnesio glicinate, 8h de sueño. El músculo se construye aquí.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions · Pigeon Stretch · Thoracic Foam Roller · Scapular Rotations · Good Mornings · Dead Bug</div><div class="ex-detail">2 series de cada. 25–30 mins total.</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESSION -->
+  <div class="progression-block">
+    <div class="label">3-Phase Progression</div>
+    <div class="prog-grid">
+      <div class="prog-phase">
+        <div class="prog-phase-num">01</div>
+        <div class="prog-phase-title">Weeks 1–6 · Base Build</div>
+        <div class="prog-phase-desc">Aprende los movimientos de gym. Construye confianza con la barra. Z2 runs 30–45 mins. Estaciones Hyrox por calidad. Anota cada sesión y añade peso cuando llegues al rango alto.</div>
+      </div>
+      <div class="prog-phase">
+        <div class="prog-phase-num">02</div>
+        <div class="prog-phase-title">Weeks 7–12 · Intensity Build</div>
+        <div class="prog-phase-desc">Pesos de gym significativamente más altos. Z2 llega a 60 mins. Intervalos del Miércoles más rápidos. Simulaciones cada dos Domingos. Los cambios musculares se empiezan a ver.</div>
+      </div>
+      <div class="prog-phase">
+        <div class="prog-phase-num">03</div>
+        <div class="prog-phase-title">Weeks 13+ · Race Ready</div>
+        <div class="prog-phase-desc">Simulaciones Hyrox completas los Domingos. Carrera a ritmo de competición. Taper 2 semanas antes de carrera. Objetivo 1:05 parejas alcanzable. 5kg músculo acumulados en esta fase.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Training Protocol v3 Final · Hybrid KB + Gym · Hyrox 1:05 + 5kg Músculo</footer>
+
+</div>
+</div>
+
+<!-- ==================== DIET SECTION ==================== -->
+<div class="section" id="section-diet">
+<div class="container">
+
+  <header style="margin-bottom:48px; animation: fadeUp 0.6s ease both;">
+    <div class="label">Performance Nutrition · Plan Final</div>
+    <h1>FUEL<br><span>PROTOCOL</span></h1>
+    <p class="subtitle">3,200 kcal días de entrenamiento. 2,700 días de descanso. Anti-inflamatorio, sin frutos secos, carbs ciclados. Hyrox + 5kg músculo.</p>
+    <div class="version-badge">v2 Final · Sin frutos secos · Anti-inflamatorio</div>
+  </header>
+
+  <div class="macros-bar">
+    <div class="macro"><div class="macro-value">~3,200</div><div class="macro-label">Training kcal</div></div>
+    <div class="macro"><div class="macro-value">~2,700</div><div class="macro-label">Rest kcal</div></div>
+    <div class="macro"><div class="macro-value">~200g</div><div class="macro-label">Proteína</div></div>
+    <div class="macro"><div class="macro-value">~200g</div><div class="macro-label">Carbs</div></div>
+  </div>
+
+  <div class="day-toggle">
+    <button class="toggle-btn active" onclick="setDay('training')">Training Day</button>
+    <button class="toggle-btn" onclick="setDay('rest')">Rest Day</button>
+  </div>
+
+  <div id="meals">
+    <!-- BREAKFAST -->
+    <div class="meal-card">
+      <div class="meal-header">
+        <div class="meal-meta"><div class="meal-title">Desayuno</div><div class="meal-time">7 – 8 am</div></div>
+        <div class="meal-cals training-cal">~850<span>kcal</span></div>
+        <div class="meal-cals rest-cal" style="display:none">~650<span>kcal</span></div>
+      </div>
+      <div class="meal-body">
+        <div class="food-item"><div class="food-name">6 Huevos enteros</div><div class="food-detail">Revueltos o fritos en aceite de oliva.</div><div class="food-tag protein">Proteína</div></div>
+        <div class="food-item">
+          <div class="food-name training-item">3 Rebanadas Sourdough</div>
+          <div class="food-name rest-item" style="display:none">1 Rebanada Sourdough</div>
+          <div class="food-detail training-item">Glucógeno base para la sesión.</div>
+          <div class="food-detail rest-item" style="display:none">Una rebanada solo para no sentirte flat.</div>
+          <div class="food-tag carb">Carb</div>
+        </div>
+        <div class="food-item"><div class="food-name">½ Aguacate</div><div class="food-detail">Grasas anti-inflamatorias. Piel, articulaciones, saciedad.</div><div class="food-tag fat">Grasa</div></div>
+        <div class="food-item">
+          <div class="food-name">Proteína + Avena</div>
+          <div class="food-detail training-item">40g whey + 50g avena. Digestión lenta, ideal antes de sesión larga.</div>
+          <div class="food-detail rest-item" style="display:none">40g whey solo con agua. Sin avena los días de descanso.</div>
+          <div class="food-tag protein">Proteína</div>
+        </div>
+      </div>
+      <div class="meal-note"><strong>Por qué:</strong> Más huevos y avena en el shake sube la comida ~200kcal sin cambiar la estructura.</div>
+    </div>
+
+    <!-- POST WORKOUT -->
+    <div class="meal-card highlight">
+      <div class="meal-header">
+        <div class="meal-meta"><div class="meal-title">Post-Workout</div><div class="meal-time">Justo después</div></div>
+        <div class="meal-cals training-cal">~400<span>kcal</span></div>
+        <div class="meal-cals rest-cal" style="display:none">—<span>skip</span></div>
+      </div>
+      <div class="meal-body">
+        <div class="food-item">
+          <div class="food-name">Shake 40g proteína</div>
+          <div class="food-detail training-item">Whey isolate, absorción rápida. Dentro de los 30 mins.</div>
+          <div class="food-detail rest-item" style="display:none">Skip en días de descanso.</div>
+          <div class="food-tag protein">Proteína</div>
+        </div>
+        <div class="food-item">
+          <div class="food-name training-item">Plátano o Rice Cakes</div>
+          <div class="food-name rest-item" style="display:none">No necesario</div>
+          <div class="food-detail training-item">Carbs rápidos para reponer glucógeno inmediatamente.</div>
+          <div class="food-detail rest-item" style="display:none">Skip en días de descanso.</div>
+          <div class="food-tag carb">Carb</div>
+        </div>
+      </div>
+      <div class="meal-note"><strong>Por qué:</strong> La ventana post-entreno es cuando los músculos absorben proteína y carbs más eficientemente. No te la saltes.</div>
+    </div>
+
+    <!-- LUNCH -->
+    <div class="meal-card">
+      <div class="meal-header">
+        <div class="meal-meta"><div class="meal-title">Comida</div><div class="meal-time">12 – 1 pm</div></div>
+        <div class="meal-cals training-cal">~950<span>kcal</span></div>
+        <div class="meal-cals rest-cal" style="display:none">~750<span>kcal</span></div>
+      </div>
+      <div class="meal-body">
+        <div class="food-item"><div class="food-name">280g Muslo de Pollo</div><div class="food-detail">Asado o a la plancha. Más proteína para el objetivo muscular.</div><div class="food-tag protein">Proteína</div></div>
+        <div class="food-item">
+          <div class="food-name training-item">300g Boniato</div>
+          <div class="food-name rest-item" style="display:none">150g Boniato</div>
+          <div class="food-detail training-item">Anti-inflamatorio, digestión lenta. Asado o en puré.</div>
+          <div class="food-detail rest-item" style="display:none">Media ración. Más verdura para compensar.</div>
+          <div class="food-tag carb">Carb</div>
+        </div>
+        <div class="food-item"><div class="food-name">Brócoli + Espinacas</div><div class="food-detail">Salteado en aceite de oliva. Fibra, articulaciones, inflamación.</div><div class="food-tag fiber">Fibra</div></div>
+        <div class="food-item"><div class="food-name">2 cucharadas Aceite de Oliva</div><div class="food-detail">Sobre verdura y pollo. Sube calorías limpiamente y reduce inflamación.</div><div class="food-tag fat">Grasa</div></div>
+      </div>
+      <div class="meal-note"><strong>Por qué:</strong> Tu comida más grande. El aceite de oliva es la forma más fácil de subir calorías sin añadir basura.</div>
+    </div>
+
+    <!-- DINNER -->
+    <div class="meal-card">
+      <div class="meal-header">
+        <div class="meal-meta"><div class="meal-title">Cena</div><div class="meal-time">7 – 8 pm</div></div>
+        <div class="meal-cals training-cal">~1,000<span>kcal</span></div>
+        <div class="meal-cals rest-cal" style="display:none">~800<span>kcal</span></div>
+      </div>
+      <div class="meal-body">
+        <div class="food-item"><div class="food-name">280g Ternera (picada o filete)</div><div class="food-detail">Grass-fed si posible. Zinc, creatina y hierro para recuperación nocturna.</div><div class="food-tag protein">Proteína</div></div>
+        <div class="food-item">
+          <div class="food-name training-item">¾ taza Arroz blanco</div>
+          <div class="food-name rest-item" style="display:none">Sin arroz</div>
+          <div class="food-detail training-item">Solo días de entrenamiento. Repone glucógeno para la sesión siguiente.</div>
+          <div class="food-detail rest-item" style="display:none">Sustituye por más verdura asada.</div>
+          <div class="food-tag carb">Carb</div>
+        </div>
+        <div class="food-item"><div class="food-name">Calabacín + Pimientos</div><div class="food-detail">Asados o salteados. Bajo en carbs, alto en micronutrientes.</div><div class="food-tag fiber">Fibra</div></div>
+        <div class="food-item"><div class="food-name">200g Yogur Griego</div><div class="food-detail">Entero, natural. Hit probiótico. Come después o como snack pre-cama.</div><div class="food-tag protein">Proteína</div></div>
+      </div>
+      <div class="meal-note"><strong>Por qué:</strong> Ternera de noche da al cuerpo creatina y zinc para construir músculo mientras duermes.</div>
+    </div>
+  </div>
+
+  <div class="notes-section">
+    <div class="label">Reglas Clave</div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Training vs rest day:</strong> Usa el toggle. La diferencia principal es el tamaño de porción y la cantidad de carbs.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Post-workout:</strong> Shake + plátano después de entrenar. El más importante para ganar músculo. No negociable.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Estreñimiento:</strong> Brócoli + espinacas + calabacín diario + cucharadita de semillas de chía en el shake. 3L de agua mínimo los días de entrenamiento.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Magnesio glicinate:</strong> 300–400mg antes de dormir. Motilidad intestinal, calidad de sueño y recuperación muscular.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Solo aceite de oliva o mantequilla.</strong> Elimina aceites de semillas (girasol, vegetal) completamente. Diferencia medible en inflamación y piel.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Sin frutos secos — alternativas:</strong> Pipas de calabaza, semillas de girasol, semillas de chía. El aguacate cubre la mayoría.</div></div>
+    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Domingo:</strong> Proteína alta todo el día, magnesio, 8h de sueño mínimo. El músculo se construye aquí, no entrenando.</div></div>
+  </div>
+
+  <footer>Fuel Protocol Final · Sin frutos secos · Anti-inflamatorio · Hyrox + 5kg músculo</footer>
+
+</div>
+</div>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    // Reset to Monday when switching to training
+    if (id === 'training') showDay(0);
+  }
+
+  function showDay(index) {
+    document.querySelectorAll('.day-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+    document.querySelectorAll('.week-day-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  }
+
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.section-toggle');
+    const isCollapsed = body.classList.contains('collapsed');
+    body.classList.toggle('collapsed', !isCollapsed);
+    toggle.textContent = isCollapsed ? '−' : '+';
+  }
+
+  function setDay(type) {
+    const isTraining = type === 'training';
+    document.querySelectorAll('.toggle-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', (i === 0) === isTraining);
+    });
+    document.querySelectorAll('.training-cal').forEach(el => el.style.display = isTraining ? '' : 'none');
+    document.querySelectorAll('.rest-cal').forEach(el => el.style.display = isTraining ? 'none' : '');
+    document.querySelectorAll('.training-item').forEach(el => el.style.display = isTraining ? '' : 'none');
+    document.querySelectorAll('.rest-item').forEach(el => el.style.display = isTraining ? 'none' : '');
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+
+</body>
+</html>
