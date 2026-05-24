@@ -759,52 +759,53 @@
     <button class="week-day-btn active" onclick="showDay(0)">
       <div class="day-abbr">Mon</div>
       <div class="day-dot-strip" style="background:#c8f55a"></div>
-      <div class="day-location">Home</div>
+      <div class="day-location">KB Power</div>
     </button>
     <button class="week-day-btn" onclick="showDay(1)">
       <div class="day-abbr">Tue</div>
       <div class="day-dot-strip" style="background:#f5e15a"></div>
-      <div class="day-location">Gym</div>
+      <div class="day-location">Gym Upper</div>
     </button>
     <button class="week-day-btn" onclick="showDay(2)">
       <div class="day-abbr">Wed</div>
       <div class="day-dot-strip" style="background:#f55a5a"></div>
-      <div class="day-location">Run</div>
+      <div class="day-location">Conditioning</div>
     </button>
     <button class="week-day-btn" onclick="showDay(3)">
       <div class="day-abbr">Thu</div>
       <div class="day-dot-strip" style="background:#f5e15a"></div>
-      <div class="day-location">Gym</div>
+      <div class="day-location">Gym Lower</div>
     </button>
     <button class="week-day-btn" onclick="showDay(4)">
       <div class="day-abbr">Fri</div>
-      <div class="day-dot-strip" style="background:#a85af5"></div>
-      <div class="day-location">Home</div>
+      <div class="day-dot-strip" style="background:#f5a85a"></div>
+      <div class="day-location">Speed+Box</div>
     </button>
     <button class="week-day-btn" onclick="showDay(5)">
       <div class="day-abbr">Sat</div>
-      <div class="day-dot-strip" style="background:#f55a5a"></div>
-      <div class="day-location">Z2/Rest</div>
+      <div class="day-dot-strip" style="background:#5ab4f5"></div>
+      <div class="day-location">Boxing</div>
     </button>
     <button class="week-day-btn" onclick="showDay(6)">
       <div class="day-abbr">Sun</div>
-      <div class="day-dot-strip" style="background:#5ab4f5"></div>
-      <div class="day-location">Sim/Mob</div>
+      <div class="day-dot-strip" style="background:#2a2a2a"></div>
+      <div class="day-location">Run/Rest</div>
     </button>
   </div>
 
-  <!-- MONDAY -->
+  <!-- MONDAY — KB Power + Strength -->
   <div class="day-panel active" id="day-0">
     <div class="day-header">
       <div class="day-title-wrap">
         <div class="day-title" style="color:#c8f55a">Monday</div>
-        <span class="day-type-badge" style="color:#c8f55a; border-color:#c8f55a44">KB Strength + Hyrox</span>
+        <span class="day-type-badge" style="color:#c8f55a; border-color:#c8f55a44">KB Power + Strength</span>
         <span class="location-badge home">🏠 Home</span>
       </div>
     </div>
     <div class="goal-pills">
-      <div class="goal-pill muscle">Strength</div>
-      <div class="goal-pill hyrox">Hyrox Stations</div>
+      <div class="goal-pill muscle">Power</div>
+      <div class="goal-pill muscle">Rotation</div>
+      <div class="goal-pill hyrox">Boxing Transfer</div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
@@ -814,55 +815,72 @@
       </div>
       <div class="section-body">
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 each side</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Hip Airplanes</div><div class="ex-detail">2×8 each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 each side — hip mobility critical for rotational power</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Thoracic Rotations</div><div class="ex-detail">2×10 each side — punch rotation starts in the thoracic spine</div></div></li>
           <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Prone Y/T/W</div><div class="ex-detail">2×10</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Ankle Dorsiflexion Stretch (banded)</div><div class="ex-detail">2×1 min each leg</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Single Leg Calf Raise lento 🦵</div><div class="ex-detail">2×12 cada pierna — 3 seg subiendo, 3 seg bajando. Tendón de Aquiles. Longevidad.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Hip Airplanes</div><div class="ex-detail">2×8 each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Single Leg Calf Raise — slow</div><div class="ex-detail">2×12 each leg. 3 sec up, 3 sec down. Achilles tendon longevity.</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#c8f55a22">💪</div>
-        <div class="section-title">KB Strength — 25 mins</div>
+        <div class="section-title">Superset A — Pull + Unilateral Legs · 5 Rounds</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="sub-label">Superset A — Pull + Unilateral Legs · 5 Rondas</div>
-        <div class="complex-note">→ Cero descanso entre Weighted Pull Ups y Reverse Lunges. 60s después de ambos. 5 rondas.</div>
+        <div class="complex-note">→ Zero rest between Pull Ups and Lunges. 60s after both. 5 rounds.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">SS A: Weighted Pull Ups</div><div class="ex-detail">6 reps — añade peso progresivamente cada semana.</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">SS A: Reverse Lunges (KB)</div><div class="ex-detail">8 reps cada pierna — paso atrás controlado. Activa estabilizadores de rodilla y cadera.</div></div></li>
-        </ul>
-        <div class="sub-label">Complex — 3 Rondas</div>
-        <div class="complex-note">→ 3 rondas el Lunes — llegas procesando el Domingo. Rondas 1–2 mismo peso, sube en ronda 3.</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Clean → Press → Thruster</div><div class="ex-detail">5 reps cada movimiento por ronda</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Weighted Pull Ups</div><div class="ex-detail">6 reps — add weight progressively each week.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Reverse Lunges (KB)</div><div class="ex-detail">8 reps each leg — controlled step back. Hip and knee stability. Boxing footwork transfer.</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">🏁</div>
-        <div class="section-title">Hyrox Station Work — 15 mins</div>
+        <div class="section-icon" style="background:#c8f55a22">⚡</div>
+        <div class="section-title">Complex — Power Clean → Press → Thruster · 4 Rounds</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="hyrox-note">→ Lunes es activación, no destrucción. 3 series por estación, calidad sobre volumen.</div>
+        <div class="complex-note">→ The Power Clean is the key movement — explosive hip extension from the floor mirrors the kinetic chain of a cross. Same weight rounds 1–2, increase round 3, increase again round 4.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Wall Hack Squat (Sled Push sub)</div><div class="ex-detail">3×10 — caderas bajas, empuje desde las piernas contra la pared.</div><div class="ex-tag hyrox-tag">Station 1</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Wall Balls</div><div class="ex-detail">3×15 — squat profundo, explosión arriba. Movimiento exacto de la estación.</div><div class="ex-tag hyrox-tag">Station 7 — Real</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Power Clean → Press → Thruster</div><div class="ex-detail">5 reps each movement. Fluid and explosive. Drive from the floor, not the arms.</div><div class="ex-tag muscle-tag">Boxing Transfer</div></div></li>
         </ul>
-        <div class="sub-label">Core / Carries</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#c8f55a22">🔥</div>
+        <div class="section-title">Conditioning — Banded Swings + Explosive Push Ups · 5 Rounds</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="complex-note">→ No rest between swings and push ups. 60–90s between rounds. Hip drive power + upper body explosiveness — both critical for boxing.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Unilateral Farmer March</div><div class="ex-detail">2×40m — activación de core y estabilizadores</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Heavy Banded KB Swings</div><div class="ex-detail">15 reps — max hip explosion. The band forces acceleration. Hip drive = punch power.</div><div class="ex-tag muscle-tag">Power</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Explosive Push Ups</div><div class="ex-detail">10 reps — hands leave the floor. Max intent every rep.</div><div class="ex-tag muscle-tag">Speed</div></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#c8f55a22">🌀</div>
+        <div class="section-title">Rotational Finisher + Core</div>
+        <div class="section-toggle">−</div>
+      </div>
+      <div class="section-body">
+        <div class="complex-note">→ 80% of punch power comes from rotation. This is a thread that runs through every session — not a one-off exercise.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">KB Single Arm Rotational Swing</div><div class="ex-detail">3×10 each side — swing with hip rotation, let torso follow. Trains the exact rotation of a hook.</div><div class="ex-tag muscle-tag">Rotation</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet"></div><div class="ex-content"><div class="ex-name">Unilateral Farmer March</div><div class="ex-detail">3×40m — anti-rotation core. Keeps the trunk stiff while legs move.</div></div></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- TUESDAY -->
+  <!-- TUESDAY — Gym Upper Hypertrophy -->
   <div class="day-panel" id="day-1">
     <div class="day-header">
       <div class="day-title-wrap">
@@ -873,8 +891,8 @@
     </div>
     <div class="goal-pills">
       <div class="goal-pill gym-tag">Gym Day 1</div>
-      <div class="goal-pill muscle">Hipertrofia</div>
-      <div class="goal-pill muscle">~60 mins</div>
+      <div class="goal-pill muscle">Hypertrophy</div>
+      <div class="goal-pill muscle">+5kg</div>
     </div>
     <div class="section-card gym-card">
       <div class="section-header" onclick="toggleSection(this)">
@@ -887,341 +905,248 @@
           <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Shoulder Dislocates / Banded Pull-Aparts</div><div class="ex-detail">2×10</div></div></li>
           <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Scapula Push-Ups</div><div class="ex-detail">2×12</div></div></li>
           <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Thoracic Rotations</div><div class="ex-detail">2×8</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Rotación externa de manguito (banda) 🦺</div><div class="ex-detail">2×15 cada lado — longevidad del hombro con el volumen de press semanal.</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets Bench Press</div><div class="ex-detail">50% y 75% del peso de trabajo</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Rotator Cuff External Rotation (band) 🦺</div><div class="ex-detail">2×15 each side — shoulder longevity. Non-negotiable before heavy pressing.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets Bench Press</div><div class="ex-detail">50% then 75% of working weight</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card gym-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#f5e15a22">🏋️</div>
-        <div class="section-title">Upper Body — Pecho, Espalda, Hombros, Brazos</div>
+        <div class="section-title">Upper Body — Chest, Back, Shoulders, Arms</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="gym-note">→ Sobrecarga progresiva cada sesión. Añade 2.5kg cuando completes todos los sets en el rango alto. Anota los pesos — así se construyen los 5kg.</div>
-        <div class="sub-label">Main Lifts</div>
+        <div class="gym-note">→ Progressive overload every session. Add 2.5kg when you complete all sets at the top rep range. Log weights — this is how the 5kg gets built.</div>
         <table class="overload-table">
-          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
-          <tr><td><strong>Barbell Bench Press</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>3 seg eccentric. El movimiento de empuje más pesado de la semana.</td></tr>
-          <tr><td><strong>Incline DB Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Pecho alto. 2 seg bajando, squeeze arriba.</td></tr>
-          <tr><td><strong>Lat Pulldown (Wide Grip)</strong></td><td><span class="sets-badge">4×</span>10–12</td><td>Estiramiento completo arriba, tira al pecho. El V-taper viene de aquí.</td></tr>
-          <tr><td><strong>Barbell / Cable Row</strong></td><td><span class="sets-badge">4×</span>8–10</td><td>Overhand grip. Codos hacia atrás. Grosor de espalda.</td></tr>
-          <tr><td><strong>Lateral Raises (DB o Cable)</strong></td><td><span class="sets-badge">3×</span>15–20</td><td>Ligero, estricto, lento. Ancho de hombros. No lo acceleres.</td></tr>
-        </table>
-        <div class="sub-label">Superset — Bíceps + Tríceps</div>
-        <div class="gym-note">→ Cero descanso entre bíceps y tríceps. 60s después de ambos. 3 rondas.</div>
-        <table class="overload-table">
-          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
-          <tr><td><strong>SS: EZ Bar / Barbell Curl</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Eccentric lento, sin balanceo.</td></tr>
-          <tr><td><strong>SS: Cable Tricep Pushdown</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>Extensión completa. Directo después del curl.</td></tr>
+          <tr><th>Exercise</th><th>Sets × Reps</th><th>Notes</th></tr>
+          <tr><td><strong>Barbell Bench Press</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>3 sec eccentric. Primary chest mass. Heaviest pressing of the week.</td></tr>
+          <tr><td><strong>Incline DB Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Upper chest. 2 sec down, squeeze at top.</td></tr>
+          <tr><td><strong>Lat Pulldown (Wide Grip)</strong></td><td><span class="sets-badge">4×</span>10–12</td><td>Full stretch at top. V-taper comes from here.</td></tr>
+          <tr><td><strong>Barbell / Cable Row</strong></td><td><span class="sets-badge">4×</span>8–10</td><td>Back thickness. Overhand grip, elbows back.</td></tr>
+          <tr><td><strong>Lateral Raises (DB or Cable)</strong></td><td><span class="sets-badge">3×</span>15–20</td><td>Light, strict, slow. Shoulder width.</td></tr>
+          <tr><td><strong>SS: EZ Bar Curl</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Slow eccentric. Superset with triceps — zero rest between.</td></tr>
+          <tr><td><strong>SS: Cable Tricep Pushdown</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>Full extension. Straight into this after curls. 60s after both.</td></tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- WEDNESDAY -->
+  <!-- WEDNESDAY — Boxing Conditioning -->
   <div class="day-panel" id="day-2">
     <div class="day-header">
       <div class="day-title-wrap">
         <div class="day-title" style="color:#f55a5a">Wednesday</div>
-        <span class="day-type-badge" style="color:#f55a5a; border-color:#f55a5a44">Run — Calidad / Long Z2</span>
-        <span class="location-badge home">🏃 Outside</span>
+        <span class="day-type-badge" style="color:#f55a5a; border-color:#f55a5a44">Boxing Conditioning</span>
+        <span class="location-badge home">🏃 Outside / Home</span>
       </div>
     </div>
     <div class="goal-pills">
-      <div class="goal-pill hyrox">Hyrox Específico</div>
-      <div class="goal-pill power">VO2max</div>
+      <div class="goal-pill hyrox">Boxing Specific</div>
+      <div class="goal-pill power">Conditioning</div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#f55a5a22">🔄</div>
-        <div class="section-title">Calentamiento — 10 mins</div>
+        <div class="section-title">Warm-Up — 8 mins</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 cada lado</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Good Mornings</div><div class="ex-detail">2×10 — abre isquios antes de correr</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×45s cada lado</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Trote suave 5 mins</div><div class="ex-detail">Llega al primer intervalo ya caliente</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10 each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Good Mornings</div><div class="ex-detail">2×10 — opens hamstrings</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×45s each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Easy jog 3 mins</div><div class="ex-detail">Arrive warm before first round</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">⚡</div>
-        <div class="section-title">Opción A — Intervalos Clásicos (semanas con sim)</div>
+        <div class="section-icon" style="background:#f55a5a22">🥊</div>
+        <div class="section-title">Option A — Boxing Rounds (alternate weeks)</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="hyrox-note">→ Objetivo: 2:10 min/400m semanas 1–4 → 2:00 semanas 5–8 → 1:50 semanas 9–12. Sin objetivo de tiempo los intervalos no tienen dirección.</div>
+        <div class="hyrox-note">→ 3 mins on / 1 min off — exact boxing round structure. Weeks 1–4: 6 rounds. Weeks 5–8: 7 rounds. Weeks 9+: 8 rounds. Trains your engine to recover between rounds.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">6–8 × 400m</div><div class="ex-detail">Sem 1–4: 6×400m a 2:10. Sem 5–8: 7×400m a 2:00. Sem 9–12: 8×400m a 1:50. 90s caminando entre reps.</div></div></li>
-        </ul>
-      </div>
-    </div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">🏁</div>
-        <div class="section-title">Opción B — Hyrox Intervals (semanas con sim)</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="hyrox-note">→ 500m fuerte + estación KB inmediatamente. 4–5 rondas. Practica llegar a una estación con el pecho ardiendo.</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">500m Z3–Z4 → estación KB sin parar</div><div class="ex-detail">Ronda 1: 15 Wall Balls. Ronda 2: 20m KB Lunges. Ronda 3: 10 Burpee Broad Jumps. Rotar. 2 mins descanso entre rondas.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">6–8 × 3 min runs / 1 min walk</div><div class="ex-detail">Z3–Z4 effort — high but sustainable. Not a sprint. Mimics the work-rest ratio of a boxing bout.</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#f55a5a22">💥</div>
-        <div class="section-title">Opción C — Intervalos + Burpee Broad Jumps (semanas con sim)</div>
+        <div class="section-title">Option B — KB Complex Rounds (alternate weeks)</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="hyrox-note">→ La más específica. 400m fuerte → 10 Burpee Broad Jumps sin parar → 90s descanso. 5–6 rondas.</div>
+        <div class="hyrox-note">→ Same round structure — 3 mins KB / 1 min rest / 6 rounds. Trains explosive repeated effort which is closer to actual boxing than steady cardio.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">400m Z3–Z4 → 10 Burpee Broad Jumps</div><div class="ex-detail">Sin pausa entre carrera y burpees. Mantén la FC alta. 5–6 rondas totales.</div></div></li>
-        </ul>
-      </div>
-    </div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">🏃</div>
-        <div class="section-title">Opción D — Long Run Z2 (semanas SIN sim)</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="hyrox-note" style="border-left-color:#5ab4f5">→ Semanas sin simulación el Domingo: Miércoles Long Run + Sábado Z2 = semana de volumen aeróbico alto. Construye el suelo que los intervalos no dan solos.</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Z2 largo — 45 a 60 mins</div><div class="ex-detail">Ritmo conversacional. FC 60–70% máx. Añade 5 mins cada ciclo.</div></div></li>
-        </ul>
-      </div>
-    </div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">📅</div>
-        <div class="section-title">Rotación por Semanas</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="hyrox-note">→ Ejemplo 4 semanas: Sem 1 (sim) → A · Sem 2 (no sim) → D · Sem 3 (sim) → B · Sem 4 (no sim) → D. La simulación ancla el ciclo.</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">Semanas CON simulación → A, B o C en ciclo</div><div class="ex-detail">La simulación ya es el estímulo de volumen — el Miércoles necesita calidad.</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Semanas SIN simulación → Opción D siempre</div><div class="ex-detail">Doble Z2 largo esa semana — máxima base aeróbica.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f55a5a"></div><div class="ex-content"><div class="ex-name">3 mins: Swing → Clean → Press → Snatch → Lunge</div><div class="ex-detail">Flow continuously. Moderate weight. Don't stop until the 3 mins is up. Then exactly 1 min rest. 6 rounds.</div><div class="ex-tag muscle-tag">Boxing Transfer</div></div></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- THURSDAY -->
+  <!-- THURSDAY — Gym Lower + Rotational Power -->
   <div class="day-panel" id="day-3">
     <div class="day-header">
       <div class="day-title-wrap">
         <div class="day-title" style="color:#f5e15a">Thursday</div>
-        <span class="day-type-badge" style="color:#f5e15a; border-color:#f5e15a44">Gym — Lower Body</span>
+        <span class="day-type-badge" style="color:#f5e15a; border-color:#f5e15a44">Gym Lower + Rotational Power</span>
         <span class="location-badge gym">🏋️ Gym</span>
       </div>
     </div>
     <div class="goal-pills">
       <div class="goal-pill gym-tag">Gym Day 2</div>
-      <div class="goal-pill muscle">Hipertrofia</div>
-      <div class="goal-pill hyrox">Hyrox Pierna</div>
+      <div class="goal-pill muscle">Leg Mass</div>
+      <div class="goal-pill hyrox">Rotation</div>
     </div>
     <div class="section-card gym-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#f5e15a22">🔄</div>
-        <div class="section-title">Warm-Up + Longevidad — 12 mins</div>
+        <div class="section-title">Warm-Up + Longevity — 12 mins</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
         <ul class="exercise-list">
           <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Hip Flexor Rock Back</div><div class="ex-detail">2×8</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Copenhagen Raises</div><div class="ex-detail">2×8 — activación de aductores antes de squats pesados</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×30–60s cada lado</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Tibialis Raise 🦵</div><div class="ex-detail">2×15 — espalda contra la pared, levanta la punta del pie. Previene shin splints. Longevidad de rodilla.</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Good Mornings (semanas de Rack Pull)</div><div class="ex-detail">3×10 — activa espalda baja y trapecios antes del Rack Pull</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets en el primer ejercicio</div><div class="ex-detail">50% y 75% del peso de trabajo</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Copenhagen Raises</div><div class="ex-detail">2×8 — adductor activation before heavy squats</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Pigeon / Couch Stretch</div><div class="ex-detail">2×30–60s each side</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Tibialis Raise 🦵</div><div class="ex-detail">2×15 — back against wall, raise toes. Shin splint prevention. Knee longevity.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">Good Mornings (Trap Bar weeks)</div><div class="ex-detail">3×10 — activates lower back and traps before heavy pulls</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5e15a"></div><div class="ex-content"><div class="ex-name">2 warm-up sets on first exercise</div><div class="ex-detail">50% and 75% of working weight</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card gym-card">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-icon" style="background:#f5e15a22">🦵</div>
-        <div class="section-title">Lower Body — Isquios, Glúteos, Cuádriceps, Gemelos</div>
+        <div class="section-title">Lower Body — Hamstrings, Quads, Glutes, Calves</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="gym-note">→ Pierna el Jueves — llegas fresco al fin de semana para correr. Leg Curl primero para calentar isquios antes del RDL.</div>
+        <div class="gym-note">→ Trap Bar alternates with RDL. Trap Bar weeks: 4×5 heavy. RDL weeks: 4×8 controlled. Both build the posterior chain that generates power from the floor — the foundation of punch power.</div>
         <table class="overload-table">
-          <tr><th>Ejercicio</th><th>Sets × Reps</th><th>Notas</th></tr>
-          <tr><td><strong>Leg Curl (Machine)</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>Primero. Activa isquios. 3 seg eccentric.</td></tr>
-          <tr><td><strong>RDL / Rack Pull desde bloques (alternar)</strong></td><td><span class="sets-badge">4×</span>8–10</td><td>Sem A: RDL — isquios y glúteos, eccentric controlado. Sem B: Rack Pull — cadena posterior alta, explosión concéntrica, carga máxima.</td></tr>
-          <tr><td><strong>Hack Squat / Back Squat (alternar)</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>Sem A: Hack Squat — cuádricep puro. Sem B: Back Squat — patrón completo. 3 seg eccentric en ambos.</td></tr>
-          <tr><td><strong>Leg Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Cuádricep sin carga espinal después del squat.</td></tr>
-          <tr><td><strong>SS: Bike (por tiempo)</strong></td><td><span class="sets-badge">4×</span>45–60s</td><td>Ritmo alto sostenible. Sin descanso — directo a Lunges. Simula piernas quemadas de carrera.</td></tr>
-          <tr><td><strong>SS: Lunges (con peso)</strong></td><td><span class="sets-badge">4×</span>20m</td><td>Mancuernas o barra. Directo desde Bike. Estación Hyrox específica. 90s descanso después.</td></tr>
-          <tr><td><strong>Calf Raises (Machine o Smith)</strong></td><td><span class="sets-badge">4×</span>15–20</td><td>Rango completo, pausa abajo. Gemelos aguantan el impacto de correr.</td></tr>
+          <tr><th>Exercise</th><th>Sets × Reps</th><th>Notes</th></tr>
+          <tr><td><strong>Leg Curl (Machine)</strong></td><td><span class="sets-badge">3×</span>12–15</td><td>First. Warms hamstrings before hinge work. 3 sec eccentric.</td></tr>
+          <tr><td><strong>Trap Bar Deadlift / RDL (alternate)</strong></td><td><span class="sets-badge">4×</span>5 or 8</td><td>Week A: Trap Bar 4×5 heavy — best posterior chain builder for boxers. Week B: RDL 4×8 — hamstring and glute hypertrophy.</td></tr>
+          <tr><td><strong>Hack Squat / Back Squat (alternate)</strong></td><td><span class="sets-badge">4×</span>6–8</td><td>Week A: Hack Squat — pure quad. Week B: Back Squat — full pattern. 3 sec eccentric both.</td></tr>
+          <tr><td><strong>Leg Press</strong></td><td><span class="sets-badge">3×</span>10–12</td><td>Quad volume without spinal load after heavy pulls.</td></tr>
+          <tr><td><strong>Calf Raises (Machine)</strong></td><td><span class="sets-badge">4×</span>15–20</td><td>Full range, pause at bottom. Ankle stability for boxing footwork.</td></tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- FRIDAY -->
+  <!-- FRIDAY — Speed + Power AM / Sparring PM -->
   <div class="day-panel" id="day-4">
     <div class="day-header">
       <div class="day-title-wrap">
-        <div class="day-title" style="color:#a85af5">Friday</div>
-        <span class="day-type-badge" style="color:#a85af5; border-color:#a85af544">KB Hipertrofia + Técnica</span>
-        <span class="location-badge home">🏠 Home</span>
+        <div class="day-title" style="color:#f5a85a">Friday</div>
+        <span class="day-type-badge" style="color:#f5a85a; border-color:#f5a85a44">Speed + Power AM · Sparring PM</span>
+        <span class="location-badge home">🏠 AM · 🥊 PM</span>
       </div>
     </div>
     <div class="goal-pills">
-      <div class="goal-pill muscle">Hipertrofia</div>
-      <div class="goal-pill muscle">+5kg</div>
-      <div class="goal-pill hyrox">Técnica KB</div>
+      <div class="goal-pill power">Speed</div>
+      <div class="goal-pill power">Rotation</div>
+      <div class="goal-pill hyrox">Sparring</div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#a85af522">🔄</div>
-        <div class="section-title">Mobility — 10 mins</div>
+        <div class="section-icon" style="background:#f5a85a22">☀️</div>
+        <div class="section-title">AM — Speed + Rotational Power · 45 mins max</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
+        <div class="complex-note">→ No heavy pressing today. Shoulders must be fresh for sparring tonight. This session activates the nervous system without creating fatigue — speed and rotation only.</div>
+        <div class="sub-label">Speed — Fast Hands</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions</div><div class="ex-detail">2×10</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Hip Airplanes</div><div class="ex-detail">2×8</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">RDL to Racked March</div><div class="ex-detail">2×10</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Wrist Mobility Drills</div><div class="ex-detail">2×10</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Band Punch — Jab + Cross</div><div class="ex-detail">4×20 each arm. Light band around wrists, max speed punches. Trains fast twitch fibres in the exact movement pattern. This is where hand speed is built.</div><div class="ex-tag muscle-tag">Speed</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">KB Speed Cleans (50% of normal weight)</div><div class="ex-detail">4×8 each arm — max velocity, not max weight. Bar should feel like it flies up. You're training speed of movement, not strength.</div><div class="ex-tag muscle-tag">Speed</div></div></li>
         </ul>
-      </div>
-    </div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#a85af522">💪</div>
-        <div class="section-title">KB + Anillas — Hipertrofia · Tiempo bajo tensión</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="complex-note">→ 3 seg eccentric en todo. No es velocidad, es músculo. Las anillas activan más fibras estabilizadoras que barra o mancuerna.</div>
-        <div class="sub-label">Empuje</div>
+        <div class="sub-label">Rotational Power</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">KB Floor Press</div><div class="ex-detail">4×10 — 3 seg eccentric. Pecho y tríceps sin estrés en el hombro.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Ring Dips</div><div class="ex-detail">3×8–10 — rango completo, anillas inestables. 3 seg eccentric. Pecho bajo y tríceps al máximo.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Dead → Rotational Power Clean → Press (KB)</div><div class="ex-detail">4×6 each side. KB from floor, rotate and clean explosively, press overhead. Trains the full kinetic chain of a cross — drive from the back foot into rotation into extension. Light-moderate weight today — speed not max load.</div><div class="ex-tag muscle-tag">Rotation</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Explosive Push Ups (light)</div><div class="ex-detail">3×8 — hands off floor. Upper body power without shoulder fatigue. Keep it light today.</div><div class="ex-tag muscle-tag">Power</div></div></li>
         </ul>
-        <div class="sub-label">Tirón</div>
+        <div class="sub-label">Core + Neck</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Australian Ring Pull Ups</div><div class="ex-detail">3×10–12 — cuerpo inclinado, tira al pecho. Espalda media, bíceps, retractores escapulares. Rotación natural de muñeca.</div><div class="ex-tag muscle-tag">Hipertrofia</div></div></li>
-        </ul>
-        <div class="sub-label">Superset Aislamiento — alternar semanas</div>
-        <div class="complex-note">→ Sem A: Lateral Raises + KB Curl. Sem B: Lateral Raises + Ring Tricep Extension. Lateral Raises siempre — máximo impacto en ancho de hombros.</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS: Lateral Raises</div><div class="ex-detail">3×15 — ligero, estricto, lento. Codo ligeramente adelantado, control total.</div><div class="ex-tag muscle-tag">Estético</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS Sem A: KB Curl</div><div class="ex-detail">3×12 — eccentric lento, sin balanceo.</div><div class="ex-tag muscle-tag">Bíceps</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">SS Sem B: Ring Tricep Extension</div><div class="ex-detail">3×12 — anillas al pecho, extiende. Rango completo con inestabilidad.</div><div class="ex-tag muscle-tag">Tríceps</div></div></li>
-        </ul>
-        <div class="sub-label">Core</div>
-        <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Hollow Hold</div><div class="ex-detail">3×35s — core de longevidad. Aumenta a 45s cuando sea fácil.</div><div class="ex-tag muscle-tag">Longevidad</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Hollow Hold</div><div class="ex-detail">3×35s — anti-extension core. Transfers power from legs to fists efficiently.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Neck Isometrics (band or manual resistance)</div><div class="ex-detail">4 directions × 30s each. Front, back, left, right. Strong neck absorbs punches and reduces concussion risk. 5 mins that matter long term.</div><div class="ex-tag hyrox-tag">Longevity</div></div></li>
         </ul>
       </div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#a85af522">🎯</div>
-        <div class="section-title">Finisher — KB Snatch EMOM · 10 mins</div>
+        <div class="section-icon" style="background:#f5a85a22">🥊</div>
+        <div class="section-title">PM — Sparring · Boxing Gym</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="complex-note">→ EMOM = Every Minute On the Minute. Minutos impares derecha, pares izquierda. El resto del minuto es descanso.</div>
+        <div class="hyrox-note" style="border-left-color:#f5a85a">→ Fresh legs, fresh shoulders, nervous system primed but not depleted. Optimal state for sparring. Focus on applying rotation — drive from the back foot on every cross, let the hip lead the hook.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Minutos impares (1,3,5,7,9) — Snatch derecha</div><div class="ex-detail">8–10 reps. Cadera, no brazo. Si la técnica cede, baja a 6.</div></div></li>
-          <li class="exercise-item"><div class="ex-bullet" style="background:#a85af5"></div><div class="ex-content"><div class="ex-name">Minutos pares (2,4,6,8,10) — Snatch izquierda</div><div class="ex-detail">8–10 reps. Mismo peso ambos lados. Trabaja el lado débil.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#f5a85a"></div><div class="ex-content"><div class="ex-name">Sparring session — gym determined</div><div class="ex-detail">Focus: rotation on the cross, hip drive, staying relaxed. Technique over power.</div></div></li>
         </ul>
-        <div class="complex-note">→ Progresión: 8 reps → cuando sobre tiempo sube a 10 → cuando 10 deje 20 seg libres, sube el peso.</div>
       </div>
     </div>
   </div>
 
-  <!-- SATURDAY -->
+  <!-- SATURDAY — Boxing Gym -->
   <div class="day-panel" id="day-5">
     <div class="day-header">
       <div class="day-title-wrap">
-        <div class="day-title" style="color:#f55a5a">Saturday</div>
-        <span class="day-type-badge" style="color:#f55a5a; border-color:#f55a5a44">Descanso / Z2 Run</span>
-        <span class="location-badge home">😴 / 🏃</span>
+        <div class="day-title" style="color:#5ab4f5">Saturday</div>
+        <span class="day-type-badge" style="color:#5ab4f5; border-color:#5ab4f544">Boxing Gym</span>
+        <span class="location-badge home">🥊 Boxing Gym</span>
       </div>
     </div>
-    <div class="goal-pills"><div class="goal-pill recovery">Depende de la semana</div></div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">📅</div>
-        <div class="section-title">Semana CON simulación el Domingo → Descanso completo</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="hyrox-note">→ Llegas fresco a la simulación — es la sesión más dura de la semana. Come bien, hidratate, duerme.</div>
-      </div>
+    <div class="goal-pills">
+      <div class="goal-pill hyrox">Technique</div>
+      <div class="goal-pill hyrox">Bag Work</div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">🏃</div>
-        <div class="section-title">Semana SIN simulación → Z2 Run 45–60 mins</div>
+        <div class="section-icon" style="background:#5ab4f522">🥊</div>
+        <div class="section-title">Boxing Session — Gym Determined</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="hyrox-note">→ Z2 puro — ritmo conversacional, FC 60–70% máx. Añade 5 mins cada semana hasta llegar a 60 mins cómodo. Pierna fue el Jueves — llegas fresco.</div>
+        <div class="complex-note">→ Session determined by your boxing gym. Could be technique, pads, bag work or light sparring. Fresh body — this is your highest quality session of the week.</div>
+        <ul class="exercise-list">
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Focus on technique over intensity</div><div class="ex-detail">Footwork, combinations, defence. The gym dictates the structure. Saturday should be your sharpest session — not your hardest.</div></div></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- SUNDAY -->
+  <!-- SUNDAY — Long Run / Rest -->
   <div class="day-panel" id="day-6">
     <div class="day-header">
       <div class="day-title-wrap">
-        <div class="day-title" style="color:#5ab4f5">Sunday</div>
-        <span class="day-type-badge" style="color:#5ab4f5; border-color:#5ab4f544">Hyrox Sim / Rest + Movilidad</span>
-        <span class="location-badge home">🏃 / 🏠</span>
+        <div class="day-title" style="color:#4a4a4a">Sunday</div>
+        <span class="day-type-badge" style="color:#4a4a4a; border-color:#2a2a2a">Z2 Run / Rest</span>
+        <span class="location-badge home">🏃 / 😴</span>
       </div>
     </div>
     <div class="goal-pills">
-      <div class="goal-pill hyrox">Hyrox Específico</div>
-      <div class="goal-pill recovery">Recuperación</div>
+      <div class="goal-pill recovery">Aerobic Base</div>
+      <div class="goal-pill recovery">Recovery</div>
     </div>
     <div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#f55a5a22">🏁</div>
-        <div class="section-title">Semana CON simulación → Hyrox Sim</div>
+        <div class="section-icon" style="background:#ffffff11">🏃</div>
+        <div class="section-title">Z2 Long Run — 45–60 mins (or Rest)</div>
         <div class="section-toggle">−</div>
       </div>
       <div class="section-body">
-        <div class="hyrox-note">→ Sábado descansaste — cuerpo fresco para la simulación. 4 carreras de 500m con 2 estaciones entre cada una. Transición carrera-estación sin parar.</div>
-        <div class="stations-grid">
-          <div class="station"><div class="station-num">1</div><div class="station-name">KB Swings (SkiErg sub)</div><div class="station-detail">50 swings</div></div>
-          <div class="station"><div class="station-num">2</div><div class="station-name">Wall Hack Squat (Sled Push sub)</div><div class="station-detail">4×10 heavy</div></div>
-          <div class="station"><div class="station-num">3</div><div class="station-name">Burpee Broad Jumps</div><div class="station-detail">4×10m exacto</div></div>
-          <div class="station"><div class="station-num">4</div><div class="station-name">KB Deadlifts (Sled Pull sub)</div><div class="station-detail">20 reps heavy</div></div>
-          <div class="station"><div class="station-num">5</div><div class="station-name">Single-Arm KB Carry</div><div class="station-detail">2×50m cada brazo</div></div>
-          <div class="station"><div class="station-num">6</div><div class="station-name">KB Racked Lunges</div><div class="station-detail">2×20m</div></div>
-          <div class="station"><div class="station-num">7</div><div class="station-name">Wall Balls</div><div class="station-detail">100 reps — real</div></div>
-          <div class="station"><div class="station-num">8</div><div class="station-name">KB Clean + Press</div><div class="station-detail">100 reps total</div></div>
-        </div>
-        <div class="complex-note">→ El Lunes siguiente: superset se mantiene, complex baja a 3 rondas, estaciones al mínimo.</div>
-      </div>
-    </div>
-    <div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-icon" style="background:#5ab4f522">🔄</div>
-        <div class="section-title">Semana SIN simulación → Rest + Movilidad</div>
-        <div class="section-toggle">−</div>
-      </div>
-      <div class="section-body">
-        <div class="complex-note">→ Corriste el Sábado — hoy recuperación. Proteína alta, magnesio glicinate, 8h de sueño. El músculo se construye aquí.</div>
+        <div class="complex-note">→ If Saturday boxing was hard — rest. If it was light technique — run. Conversational pace, 60–70% max HR. A boxer who doesn't gas out in the later rounds wins.</div>
         <ul class="exercise-list">
-          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">90/90 Hip Transitions · Pigeon Stretch · Thoracic Foam Roller · Scapular Rotations · Good Mornings · Dead Bug</div><div class="ex-detail">2 series de cada. 25–30 mins total.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Zone 2 Run — 45 to 60 mins</div><div class="ex-detail">Nasal breathing if possible. Add 5 mins per month. Long term aerobic base.</div></div></li>
+          <li class="exercise-item"><div class="ex-bullet" style="background:#5ab4f5"></div><div class="ex-content"><div class="ex-name">Mobility — 20 mins optional</div><div class="ex-detail">90/90 Hips · Pigeon Stretch · Thoracic Foam Roller · Scapular Rotations · Dead Bug. 2 sets each.</div></div></li>
         </ul>
+        <div class="complex-note">→ Protein high all day. Magnesium glycinate before sleep. 8h minimum. The 5kg of muscle is built on Sunday, not Tuesday.</div>
       </div>
     </div>
   </div>
@@ -1233,22 +1158,22 @@
       <div class="prog-phase">
         <div class="prog-phase-num">01</div>
         <div class="prog-phase-title">Weeks 1–6 · Base Build</div>
-        <div class="prog-phase-desc">Aprende los movimientos de gym. Construye confianza con la barra. Z2 runs 30–45 mins. Estaciones Hyrox por calidad. Anota cada sesión y añade peso cuando llegues al rango alto.</div>
+        <div class="prog-phase-desc">Learn gym movements. Power Clean technique dialled in. Wednesday rounds start at 6. Band punch speed work begins. Focus on quality and rotation mechanics over intensity.</div>
       </div>
       <div class="prog-phase">
         <div class="prog-phase-num">02</div>
         <div class="prog-phase-title">Weeks 7–12 · Intensity Build</div>
-        <div class="prog-phase-desc">Pesos de gym significativamente más altos. Z2 llega a 60 mins. Intervalos del Miércoles más rápidos. Simulaciones cada dos Domingos. Los cambios musculares se empiezan a ver.</div>
+        <div class="prog-phase-desc">Gym weights significantly heavier. Wednesday rounds up to 8. Band punch speed noticeably faster. Rotational work heavier. Sparring quality improving. Muscle gains visible.</div>
       </div>
       <div class="prog-phase">
         <div class="prog-phase-num">03</div>
-        <div class="prog-phase-title">Weeks 13+ · Race Ready</div>
-        <div class="prog-phase-desc">Simulaciones Hyrox completas los Domingos. Carrera a ritmo de competición. Taper 2 semanas antes de carrera. Objetivo 1:05 parejas alcanzable. 5kg músculo acumulados en esta fase.</div>
+        <div class="prog-phase-title">Weeks 13+ · Fight Ready</div>
+        <div class="prog-phase-desc">Exhibition fight preparation. Taper 2 weeks before fight. Shift to maintenance calories. 5kg muscle goal achieved. Speed and power at peak. Ready for the ring.</div>
       </div>
     </div>
   </div>
 
-  <footer>Training Protocol v3 Final · Hybrid KB + Gym · Hyrox 1:05 + 5kg Músculo</footer>
+  <footer>Training Protocol v4 · Boxing + Gym + KB · Muscle + Fight Ready</footer>
 
 </div>
 </div>
