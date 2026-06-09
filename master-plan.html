@@ -760,6 +760,12 @@
   .mode-toggle { display:flex; gap:2px; }
   .mode-btn { background:#111; border:1px solid #222; color:#444; font-family:"DM Sans",sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
   .mode-btn.active { background:#1e1e1e; color:#fff; border-color:#333; }
+  .cat-header { display:flex; align-items:center; gap:10px; padding:14px 0; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; border-bottom:1px solid #181818; }
+  .cat-arrow { font-size:10px; color:#555; width:14px; flex-shrink:0; transition:transform 0.2s; }
+  .cat-header.open .cat-arrow { transform:rotate(90deg); }
+  .cat-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; flex:1; }
+  .cat-body { display:none; }
+  .cat-body.open { display:block; }
 </style>
 </head>
 <body>
@@ -789,543 +795,309 @@
     <div class="t-header-title">IRON <span>WEEK</span></div>
   </div>
 
-  <!-- Sub-nav: Weekly / Quick -->
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#1a1a1a; border:1px solid #1a1a1a; margin-bottom:20px;">
-    <button id="subnav-weekly" onclick="showSubnav('weekly')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Full Workout</button>
-    <button id="subnav-quick" onclick="showSubnav('quick')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Quick Sessions</button>
+  <!-- Sub-nav -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#1a1a1a; border:1px solid #1a1a1a; margin-bottom:20px; width:100%;">
+    <button id="subnav-weekly" onclick="showSubnav('weekly')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mobility</button>
+    <button id="subnav-quick" onclick="showSubnav('quick')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sessions</button>
   </div>
 
-  <!-- ── WEEKLY PLAN ─────────────────────────────── -->
+  <!-- ── MOBILITY ─────────────────────────────── -->
   <div id="t-weekly" style="display:none">
 
-    <!-- Week strip -->
-    <div class="t-week-strip">
-      <button class="t-day-btn active" onclick="selectDay(0)" style="--dc:#f5a85a"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">MON</div></button>
-      <button class="t-day-btn" onclick="selectDay(1)" style="--dc:#ffffff"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">TUE</div></button>
-      <button class="t-day-btn" onclick="selectDay(2)" style="--dc:#c8f55a"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">WED</div></button>
-      <button class="t-day-btn" onclick="selectDay(3)" style="--dc:#ffffff"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">THU</div></button>
-      <button class="t-day-btn" onclick="selectDay(4)" style="--dc:#f5a85a"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">FRI</div></button>
-      <button class="t-day-btn" onclick="selectDay(5)" style="--dc:#5ab4f5"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">SAT</div></button>
-      <button class="t-day-btn" onclick="selectDay(6)" style="--dc:#444"><div class="t-day-btn-dot"></div><div class="t-day-btn-label">SUN</div></button>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Day-specific mobility. Do before each session.</div>
+
+    <!-- MON -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Monday — Full Body Strength</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10 each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Prone Y/T/W</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle Dorsiflexion Stretch (band)</div><div class="t-item-detail">2×1 min each</div></div>
     </div>
 
-    <!-- ── MONDAY ── -->
-    <div class="t-day-panel active" id="td-0">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-        <div class="t-day-title" style="margin-bottom:0">Monday</div>
-        <div class="mode-toggle">
-          <button class="mode-btn active" onclick="setMode(0,'full',this)">Full</button>
-          <button class="mode-btn" onclick="setMode(0,'short',this)">Short</button>
-        </div>
-      </div>
-
-      <!-- FULL -->
-      <div class="day-full" id="full-0">
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Full Body Strength</span></div>
-        <div class="t-body">
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Mobility Drill</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10 each</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Prone Y/T/W</div><div class="t-item-detail">2×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle Dorsiflexion Stretch (band)</div><div class="t-item-detail">2×1 min each</div></div>
-          </div>
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Workout</span></div>
-          <div class="t-body">
-            <div class="t-section-head">Strength</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Front Squats / Hack Squats</div><div class="t-item-detail">30 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Chin Ups</div><div class="t-item-detail">30 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Dips</div><div class="t-item-detail">30 reps</div></div>
-            <div class="t-section-head">Complex — 4 Fluent Rounds</div>
-            <div class="t-note">→ Same weight rounds 1–2. Increase round 3, increase again round 4.</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Press → Thruster</div><div class="t-item-detail">5 reps each</div></div>
-            <div class="t-section-head">Core / Carries</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Unilateral Farmer March</div><div class="t-item-detail">3×40m (45s)</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHORT -->
-      <div class="day-short" id="short-0" style="display:none">
-        <div class="t-note" style="margin-bottom:12px">→ 4 rounds · 1 bell · ~25 mins. Rest 60–90s between rounds.</div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Full Body Power — 4 Rounds</span></div>
-        <div class="t-body">
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Front Squat / Hack Squat</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Press</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pull Up / Chin Up</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing</div><div class="t-item-detail">8 reps</div></div>
-        </div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Alternative — Hybrid Strength · 4–6 Rounds</span></div>
-        <div class="t-body">
-          <div class="t-note">→ Start with 30 Weighted Chin Ups, then 4–6 rounds of the complex. 4 rounds if time is short, 6 if you have it.</div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Chin Ups</div><div class="t-item-detail">30 reps total</div></div>
-          <div class="t-section-head">Complex — 4–6 Rounds</div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deadlifts</div><div class="t-item-detail">5 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">5 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean & Press</div><div class="t-item-detail">5 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thrusters</div><div class="t-item-detail">5 reps</div></div>
-        </div>
-      </div>
+    <!-- TUE -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Tuesday — Full Body Strength V2</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates / Banded Pull-Aparts</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Rotations</div><div class="t-item-detail">2×8</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapula Push-Ups</div><div class="t-item-detail">2×12</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lower Back Extensions</div><div class="t-item-detail">2×10</div></div>
     </div>
 
-    <!-- ── TUESDAY ── -->
-    <div class="t-day-panel" id="td-1">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-        <div class="t-day-title" style="margin-bottom:0">Tuesday</div>
-        <div class="mode-toggle">
-          <button class="mode-btn active" onclick="setMode(1,'full',this)">Full</button>
-          <button class="mode-btn" onclick="setMode(1,'short',this)">Short</button>
-        </div>
-      </div>
-
-      <!-- FULL -->
-      <div class="day-full" id="full-1">
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Full Body Strength V2</span></div>
-        <div class="t-body">
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Mobility Drill</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates / Banded Pull-Aparts</div><div class="t-item-detail">2×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Rotations</div><div class="t-item-detail">2×8</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapula Push-Ups</div><div class="t-item-detail">2×12</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lower Back Extensions</div><div class="t-item-detail">2×10</div></div>
-          </div>
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Workout</span></div>
-          <div class="t-body">
-            <div class="t-section-head">Strength</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Unilateral RDL</div><div class="t-item-detail">4×10 each</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Floor Press / Incline KB Press / Deficit Push Ups</div><div class="t-item-detail">4×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Australian Ring Pull Up</div><div class="t-item-detail">4×10</div></div>
-            <div class="t-section-head">Complex — 4 Rounds (increase reps weekly)</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rows · Swings · Cleans · Press · Reverse Lunge</div><div class="t-item-detail">5 reps each</div></div>
-            <div class="t-section-head">Superset Finisher</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lateral Raises</div><div class="t-item-detail">2×15</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bicep Curls</div><div class="t-item-detail">2×15</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHORT -->
-      <div class="day-short" id="short-1" style="display:none">
-        <div class="t-note" style="margin-bottom:12px">→ 4 rounds · 1 bell · ~25 mins. Rest 60–90s between rounds.</div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push / Pull — 4 Rounds</span></div>
-        <div class="t-body">
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Floor Press / Deficit Push Ups</div><div class="t-item-detail">10 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm Row</div><div class="t-item-detail">10 reps each</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">RDL</div><div class="t-item-detail">10 reps each</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thruster</div><div class="t-item-detail">10 reps</div></div>
-        </div>
-      </div>
+    <!-- WED -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Wednesday — Conditioning</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rice Bucket Wrist Rotations</div><div class="t-item-detail">3×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip 90/90 Transitions</div><div class="t-item-detail">2×10 each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle Dorsiflexion Stretch (band)</div><div class="t-item-detail">2×1 min each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Rotations</div><div class="t-item-detail">2×10</div></div>
     </div>
 
-    <!-- ── WEDNESDAY ── -->
-    <div class="t-day-panel" id="td-2">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-        <div class="t-day-title" style="margin-bottom:0">Wednesday</div>
-        <div class="mode-toggle">
-          <button class="mode-btn active" onclick="setMode(2,'full',this)">Full</button>
-          <button class="mode-btn" onclick="setMode(2,'short',this)">Short</button>
-        </div>
-      </div>
-
-      <!-- FULL -->
-      <div class="day-full" id="full-2">
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Conditioning / Run</span></div>
-        <div class="t-body">
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Mobility Drill</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rice Bucket Wrist Rotations</div><div class="t-item-detail">3×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip 90/90 Transitions</div><div class="t-item-detail"></div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle Dorsiflexion Stretch (band)</div><div class="t-item-detail">2×1 min each</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Rotations</div><div class="t-item-detail">2×10</div></div>
-          </div>
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Workout</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Isometrics</div><div class="t-item-detail">4 dir × 30s</div></div>
-            <div class="t-section-head">15 min Flow — 3 rounds each side (add 1 squat per round)</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Press → High Pull → Snatch → Kickstand Squat</div><div class="t-item-detail">3 rounds each</div></div>
-            <div class="t-section-head">Finisher</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Burpees</div><div class="t-item-detail">50 reps</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHORT -->
-      <div class="day-short" id="short-2" style="display:none">
-        <div class="t-note" style="margin-bottom:12px">→ Pick any Quick Session. All under 30 mins, single bell.</div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">→ Go to Quick Sessions tab</span></div>
-        <div class="t-body">
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sessions 1–8 are all built for days like this</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">20–30 mins · high intensity · single bell</div></div>
-        </div>
-      </div>
+    <!-- THU -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thursday — Hypertrophy</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Flexor Rock Back</div><div class="t-item-detail">2×8</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Figure 4 Contour</div><div class="t-item-detail">2×8</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Raises</div><div class="t-item-detail">2×8</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon / Couch Stretch</div><div class="t-item-detail">2×30–60s</div></div>
     </div>
 
-    <!-- ── THURSDAY ── -->
-    <div class="t-day-panel" id="td-3">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-        <div class="t-day-title" style="margin-bottom:0">Thursday</div>
-        <div class="mode-toggle">
-          <button class="mode-btn active" onclick="setMode(3,'full',this)">Full</button>
-          <button class="mode-btn" onclick="setMode(3,'short',this)">Short</button>
-        </div>
-      </div>
-
-      <!-- FULL -->
-      <div class="day-full" id="full-3">
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hypertrophy</span></div>
-        <div class="t-body">
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Mobility Drill</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Flexor Rock Back</div><div class="t-item-detail">2×8</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Figure 4 Contour</div><div class="t-item-detail">2×8</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Raises</div><div class="t-item-detail">2×8</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon / Couch Stretch</div><div class="t-item-detail">2×30–60s</div></div>
-          </div>
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Workout</span></div>
-          <div class="t-body">
-            <div class="t-section-head">Push / Pull — 4 Rounds</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Goblet Squats</div><div class="t-item-detail">10 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Summersault Squats</div><div class="t-item-detail">10 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm Row</div><div class="t-item-detail">10 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deficit Push Ups</div><div class="t-item-detail">10 reps</div></div>
-            <div class="t-section-head">Complex — 4 Rounds</div>
-            <div class="t-note">→ Same weight rounds 1–2. Increase round 3, increase again round 4.</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Long Cycle</div><div class="t-item-detail">8 reps</div></div>
-            <div class="t-section-head">Core + Mobility — 10–15 mins</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Hold</div><div class="t-item-detail">2×30s</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Side Plank</div><div class="t-item-detail">2×30s each</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHORT -->
-      <div class="day-short" id="short-3" style="display:none">
-        <div class="t-note" style="margin-bottom:12px">→ 4 rounds · 1 bell · ~25 mins. Rest 60–90s between rounds.</div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hypertrophy Complex — 4 Rounds</span></div>
-        <div class="t-body">
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Goblet Squat</div><div class="t-item-detail">10 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Summersault Squat</div><div class="t-item-detail">10 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm Row</div><div class="t-item-detail">10 reps each</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Long Cycle</div><div class="t-item-detail">10 reps</div></div>
-        </div>
-      </div>
+    <!-- FRI -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Friday — Power & Rotation</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">RDL to Racked March</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wrist Mobility Drills</div><div class="t-item-detail">2×10</div></div>
     </div>
 
-    <!-- ── FRIDAY ── -->
-    <div class="t-day-panel" id="td-4">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-        <div class="t-day-title" style="margin-bottom:0">Friday</div>
-        <div class="mode-toggle">
-          <button class="mode-btn active" onclick="setMode(4,'full',this)">Full</button>
-          <button class="mode-btn" onclick="setMode(4,'short',this)">Short</button>
-        </div>
-      </div>
-
-      <!-- FULL -->
-      <div class="day-full" id="full-4">
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Power & Rotation + Sparring</span></div>
-        <div class="t-body">
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Mobility Drill</span></div>
-          <div class="t-body">
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">2×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">RDL to Racked March</div><div class="t-item-detail">2×10</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wrist Mobility Drills</div><div class="t-item-detail">2×10</div></div>
-          </div>
-          <div class="t-row sub" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Workout</span></div>
-          <div class="t-body">
-            <div class="t-section-head">Power Block</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Jump Squats</div><div class="t-item-detail">8 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Heavy Banded Swings</div><div class="t-item-detail">8 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Explosive Push Ups</div><div class="t-item-detail">8 reps</div></div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Speed Cleans</div><div class="t-item-detail">8 reps</div></div>
-            <div class="t-section-head">Complex — 20 mins, 4–5 Fluent Rounds</div>
-            <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Push Press → Rotational Snatch → Front Lunge</div><div class="t-item-detail">per round</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHORT -->
-      <div class="day-short" id="short-4" style="display:none">
-        <div class="t-note" style="margin-bottom:12px">→ 4 rounds · 1 bell · ~25 mins. Rest 60–90s between rounds.</div>
-        <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Power + Rotation — 4 Rounds</span></div>
-        <div class="t-body">
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Jump Squat</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Swing</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Push Press</div><div class="t-item-detail">8 reps</div></div>
-          <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rotational Snatch</div><div class="t-item-detail">8 reps each</div></div>
-        </div>
-      </div>
+    <!-- GENERAL -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">General Recovery — Anytime</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hips</div><div class="t-item-detail">2×10 each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Foam Roller</div><div class="t-item-detail">2 mins</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Rotations</div><div class="t-item-detail">2×10</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">2×10</div></div>
     </div>
 
-    <!-- ── SATURDAY ── -->
-    <div class="t-day-panel" id="td-5">
-      <div class="t-day-title">Saturday</div>
-      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Boxing</span></div>
-      <div class="t-body">
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Session determined by boxing gym</div></div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Technique · Pads · Bag · Sparring</div></div>
-      </div>
-    </div>
+  </div>
 
-    <!-- ── SUNDAY ── -->
-    <div class="t-day-panel" id="td-6">
-      <div class="t-day-title">Sunday</div>
-      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Z2 Run / Rest</span></div>
-      <div class="t-body">
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Easy run — conversational pace</div><div class="t-item-detail">45–60 mins</div></div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Or full rest if Saturday was hard</div></div>
-      </div>
-    </div>
-
-  </div><!-- end #t-weekly -->
-
-  <!-- ── QUICK SESSIONS ─────────────────────────────── -->
+  <!-- ── SESSIONS ─────────────────────────────── -->
   <div id="t-quick">
-    <div style="font-size:12px; color:#555; margin-bottom:24px; line-height:1.6;">Pick one when time is short. Bell count noted in each session.</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Pick one when time is short. Bell count noted in each session.</div>
 
-    <!-- STRENGTH -->
-    <div class="t-section-head" style="color:#f5a85a; border-color:#f5a85a33">⚡ Strength</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S1 — Clean & Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 10 rounds for time · 1 heavy bell · rest as needed between rounds.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Strict Press</div><div class="t-item-detail">1 rep</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">3 reps</div></div>
+    <!-- STRENGTH CATEGORY -->
+    <div class="cat-header" onclick="toggleCat(this)" style="border-top:1px solid #1a1a1a;">
+      <span class="cat-arrow">▶</span>
+      <span class="cat-label" style="color:#f5a85a">⚡ Strength</span>
+    </div>
+    <div class="cat-body">
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S1 — Clean & Press</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds for time · 1 heavy bell · rest as needed between rounds.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Strict Press</div><div class="t-item-detail">1 rep</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">3 reps</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S2 — The Grind</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 2 min rest · 1 heavy bell.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans · 5 Half Rack Back Lunges · 5 Push Press</div><div class="t-item-detail">per round</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S3 — Pull & Push</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 2 min rest · 1 bell · dead stop clean, reset each rep.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Dead Stop Clean</div><div class="t-item-detail">reset each rep</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Strict Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Weighted Pull Up / Chin Up</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S4 — The Triple</span></div>
+      <div class="t-body">
+        <div class="t-note">→ E2MOM 20 · 10 windows · 1 heavy bell · if you miss, rest and restart.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Power Clean → 3 Front Squat → 3 Push Jerk</div><div class="t-item-detail">= 1 window</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S5 — Push · Pull · Squat</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 90s rest · 1 bell.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Renegade Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Goblet Squat</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S6 — Clean & Lunge</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 1 min rest · descending ladder · 1 heavy bell.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 Cleans + 4 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Cleans + 3 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2 Cleans + 2 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">1 Clean + 1 Lunge each leg</div><div class="t-item-detail">= 1 round</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S7 — Double Bell Ladder</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4–6 sets · +1 rep each round · rest as needed · 2 bells: medium + heavy.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Snatch</div><div class="t-item-detail">medium · start 1/side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Clean & Press</div><div class="t-item-detail">medium · start 2/side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Racked Squat</div><div class="t-item-detail">heavy · start 8 reps</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S8 — Double KB Front Squat EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 30 · 2 bells in rack · 5 reps per min · log it and add 1 rep next session.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double KB Front Squat</div><div class="t-item-detail">5 reps / min · 30 mins</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S9 — The Sandow Complex</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4 sets · 5 per side · 90s rest · 1 bell · don't put it down.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandow Snatch</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Lunge → Half Kneeling</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Half Kneeling Clean → Press</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Stand with bell overhead</div><div class="t-item-detail">control the ascent</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S10 — Heavy Complex EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 5 rounds · 1 heavy bell · windmill demands full shoulder stability.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Clean → Push Press → Windmill (R)</div><div class="t-item-detail">1 sequence</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Clean → Push Press → Windmill (L)</div><div class="t-item-detail">1 sequence</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S11 — Half Bodyweight Complex</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4 rounds · 2 min rest · 1 bell · aim for half bodyweight. Complete one full side before switching.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Half Rack Back Lunge (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Repeat left side</div><div class="t-item-detail">then rest 2 mins</div></div>
+      </div>
     </div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S2 — The Grind</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 rounds · 2 min rest · 1 heavy bell.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans · 5 Half Rack Back Lunges · 5 Push Press</div><div class="t-item-detail">per round</div></div>
+    <!-- VOLUME CATEGORY -->
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="cat-arrow">▶</span>
+      <span class="cat-label" style="color:#ffffff">💪 Volume / Hypertrophy</span>
+    </div>
+    <div class="cat-body">
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V1 — Snatch & Press</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 20 · 2 min rest between rounds · 1 bell.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Snatch → Strict Shoulder Press</div><div class="t-item-detail">each side</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V2 — Hinge · Push · Pull</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 25 · 1 bell · same weight both sides.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Floor Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 RDL</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Reverse Lunge</div><div class="t-item-detail">each side</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V3 — The Classic</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 8 rounds for time · 1 bell · log time, beat it next week.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Clean → 6 Front Squat → 6 Push Press</div><div class="t-item-detail">per round</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V4 — The Ladder</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds · no rest · +1 rep each round · 1 bell · 55 total reps per movement.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing → Clean → Squat</div><div class="t-item-detail">Round 1=1 · Round 10=10</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V5 — Leg Day</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 90s rest · 1 bell · no rest between the two squats.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Goblet Squat</div><div class="t-item-detail">no rest ↓</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Summersault Squat</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Swing</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V6 — Arms & Shoulders</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · 1 bell · slow eccentric on everything.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Strict Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Upright Row</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Curl / Ring Curl</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Ring Tricep Extension / Close Grip Floor Press</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V7 — Pull Day</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 8 sets each · bodyweight + optional load · stop at technique failure not grip failure.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">8 sets · 5–8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">8 sets · 8 reps each</div></div>
+      </div>
     </div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S3 — Pull & Push</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 rounds · 2 min rest · 1 heavy bell · dead stop clean, reset each rep.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Dead Stop Clean</div><div class="t-item-detail">reset each rep</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Strict Press</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Weighted Pull Up / Chin Up</div><div class="t-item-detail"></div></div>
+    <!-- CONDITIONING CATEGORY -->
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="cat-arrow">▶</span>
+      <span class="cat-label" style="color:#c8f55a">🔥 Conditioning</span>
+    </div>
+    <div class="cat-body">
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C1 — The Ladder EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 30 · 1 bell · +1 squat rep each min · on failure: 3 min rest, restart from 1.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean · Squat (ladder) · Thruster · Push Press · Row</div><div class="t-item-detail">squat +1 each min</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C2 — The Four</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 20 · 1 bell · as heavy as possible.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row → Clean → Reverse Lunge → Squat</div><div class="t-item-detail">continuous</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C3 — Boxing Rounds</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds · 3 min on / 1 min off · 1 bell · exact boxing round structure.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing → Clean → Press → Snatch</div><div class="t-item-detail">continuous 3 mins</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C4 — Snatch & Swing</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 1 bell · alternate sides · reduce reps if you miss.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — 5 Snatch (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — 10 Swings</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C5 — Death by Clean & Thruster</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM · 1 bell · +1 rep each min · on failure: 3 min rest, repeat from last round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean + Thruster</div><div class="t-item-detail">ladder +1 per min</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C6 — 20 Min No Rest EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 2 bells: medium + heavy · 5 rounds · the minute change is your rest.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Swing / Squat (heavy bell)</div><div class="t-item-detail">5 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — KB Halo</div><div class="t-item-detail">10 each way</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Tac Snatch → B Stance Squat (medium bell)</div><div class="t-item-detail">3 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — KB Push Ups</div><div class="t-item-detail">12 reps</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C7 — Snatch EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 1 bell · alternate sides · start 5 reps, +1 every 4 mins.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Snatch (R)</div><div class="t-item-detail">5 → 6 → 7 → 8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Snatch (L)</div><div class="t-item-detail">5 → 6 → 7 → 8 reps</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C8 — Clean & Press / Bulgarian Split Squat</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 5 rounds · 1 bell · odd: press · even: 1 leg per min.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Clean & Press</div><div class="t-item-detail">1 rep heavy</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Racked Bulgarian Split Squat</div><div class="t-item-detail">3 reps · 1 leg per min</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C9 — Swing · Snatch · Thruster</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 sets · 90s rest · 1 bell · complete both sides before resting.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (L)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">15 Push Ups</div><div class="t-item-detail">then rest 90s</div></div>
+      </div>
     </div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S4 — The Triple</span></div>
-    <div class="t-body">
-      <div class="t-note">→ E2MOM 20 · 10 windows · 1 heavy bell · if you miss, rest and restart.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Power Clean · 3 Front Squat · 3 Push Jerk</div><div class="t-item-detail">= 1 window</div></div>
+    <!-- FULL BODY CATEGORY -->
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="cat-arrow">▶</span>
+      <span class="cat-label" style="color:#5ab4f5">🌀 Full Body</span>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S5 — Push · Pull · Squat</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 rounds · 90s rest · 1 bell.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Renegade Row</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Goblet Squat</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S6 — Clean & Lunge</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 rounds · 1 min rest between rounds · 1 heavy bell · descending ladder within each round.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 Cleans + 4 Lunges each leg</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Cleans + 3 Lunges each leg</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2 Cleans + 2 Lunges each leg</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">1 Clean + 1 Lunge each leg</div><div class="t-item-detail">= 1 round</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S10 — Heavy Complex EMOM</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 20 · 5 rounds. Heavy bell on the complex. Windmill demands shoulder stability — don't rush it.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Clean → Push Press → Windmill (R)</div><div class="t-item-detail">1 sequence</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Clean → Push Press → Windmill (L)</div><div class="t-item-detail">1 sequence</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S9 — The Sandow Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 sets · 5 per side · 90s rest · 1 bell · don't put it down.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandow Snatch</div><div class="t-item-detail">5 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Lunge → Half Kneeling</div><div class="t-item-detail">5 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Half Kneeling Clean → Press</div><div class="t-item-detail">5 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Stand with bell overhead</div><div class="t-item-detail">control the ascent</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S8 — Double KB Front Squat EMOM</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 30 · 2 bells in rack · 5 reps per min · log it and add 1 rep next session.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double KB Front Squat</div><div class="t-item-detail">5 reps / min · 30 mins</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S7 — Double Bell Ladder</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4–6 sets · +1 rep each round · rest as needed · 2 bells: medium + heavy.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Snatch</div><div class="t-item-detail">medium bell · start 1/side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Clean & Press</div><div class="t-item-detail">medium bell · start 2/side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Racked Squat</div><div class="t-item-detail">heavy bell · start 8</div></div>
-    </div>
-
-    
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S11 — Half Bodyweight Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 rounds · 2 min rest · 1 bell · aim for half bodyweight. Complete one full side before switching.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans (R)</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Half Rack Back Lunge (R)</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press (R)</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Repeat left side</div><div class="t-item-detail">then rest 2 mins</div></div>
-    </div>
-
-    <div class="t-section-head" style="color:#ffffff; border-color:#ffffff22; margin-top:24px">💪 Volume / Hypertrophy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V1 — Snatch & Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ AMRAP 20 · 2 min rest between rounds · 1 bell.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Snatch → Strict Shoulder Press</div><div class="t-item-detail">each side</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V2 — Hinge · Push · Pull</span></div>
-    <div class="t-body">
-      <div class="t-note">→ AMRAP 25 · 1 bell · same weight both sides · keep moving.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Floor Press</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 RDL</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Reverse Lunge</div><div class="t-item-detail">each side</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V3 — The Classic</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8 rounds for time · 1 bell · log time, beat it next week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Clean · 6 Front Squat · 6 Push Press</div><div class="t-item-detail">per round</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V4 — The Ladder</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 10 rounds · no rest · +1 rep each round up to 10 · 1 bell · 55 total reps per movement.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing · Clean · Squat</div><div class="t-item-detail">Round 1=1, Round 10=10</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V5 — Leg Day</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 rounds · 90s rest · 1 bell · no rest between the two squats.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Goblet Squat</div><div class="t-item-detail">no rest ↓</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Summersault Squat</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Swing</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V7 — Pull Day</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Push to technique failure on pull ups — not grip failure, not ego. When form breaks, stop. Rest as needed between sets.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">8 sets · 5–8 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">8 sets · 8 reps each</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V6 — Arms & Shoulders</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 rounds · 90s rest · 1 bell · slow eccentric on everything.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Strict Press</div><div class="t-item-detail">each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Upright Row</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Curl / Ring Curl</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Ring Tricep Extension / Close Grip Floor Press</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <!-- CONDITIONING -->
-    <div class="t-section-head" style="color:#c8f55a; border-color:#c8f55a33; margin-top:24px">🔥 Conditioning</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C1 — The Ladder EMOM</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 30 · 1 bell · +1 squat rep each min · on failure: 3 min rest, restart from 1.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean · Squat (ladder) · Thruster · Push Press · Row</div><div class="t-item-detail">squat adds each min</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C2 — The Four</span></div>
-    <div class="t-body">
-      <div class="t-note">→ AMRAP 20 · 1 bell · as heavy as possible.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row → Clean → Reverse Lunge → Squat</div><div class="t-item-detail">continuous</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C3 — Boxing Rounds</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 10 rounds · 3 min on / 1 min off · 1 bell · exact boxing round structure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing → Clean → Press → Snatch</div><div class="t-item-detail">continuous 3 mins</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C4 — Snatch & Swing</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 20 · 1 bell · alternating sides · reduce reps if you miss.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes: 5 Snatch each side</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes: 10 Swings</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C5 — Death by Clean & Thruster</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Min 1: 1 Clean + 1 Thruster. Min 2: 2 Cleans + 2 Thrusters. Continue until you can't complete within the minute. Rest 3 mins. Repeat from last round.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean + Thruster — ladder +1 per minute</div><div class="t-item-detail">until failure</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C6 — 20 Min No Rest EMOM</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 movements cycling every minute. Repeat 5 times = 20 mins. No rest — the minute change is your rest.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Swing / Squat (heavy bell)</div><div class="t-item-detail">5 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — KB Halo</div><div class="t-item-detail">10 each way</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Tac Snatch → B Stance Squat (medium bell)</div><div class="t-item-detail">3 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — KB Push Ups</div><div class="t-item-detail">12 reps</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C7 — Snatch EMOM</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 20 · alternate sides each minute. Start at 5 reps, increase by 1 every 4 mins. If you miss the minute, drop back 1 rep and finish.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes: Snatch right</div><div class="t-item-detail">5→6→7→8 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes: Snatch left</div><div class="t-item-detail">5→6→7→8 reps</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C8 — Clean & Press / Bulgarian Split Squat</span></div>
-    <div class="t-body">
-      <div class="t-note">→ EMOM 20 · 5 rounds. Odd minutes press, even minutes one leg per minute.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Clean & Press</div><div class="t-item-detail">1 rep heavy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Racked Bulgarian Split Squat</div><div class="t-item-detail">3 reps · 1 leg per min</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C9 — Swing · Snatch · Thruster</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 sets · 90s rest · 1 bell · complete both sides before resting.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (R)</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (L)</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">15 Push Ups</div><div class="t-item-detail">then rest 90s</div></div>
-    </div>
-
-    <!-- FULL BODY -->
-    <div class="t-section-head" style="color:#5ab4f5; border-color:#5ab4f533; margin-top:24px">🌀 Full Body</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F1 — The Flow</span></div>
-    <div class="t-body">
-      <div class="t-note">→ AMRAP 30 mins · 1 bell · continuous flow. Each full sequence = 1 round. Don't stop the clock.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Seesaw Lunge → Thruster → Windmill → Push Press</div><div class="t-item-detail">continuous</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F2 — Power Triplet</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 10 rounds for time · 1 bell · 3× the sequence = 1 round · rest as needed.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Power Clean → Clean Squat → Push Press / Jerk</div><div class="t-item-detail">×3 = 1 round</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F3 — The Burner</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 rounds · 90s rest · 1 bell · increase weight each round if possible.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Swing</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Clean → Press</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Front Squat</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 Burpee</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F4 — The Chipper</span></div>
-    <div class="t-body">
-      <div class="t-note">→ For time · 1 bell · complete all reps in as few sets as possible.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">50 Front Squats</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">40 Cleans</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Push Press</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">20 Swings</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Burpees</div><div class="t-item-detail"></div></div>
+    <div class="cat-body">
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F1 — The Flow</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 30 · 1 bell · continuous · each sequence = 1 round · don't rush the Windmill.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Seesaw Lunge → Thruster → Windmill → Push Press</div><div class="t-item-detail">continuous</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F2 — Power Triplet</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds for time · 1 bell · 3× the sequence = 1 round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Power Clean → Clean Squat → Push Press / Jerk</div><div class="t-item-detail">×3 = 1 round</div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F3 — The Burner</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · 1 bell · increase weight each round if possible.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Swing</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Clean → Press</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Front Squat</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 Burpee</div><div class="t-item-detail"></div></div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F4 — The Chipper</span></div>
+      <div class="t-body">
+        <div class="t-note">→ For time · 1 bell · as few sets as possible.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">50 Front Squats</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">40 Cleans</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Push Press</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">20 Swings</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Burpees</div><div class="t-item-detail"></div></div>
+      </div>
     </div>
 
   </div>
@@ -1793,6 +1565,12 @@
     document.getElementById('subnav-weekly').style.color = isWeekly ? '#fff' : '#555';
     document.getElementById('subnav-quick').style.background = isWeekly ? '#111' : '#1e1e1e';
     document.getElementById('subnav-quick').style.color = isWeekly ? '#555' : '#fff';
+  }
+
+  function toggleCat(el) {
+    el.classList.toggle('open');
+    const next = el.nextElementSibling;
+    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
   }
 
   function toggleRow(el) {
