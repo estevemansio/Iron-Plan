@@ -739,7 +739,7 @@
   .t-row:last-child { border-bottom: none; }
   .t-row-arrow { font-size: 10px; color: #444; width: 14px; flex-shrink: 0; transition: transform 0.2s; }
   .t-row.open .t-row-arrow { transform: rotate(90deg); color: #888; }
-  .t-row-label { font-size: 15px; font-weight: 700; color: #fff; flex: 1; text-transform: uppercase; letter-spacing: 0.04em; }
+  .t-row-label { font-size: 13px; font-weight: 600; color: #fff; flex: 1; text-transform: uppercase; letter-spacing: 0.04em; }
   .t-row.sub .t-row-label { font-size: 13px; color: #999; font-weight: 500; padding-left: 14px; text-transform: none; letter-spacing: 0; }
   .t-row.sub .t-row-arrow { color: #333; }
   .t-row.sub.open .t-row-arrow { color: #666; }
@@ -760,12 +760,31 @@
   .mode-toggle { display:flex; gap:2px; }
   .mode-btn { background:#111; border:1px solid #222; color:#444; font-family:"DM Sans",sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
   .mode-btn.active { background:#1e1e1e; color:#fff; border-color:#333; }
-  .cat-header { display:flex; align-items:center; gap:10px; padding:14px 0; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; border-bottom:1px solid #181818; }
+  .season-btn { background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
+  .season-btn.active { background:#1e1e1e; color:#fff; }
+  .season-panel { display:none; animation: fadeUp 0.25s ease both; }
+  .season-panel.active { display:block; }
   .cat-arrow { font-size:10px; color:#555; width:14px; flex-shrink:0; transition:transform 0.2s; }
   .cat-header.open .cat-arrow { transform:rotate(90deg); }
   .cat-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; flex:1; }
   .cat-body { display:none; }
   .cat-body.open { display:block; }
+  /* MENU STYLES */
+  .season-produce { font-size:11px; color:#555; margin-bottom:20px; line-height:1.6; letter-spacing:0.03em; }
+  .menu-day-header { font-family:"Bebas Neue",sans-serif; font-size:28px; color:#fff; letter-spacing:0.05em; padding:24px 0 8px; border-top:1px solid #1a1a1a; margin-top:8px; }
+  .menu-meal-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#555; margin-bottom:8px; margin-top:16px; }
+  .menu-flow { color:#333; }
+  .menu-card { background:#141414; border:1px solid #1f1f1f; padding:16px; margin-bottom:2px; }
+  .menu-card-cook { border-left:2px solid var(--accent); position:relative; }
+  .menu-cook-badge { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .menu-dish { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:8px; }
+  .menu-dish-name { font-size:16px; font-weight:600; color:#fff; flex:1; }
+  .menu-dish-macros { font-size:10px; color:#444; white-space:nowrap; flex-shrink:0; }
+  .menu-ingredients { font-size:12px; color:#888; line-height:1.6; }
+  .menu-side { font-size:12px; color:#555; margin-top:4px; }
+  .menu-total { margin-top:20px; padding:12px 14px; background:#111; border-left:2px solid var(--accent); font-size:11px; color:#666; letter-spacing:0.05em; }
+  .train-panel { animation: fadeUp 0.25s ease both; }
+  .t-cat-label { font-family:"Bebas Neue",sans-serif; font-size:28px; letter-spacing:0.05em; color:#fff; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #1a1a1a; }
 </style>
 </head>
 <body>
@@ -795,14 +814,17 @@
     <div class="t-header-title">IRON <span>WEEK</span></div>
   </div>
 
-  <!-- Sub-nav -->
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#1a1a1a; border:1px solid #1a1a1a; margin-bottom:20px; width:100%;">
-    <button id="subnav-weekly" onclick="showSubnav('weekly')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mobility</button>
-    <button id="subnav-quick" onclick="showSubnav('quick')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; padding:12px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sessions</button>
+  <!-- 4-option selector -->
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px;">
+    <button class="train-tab" id="tab-mobility" onclick="showTrainTab('mobility')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mobility</button>
+    <button class="train-tab active" id="tab-strength" onclick="showTrainTab('strength')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Strength</button>
+    <button class="train-tab" id="tab-volume" onclick="showTrainTab('volume')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Volume</button>
+    <button class="train-tab" id="tab-conditioning" onclick="showTrainTab('conditioning')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Cond.</button>
+    <button class="train-tab" id="tab-fullbody" onclick="showTrainTab('fullbody')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Full</button>
   </div>
 
   <!-- ── MOBILITY ─────────────────────────────── -->
-  <div id="t-weekly" style="display:none">
+  <div class="train-panel" id="panel-mobility" style="display:none">
 
     <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Day-specific mobility. Do before each session.</div>
 
@@ -866,15 +888,8 @@
   </div>
 
   <!-- ── SESSIONS ─────────────────────────────── -->
-  <div id="t-quick">
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Pick one when time is short. Bell count noted in each session.</div>
-
-    <!-- STRENGTH CATEGORY -->
-    <div class="cat-header" onclick="toggleCat(this)" style="border-top:1px solid #1a1a1a;">
-      <span class="cat-arrow">▶</span>
-      <span class="cat-label" style="color:#f5a85a">⚡ Strength</span>
-    </div>
-    <div class="cat-body">
+  <div class="train-panel" id="panel-strength" style="display:block">
+    <div class="t-cat-label" style="color:#f5a85a">⚡ Strength</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S1 — Clean & Press</span></div>
       <div class="t-body">
         <div class="t-note">→ 10 rounds for time · 1 heavy bell · rest as needed between rounds.</div>
@@ -951,12 +966,10 @@
       </div>
     </div>
 
-    <!-- VOLUME CATEGORY -->
-    <div class="cat-header" onclick="toggleCat(this)">
-      <span class="cat-arrow">▶</span>
-      <span class="cat-label" style="color:#ffffff">💪 Volume / Hypertrophy</span>
-    </div>
-    <div class="cat-body">
+  </div>
+
+  <div class="train-panel" id="panel-volume" style="display:none">
+    <div class="t-cat-label" style="color:#ffffff">💪 Volume / Hypertrophy</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V1 — Snatch & Press</span></div>
       <div class="t-body">
         <div class="t-note">→ AMRAP 20 · 2 min rest between rounds · 1 bell.</div>
@@ -1004,12 +1017,10 @@
       </div>
     </div>
 
-    <!-- CONDITIONING CATEGORY -->
-    <div class="cat-header" onclick="toggleCat(this)">
-      <span class="cat-arrow">▶</span>
-      <span class="cat-label" style="color:#c8f55a">🔥 Conditioning</span>
-    </div>
-    <div class="cat-body">
+  </div>
+
+  <div class="train-panel" id="panel-conditioning" style="display:none">
+    <div class="t-cat-label" style="color:#c8f55a">🔥 Conditioning</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C1 — The Ladder EMOM</span></div>
       <div class="t-body">
         <div class="t-note">→ EMOM 30 · 1 bell · +1 squat rep each min · on failure: 3 min rest, restart from 1.</div>
@@ -1065,12 +1076,10 @@
       </div>
     </div>
 
-    <!-- FULL BODY CATEGORY -->
-    <div class="cat-header" onclick="toggleCat(this)">
-      <span class="cat-arrow">▶</span>
-      <span class="cat-label" style="color:#5ab4f5">🌀 Full Body</span>
-    </div>
-    <div class="cat-body">
+  </div>
+
+  <div class="train-panel" id="panel-fullbody" style="display:none">
+    <div class="t-cat-label" style="color:#5ab4f5">🌀 Full Body</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F1 — The Flow</span></div>
       <div class="t-body">
         <div class="t-note">→ AMRAP 30 · 1 bell · continuous · each sequence = 1 round · don't rush the Windmill.</div>
@@ -1126,8 +1135,6 @@
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Farmer Carry or Suitcase Carry</div><div class="t-item-detail">40m heavy</div></div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Push Ups</div><div class="t-item-detail">15 reps</div></div>
       </div>
-    </div>
-
   </div>
 
 </div>
@@ -1137,135 +1144,241 @@
 <div class="section" id="section-diet">
 <div class="container">
 
-  <header style="margin-bottom:48px; animation: fadeUp 0.6s ease both;">
-    <div class="label">Performance Nutrition · Plan Final</div>
-    <h1>FUEL<br><span>PROTOCOL</span></h1>
-    <p class="subtitle">3,200 kcal días de entrenamiento. 2,700 días de descanso. Anti-inflamatorio, sin frutos secos, carbs ciclados. Hyrox + 5kg músculo.</p>
-    <div class="version-badge">v2 Final · Sin frutos secos · Anti-inflamatorio</div>
+  <header style="margin-bottom:28px; padding-top:8px; animation: fadeUp 0.5s ease both;">
+    <div class="label">Nutrición · Estacional · Anti-inflamatorio</div>
+    <h1>FUEL <span style="color:var(--accent)">PLAN</span></h1>
   </header>
 
-  <div class="macros-bar">
-    <div class="macro"><div class="macro-value">~3,200</div><div class="macro-label">Training kcal</div></div>
-    <div class="macro"><div class="macro-value">~2,700</div><div class="macro-label">Rest kcal</div></div>
-    <div class="macro"><div class="macro-value">~200g</div><div class="macro-label">Proteína</div></div>
-    <div class="macro"><div class="macro-value">~200g</div><div class="macro-label">Carbs</div></div>
-  </div>
-
-  <div class="day-toggle">
-    <button class="toggle-btn active" onclick="setDay('training')">Training Day</button>
-    <button class="toggle-btn" onclick="setDay('rest')">Rest Day</button>
-  </div>
-
-  <div id="meals">
-    <!-- BREAKFAST -->
-    <div class="meal-card">
-      <div class="meal-header">
-        <div class="meal-meta"><div class="meal-title">Desayuno</div><div class="meal-time">7 – 8 am</div></div>
-        <div class="meal-cals training-cal">~850<span>kcal</span></div>
-        <div class="meal-cals rest-cal" style="display:none">~650<span>kcal</span></div>
-      </div>
-      <div class="meal-body">
-        <div class="food-item"><div class="food-name">6 Huevos enteros</div><div class="food-detail">Revueltos o fritos en aceite de oliva.</div><div class="food-tag protein">Proteína</div></div>
-        <div class="food-item">
-          <div class="food-name training-item">3 Rebanadas Sourdough</div>
-          <div class="food-name rest-item" style="display:none">1 Rebanada Sourdough</div>
-          <div class="food-detail training-item">Glucógeno base para la sesión.</div>
-          <div class="food-detail rest-item" style="display:none">Una rebanada solo para no sentirte flat.</div>
-          <div class="food-tag carb">Carb</div>
-        </div>
-        <div class="food-item"><div class="food-name">½ Aguacate</div><div class="food-detail">Grasas anti-inflamatorias. Piel, articulaciones, saciedad.</div><div class="food-tag fat">Grasa</div></div>
-        <div class="food-item">
-          <div class="food-name">Proteína + Avena</div>
-          <div class="food-detail training-item">40g whey + 50g avena. Digestión lenta, ideal antes de sesión larga.</div>
-          <div class="food-detail rest-item" style="display:none">40g whey solo con agua. Sin avena los días de descanso.</div>
-          <div class="food-tag protein">Proteína</div>
-        </div>
-      </div>
-      <div class="meal-note"><strong>Por qué:</strong> Más huevos y avena en el shake sube la comida ~200kcal sin cambiar la estructura.</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:28px;">
+    <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:6px;">Training Day</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; line-height:1;">3,500</div>
+      <div style="font-size:10px; color:#555; margin-top:4px;">kcal · 200g P · 380g C · 100g F</div>
     </div>
-
-    <!-- POST WORKOUT -->
-    <div class="meal-card highlight">
-      <div class="meal-header">
-        <div class="meal-meta"><div class="meal-title">Post-Workout</div><div class="meal-time">Justo después</div></div>
-        <div class="meal-cals training-cal">~400<span>kcal</span></div>
-        <div class="meal-cals rest-cal" style="display:none">—<span>skip</span></div>
-      </div>
-      <div class="meal-body">
-        <div class="food-item">
-          <div class="food-name">Shake 40g proteína</div>
-          <div class="food-detail training-item">Whey isolate, absorción rápida. Dentro de los 30 mins.</div>
-          <div class="food-detail rest-item" style="display:none">Skip en días de descanso.</div>
-          <div class="food-tag protein">Proteína</div>
-        </div>
-        <div class="food-item">
-          <div class="food-name training-item">Plátano o Rice Cakes</div>
-          <div class="food-name rest-item" style="display:none">No necesario</div>
-          <div class="food-detail training-item">Carbs rápidos para reponer glucógeno inmediatamente.</div>
-          <div class="food-detail rest-item" style="display:none">Skip en días de descanso.</div>
-          <div class="food-tag carb">Carb</div>
-        </div>
-      </div>
-      <div class="meal-note"><strong>Por qué:</strong> La ventana post-entreno es cuando los músculos absorben proteína y carbs más eficientemente. No te la saltes.</div>
-    </div>
-
-    <!-- LUNCH -->
-    <div class="meal-card">
-      <div class="meal-header">
-        <div class="meal-meta"><div class="meal-title">Comida</div><div class="meal-time">12 – 1 pm</div></div>
-        <div class="meal-cals training-cal">~950<span>kcal</span></div>
-        <div class="meal-cals rest-cal" style="display:none">~750<span>kcal</span></div>
-      </div>
-      <div class="meal-body">
-        <div class="food-item"><div class="food-name">280g Muslo de Pollo</div><div class="food-detail">Asado o a la plancha. Más proteína para el objetivo muscular.</div><div class="food-tag protein">Proteína</div></div>
-        <div class="food-item">
-          <div class="food-name training-item">300g Boniato</div>
-          <div class="food-name rest-item" style="display:none">150g Boniato</div>
-          <div class="food-detail training-item">Anti-inflamatorio, digestión lenta. Asado o en puré.</div>
-          <div class="food-detail rest-item" style="display:none">Media ración. Más verdura para compensar.</div>
-          <div class="food-tag carb">Carb</div>
-        </div>
-        <div class="food-item"><div class="food-name">Brócoli + Espinacas</div><div class="food-detail">Salteado en aceite de oliva. Fibra, articulaciones, inflamación.</div><div class="food-tag fiber">Fibra</div></div>
-        <div class="food-item"><div class="food-name">2 cucharadas Aceite de Oliva</div><div class="food-detail">Sobre verdura y pollo. Sube calorías limpiamente y reduce inflamación.</div><div class="food-tag fat">Grasa</div></div>
-      </div>
-      <div class="meal-note"><strong>Por qué:</strong> Tu comida más grande. El aceite de oliva es la forma más fácil de subir calorías sin añadir basura.</div>
-    </div>
-
-    <!-- DINNER -->
-    <div class="meal-card">
-      <div class="meal-header">
-        <div class="meal-meta"><div class="meal-title">Cena</div><div class="meal-time">7 – 8 pm</div></div>
-        <div class="meal-cals training-cal">~1,000<span>kcal</span></div>
-        <div class="meal-cals rest-cal" style="display:none">~800<span>kcal</span></div>
-      </div>
-      <div class="meal-body">
-        <div class="food-item"><div class="food-name">280g Ternera (picada o filete)</div><div class="food-detail">Grass-fed si posible. Zinc, creatina y hierro para recuperación nocturna.</div><div class="food-tag protein">Proteína</div></div>
-        <div class="food-item">
-          <div class="food-name training-item">¾ taza Arroz blanco</div>
-          <div class="food-name rest-item" style="display:none">Sin arroz</div>
-          <div class="food-detail training-item">Solo días de entrenamiento. Repone glucógeno para la sesión siguiente.</div>
-          <div class="food-detail rest-item" style="display:none">Sustituye por más verdura asada.</div>
-          <div class="food-tag carb">Carb</div>
-        </div>
-        <div class="food-item"><div class="food-name">Calabacín + Pimientos</div><div class="food-detail">Asados o salteados. Bajo en carbs, alto en micronutrientes.</div><div class="food-tag fiber">Fibra</div></div>
-        <div class="food-item"><div class="food-name">200g Yogur Griego</div><div class="food-detail">Entero, natural. Hit probiótico. Come después o como snack pre-cama.</div><div class="food-tag protein">Proteína</div></div>
-      </div>
-      <div class="meal-note"><strong>Por qué:</strong> Ternera de noche da al cuerpo creatina y zinc para construir músculo mientras duermes.</div>
+    <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:6px;">Rest Day</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; line-height:1;">2,800</div>
+      <div style="font-size:10px; color:#555; margin-top:4px;">kcal · 185g P · 280g C · 85g F</div>
     </div>
   </div>
 
-  <div class="notes-section">
-    <div class="label">Reglas Clave</div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Training vs rest day:</strong> Usa el toggle. La diferencia principal es el tamaño de porción y la cantidad de carbs.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Post-workout:</strong> Shake + plátano después de entrenar. El más importante para ganar músculo. No negociable.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Estreñimiento:</strong> Brócoli + espinacas + calabacín diario + cucharadita de semillas de chía en el shake. 3L de agua mínimo los días de entrenamiento.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Magnesio glicinate:</strong> 300–400mg antes de dormir. Motilidad intestinal, calidad de sueño y recuperación muscular.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Solo aceite de oliva o mantequilla.</strong> Elimina aceites de semillas (girasol, vegetal) completamente. Diferencia medible en inflamación y piel.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Sin frutos secos — alternativas:</strong> Pipas de calabaza, semillas de girasol, semillas de chía. El aguacate cubre la mayoría.</div></div>
-    <div class="note-item"><div class="note-dot"></div><div class="note-text"><strong>Domingo:</strong> Proteína alta todo el día, magnesio, 8h de sueño mínimo. El músculo se construye aquí, no entrenando.</div></div>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:#1a1a1a; margin-bottom:28px;">
+    <button class="season-btn active" onclick="showSeason('spring',this)">🌱 Spring</button>
+    <button class="season-btn" onclick="showSeason('summer',this)">☀️ Summer</button>
+    <button class="season-btn" onclick="showSeason('autumn',this)">🍂 Autumn</button>
+    <button class="season-btn" onclick="showSeason('winter',this)">❄️ Winter</button>
   </div>
 
-  <footer>Fuel Protocol Final · Sin frutos secos · Anti-inflamatorio · Hyrox + 5kg músculo</footer>
+  <!-- SPRING -->
+  <div class="season-panel active" id="season-spring">
+    <div class="season-produce">April – June · Asparagus · Artichokes · Broad beans · Strawberries · New potatoes</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Greek Yogurt Bowl</div><div class="menu-dish-macros">650 kcal · 35g P · 90g C · 12g F</div></div>
+      <div class="menu-ingredients">Greek yogurt 300g · Oats 80g · Strawberries 150g · Honey · Cinnamon · Ginger</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Esqueixada de Bacallà</div><div class="menu-dish-macros">720 kcal · 52g P · 68g C · 22g F</div></div>
+      <div class="menu-ingredients">Desalted cod 200g · Tomato · Red onion · Roasted peppers · Olives · EVOO · Parsley</div>
+      <div class="menu-side">+ New potatoes 250g boiled with bay leaf</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Chicken Fried Rice</div><div class="menu-dish-macros">880 kcal · 65g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken thighs 300g · Brown rice fried in wok · 2 eggs · Garlic · Ginger · Soy sauce · Sesame oil</div>
+      <div class="menu-side">+ Artichokes &amp; asparagus chopped in · Lemon · Smoked paprika · Spring onion · Black pepper</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Chicken Fried Rice</div><div class="menu-dish-macros">880 kcal · 65g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken · Brown rice · Eggs · Artichokes &amp; asparagus — reheated in wok, 2 mins</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Turmeric Salmon</div><div class="menu-dish-macros">850 kcal · 60g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon 220g · Turmeric · Ginger · Black pepper · Pan-seared</div>
+      <div class="menu-side">+ Broad beans &amp; peas · Garlic · Mint · Olive oil</div>
+      <div class="menu-side">+ Quinoa 160g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Turmeric Salmon</div><div class="menu-dish-macros">850 kcal · 60g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon · Broad beans &amp; peas · Quinoa — reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Esqueixada de Bacallà</div><div class="menu-dish-macros">720 kcal · 52g P · 68g C · 22g F</div></div>
+      <div class="menu-ingredients">Desalted cod 200g · Tomato · Red onion · Roasted peppers · Olives · EVOO · Parsley</div>
+      <div class="menu-side">+ New potatoes 250g boiled with bay leaf</div>
+    </div>
+    <div class="menu-total">Daily total ~3,400 kcal · 197g P · 346g C · 96g F</div>
+  </div>
+
+  <!-- SUMMER -->
+  <div class="season-panel" id="season-summer">
+    <div class="season-produce">July – September · Tomatoes · Aubergine · Courgette · Peppers · Sardines · Peaches</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Eggs &amp; Tomato on Sourdough</div><div class="menu-dish-macros">620 kcal · 28g P · 65g C · 22g F</div></div>
+      <div class="menu-ingredients">3 scrambled eggs · 2 slices sourdough · Tomato with EVOO &amp; sea salt · Fresh peach or watermelon</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Fideuà de Carn</div><div class="menu-dish-macros">880 kcal · 58g P · 88g C · 26g F</div></div>
+      <div class="menu-ingredients">Short noodles · Chicken thighs · Sofrito — tomato, garlic, paprika, saffron · Chicken stock · Socarrat</div>
+      <div class="menu-side">+ Alioli on the side</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Grilled Sardines &amp; Escalivada</div><div class="menu-dish-macros">820 kcal · 55g P · 68g C · 30g F</div></div>
+      <div class="menu-ingredients">Sardines 280g · Lemon · Sea salt · Parsley</div>
+      <div class="menu-side">+ Escalivada — roasted aubergine, peppers &amp; onion · Garlic · EVOO</div>
+      <div class="menu-side">+ New potatoes 200g boiled</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Sardines &amp; Escalivada</div><div class="menu-dish-macros">820 kcal · 55g P · 68g C · 30g F</div></div>
+      <div class="menu-ingredients">Sardines · Escalivada · Potatoes — room temp, escalivada better cold</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Beef Entrecot &amp; Chimichurri</div><div class="menu-dish-macros">920 kcal · 62g P · 75g C · 36g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 220g · Chimichurri — parsley, garlic, EVOO, red wine vinegar, oregano, chilli</div>
+      <div class="menu-side">+ Roasted courgette &amp; cherry tomatoes · Basil · Garlic</div>
+      <div class="menu-side">+ Sweet potato 200g roasted with cumin</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Beef Entrecot &amp; Chimichurri</div><div class="menu-dish-macros">920 kcal · 62g P · 75g C · 36g F</div></div>
+      <div class="menu-ingredients">Entrecot · Courgette &amp; tomatoes · Sweet potato — reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Fideuà de Carn</div><div class="menu-dish-macros">880 kcal · 58g P · 88g C · 26g F</div></div>
+      <div class="menu-ingredients">Short noodles · Chicken thighs · Sofrito · Saffron · Stock · Socarrat</div>
+      <div class="menu-side">+ Alioli on the side</div>
+    </div>
+    <div class="menu-total">Daily total ~3,440 kcal · 198g P · 352g C · 98g F</div>
+  </div>
+
+  <!-- AUTUMN -->
+  <div class="season-panel" id="season-autumn">
+    <div class="season-produce">October – December · Pumpkin · Mushrooms · Cauliflower · Pomegranate · Mackerel</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Yogurt &amp; Pomegranate Bowl</div><div class="menu-dish-macros">650 kcal · 35g P · 88g C · 12g F</div></div>
+      <div class="menu-ingredients">Greek yogurt 300g · Oats 80g · Pomegranate seeds · Cinnamon · Turmeric · Black pepper · Honey</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Escalivada &amp; Beef</div><div class="menu-dish-macros">820 kcal · 52g P · 62g C · 32g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 200g sliced · Escalivada — roasted aubergine, peppers &amp; onion · Garlic · EVOO</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Arroz con Pollo</div><div class="menu-dish-macros">960 kcal · 68g P · 102g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken thighs 300g · Bomba rice 180g dry · Sofrito — tomato, garlic, paprika, saffron · Chicken stock</div>
+      <div class="menu-side">+ Green beans · Rosemary · Wide pan until socarrat forms</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Arroz con Pollo</div><div class="menu-dish-macros">960 kcal · 68g P · 102g C · 28g F</div></div>
+      <div class="menu-ingredients">Arroz con pollo reheated — socarrat even better the next day</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Grilled Mackerel &amp; Cauliflower</div><div class="menu-dish-macros">820 kcal · 55g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Mackerel 220g · Turmeric · Lemon · Black pepper · Grilled</div>
+      <div class="menu-side">+ Roasted cauliflower · Curry powder · Garlic · Olive oil</div>
+      <div class="menu-side">+ Brown rice 180g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Grilled Mackerel &amp; Cauliflower</div><div class="menu-dish-macros">820 kcal · 55g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Mackerel · Cauliflower · Brown rice — reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Escalivada &amp; Beef</div><div class="menu-dish-macros">820 kcal · 52g P · 62g C · 32g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 200g — grill and slice cold for tomorrow</div>
+      <div class="menu-side">+ Big tray escalivada — keeps 3 days in fridge · Garlic · EVOO</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-total">Daily total ~3,450 kcal · 198g P · 330g C · 96g F</div>
+  </div>
+
+  <!-- WINTER -->
+  <div class="season-panel" id="season-winter">
+    <div class="season-produce">January – March · Citrus · Cabbage · Leeks · Spinach · Sweet potato · Cod</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Spinach Eggs &amp; Citrus Oats</div><div class="menu-dish-macros">620 kcal · 34g P · 70g C · 20g F</div></div>
+      <div class="menu-ingredients">3 eggs scrambled with spinach &amp; garlic · Oats 70g with orange zest, cinnamon &amp; ginger · Orange segments</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Lentils with Fried Egg</div><div class="menu-dish-macros">860 kcal · 55g P · 95g C · 20g F</div></div>
+      <div class="menu-ingredients">Green lentils 200g dry · Leeks · Carrot · Garlic · Smoked paprika · Cumin · Sherry vinegar</div>
+      <div class="menu-side">+ Fried egg on top</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Slow-Cooked Beef</div><div class="menu-dish-macros">960 kcal · 65g P · 78g C · 36g F</div></div>
+      <div class="menu-ingredients">Beef chuck or shin 250g · Leeks · Carrot · Tomato · Garlic · Bay leaf · Rosemary · Red wine · Pressure cooker 45 mins</div>
+      <div class="menu-side">+ Roasted sweet potato 250g · Turmeric · Olive oil</div>
+      <div class="menu-side">+ Wilted spinach with garlic</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Slow-Cooked Beef</div><div class="menu-dish-macros">960 kcal · 65g P · 78g C · 36g F</div></div>
+      <div class="menu-ingredients">Beef stew · Sweet potato · Spinach — always better reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Citrus Glazed Salmon</div><div class="menu-dish-macros">840 kcal · 58g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon 220g · Citrus glaze — orange juice, ginger, garlic, honey</div>
+      <div class="menu-side">+ Roasted cabbage · Caraway seeds · Olive oil</div>
+      <div class="menu-side">+ Quinoa 160g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Citrus Glazed Salmon</div><div class="menu-dish-macros">840 kcal · 58g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon · Cabbage · Quinoa — reheated or room temp</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Lentils with Fried Egg</div><div class="menu-dish-macros">860 kcal · 55g P · 95g C · 20g F</div></div>
+      <div class="menu-ingredients">Green lentils 200g dry · Leeks · Carrot · Garlic · Smoked paprika · Cumin · Sherry vinegar</div>
+      <div class="menu-side">+ Fried egg on top · Cook a big pot — tomorrow is Day 1 lunch</div>
+    </div>
+    <div class="menu-total">Daily total ~3,480 kcal · 200g P · 360g C · 98g F</div>
+  </div>
 
 </div>
 </div>
@@ -1593,6 +1706,31 @@
     document.getElementById('subnav-weekly').style.color = isWeekly ? '#fff' : '#555';
     document.getElementById('subnav-quick').style.background = isWeekly ? '#111' : '#1e1e1e';
     document.getElementById('subnav-quick').style.color = isWeekly ? '#555' : '#fff';
+  }
+
+  function showTrainTab(tab) {
+    const panels = { mobility:'panel-mobility', strength:'panel-strength', volume:'panel-volume', conditioning:'panel-conditioning', fullbody:'panel-fullbody' };
+    document.querySelectorAll('.train-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.train-tab').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
+    const panel = document.getElementById(panels[tab]);
+    const btn = document.getElementById('tab-' + tab);
+    if (panel) panel.style.display = 'block';
+    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
+  }
+
+  function showSubnav(tab) {
+    const isWeekly = tab === 'weekly';
+    const w = document.getElementById('t-weekly');
+    const q = document.getElementById('t-quick');
+    if (w) w.style.display = isWeekly ? 'block' : 'none';
+    if (q) q.style.display = isWeekly ? 'none' : 'block';
+  }
+
+  function showSeason(id, btn) {
+    document.querySelectorAll('.season-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('season-' + id).classList.add('active');
+    btn.classList.add('active');
   }
 
   function toggleCat(el) {
