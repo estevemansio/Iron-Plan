@@ -783,8 +783,9 @@
   .menu-ingredients { font-size:12px; color:#888; line-height:1.6; }
   .menu-side { font-size:12px; color:#555; margin-top:4px; }
   .menu-total { margin-top:20px; padding:12px 14px; background:#111; border-left:2px solid var(--accent); font-size:11px; color:#666; letter-spacing:0.05em; }
-  .train-panel { animation: fadeUp 0.25s ease both; }
-  .t-cat-label { font-family:"Bebas Neue",sans-serif; font-size:28px; letter-spacing:0.05em; color:#fff; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #1a1a1a; }
+  .tr-session-btn { background:#141414; border:1px solid #1f1f1f; color:#ccc; font-family:'DM Sans',sans-serif; font-size:13px; padding:13px 16px; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:background 0.15s; width:100%; }
+  .tr-session-btn:active { background:#1e1e1e; color:#fff; }
+
 </style>
 </head>
 <body>
@@ -1429,343 +1430,264 @@
 <div class="section" id="section-tracker">
 <div class="container">
 
-  <header style="margin-bottom:32px; animation: fadeUp 0.6s ease both;">
-    <div class="label">Workout Tracker</div>
-    <h1>START<br><span>WORKOUT</span></h1>
-    <p class="subtitle">Marca tu sesión. La app lleva el registro y te avisa cuándo subir peso o reps.</p>
+  <header style="margin-bottom:28px; padding-top:8px; animation: fadeUp 0.5s ease both;">
+    <div class="label">Progressive Overload Tracker</div>
+    <h1>TRACK <span style="color:var(--accent)">IT</span></h1>
+    <div class="subtitle" style="font-size:13px; color:#555; margin-top:8px;">Select session → log key lifts → app tells you when to go heavier.</div>
   </header>
 
-  <!-- Day selector -->
-  <div id="tracker-day-select">
-    <div class="label" style="margin-bottom:16px">¿Qué día es hoy?</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); border:1px solid var(--border); margin-bottom:32px;">
-      <button class="tracker-day-btn" onclick="selectDay('monday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#c8f55a;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Monday</div><div style="font-size:10px;margin-top:2px">KB Strength + Hyrox</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('tuesday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#f5e15a;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Tuesday</div><div style="font-size:10px;margin-top:2px">Gym Upper Body</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('wednesday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#f55a5a;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Wednesday</div><div style="font-size:10px;margin-top:2px">Intervals / Long Z2</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('thursday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#f5e15a;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Thursday</div><div style="font-size:10px;margin-top:2px">Gym Lower Body</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('friday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#a85af5;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Friday</div><div style="font-size:10px;margin-top:2px">KB Hipertrofia + Snatch</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('saturday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#f55a5a;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Saturday</div><div style="font-size:10px;margin-top:2px">Z2 Run / Rest</div></div>
-      </button>
-      <button class="tracker-day-btn" onclick="selectDay('sunday')" style="background:var(--card-bg); border:none; color:var(--muted); padding:18px 12px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#5ab4f5;flex-shrink:0"></div>
-        <div style="text-align:left"><div style="color:var(--off-white);font-weight:500">Sunday</div><div style="font-size:10px;margin-top:2px">Hyrox Sim / Mobility</div></div>
-      </button>
+  <!-- Session selector -->
+  <div id="tr-select">
+    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:12px;">Select today's session</div>
+
+    <!-- Strength -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a; margin-bottom:8px; margin-top:16px;">⚡ Strength</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('s1')">S1 — Clean &amp; Press</button>
+      <button class="tr-session-btn" onclick="selectSession('s2')">S2 — The Grind</button>
+      <button class="tr-session-btn" onclick="selectSession('s3')">S3 — Pull &amp; Push</button>
+      <button class="tr-session-btn" onclick="selectSession('s4')">S4 — The Triple</button>
+      <button class="tr-session-btn" onclick="selectSession('s5')">S5 — Push · Pull · Squat</button>
+      <button class="tr-session-btn" onclick="selectSession('s6')">S6 — Clean &amp; Lunge</button>
+      <button class="tr-session-btn" onclick="selectSession('s7')">S7 — Double Bell Ladder</button>
+      <button class="tr-session-btn" onclick="selectSession('s8')">S8 — Double KB Front Squat EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('s9')">S9 — The Sandow Complex</button>
+      <button class="tr-session-btn" onclick="selectSession('s10')">S10 — Heavy Complex EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('s11')">S11 — Half Bodyweight Complex</button>
+    </div>
+
+    <!-- Volume -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#ffffff; margin-bottom:8px;">💪 Volume</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('v1')">V1 — Snatch &amp; Press</button>
+      <button class="tr-session-btn" onclick="selectSession('v2')">V2 — Hinge · Push · Pull</button>
+      <button class="tr-session-btn" onclick="selectSession('v3')">V3 — The Classic</button>
+      <button class="tr-session-btn" onclick="selectSession('v4')">V4 — The Ladder</button>
+      <button class="tr-session-btn" onclick="selectSession('v5')">V5 — Leg Day</button>
+      <button class="tr-session-btn" onclick="selectSession('v6')">V6 — Arms &amp; Shoulders</button>
+      <button class="tr-session-btn" onclick="selectSession('v7')">V7 — Pull Day</button>
+    </div>
+
+    <!-- Conditioning -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#c8f55a; margin-bottom:8px;">🔥 Conditioning</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('c1')">C1 — The Ladder EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c2')">C2 — The Four</button>
+      <button class="tr-session-btn" onclick="selectSession('c3')">C3 — Boxing Rounds</button>
+      <button class="tr-session-btn" onclick="selectSession('c4')">C4 — Snatch &amp; Swing</button>
+      <button class="tr-session-btn" onclick="selectSession('c5')">C5 — Death by Clean &amp; Thruster</button>
+      <button class="tr-session-btn" onclick="selectSession('c6')">C6 — 20 Min No Rest EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c7')">C7 — Snatch EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c8')">C8 — Clean &amp; Press / Bulgarian Split Squat</button>
+      <button class="tr-session-btn" onclick="selectSession('c9')">C9 — Swing · Snatch · Thruster</button>
+      <button class="tr-session-btn" onclick="selectSession('c10')">C10 — Rep Accumulator</button>
+    </div>
+
+    <!-- Full Body -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#5ab4f5; margin-bottom:8px;">🌀 Full Body</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('f1')">F1 — The Flow</button>
+      <button class="tr-session-btn" onclick="selectSession('f2')">F2 — Power Triplet</button>
+      <button class="tr-session-btn" onclick="selectSession('f3')">F3 — The Burner</button>
+      <button class="tr-session-btn" onclick="selectSession('f4')">F4 — The Chipper</button>
+      <button class="tr-session-btn" onclick="selectSession('f5')">F5 — Kickstand Quintet</button>
+      <button class="tr-session-btn" onclick="selectSession('f6')">F6 — Ring Upper Body</button>
+      <button class="tr-session-btn" onclick="selectSession('f7')">F7 — Bomber Prep</button>
     </div>
   </div>
 
-  <!-- Workout confirmation screen -->
-  <div id="tracker-workout" style="display:none">
-    <div id="tracker-day-header" style="margin-bottom:24px"></div>
-    <div id="tracker-exercises"></div>
-    <button onclick="logWorkout()" style="width:100%; background:var(--accent); border:none; color:var(--black); font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:8px; -webkit-tap-highlight-color:transparent;">
-      ✓ SESIÓN COMPLETADA
-    </button>
-    <button onclick="cancelWorkout()" style="width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">
-      ← Cambiar día
-    </button>
+  <!-- Logging screen -->
+  <div id="tr-log" style="display:none">
+    <div id="tr-session-title" style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#fff; margin-bottom:4px;"></div>
+    <div id="tr-session-date" style="font-size:10px; color:#444; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:24px;"></div>
+
+    <div id="tr-movements"></div>
+
+    <button onclick="saveSession()" style="width:100%; background:var(--accent); border:none; color:#000; font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:16px; -webkit-tap-highlight-color:transparent;">✓ LOG SESSION</button>
+    <button onclick="backToSelect()" style="width:100%; background:transparent; border:1px solid #222; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">← Back</button>
   </div>
 
   <!-- History -->
-  <div style="margin-top:40px">
-    <div class="label" style="margin-bottom:16px">Historial reciente</div>
-    <div id="tracker-history"></div>
+  <div id="tr-history" style="margin-top:40px; display:none">
+    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:16px;">History</div>
+    <div id="tr-history-list"></div>
   </div>
 
 </div>
 </div>
 
 <script>
-  // ─── DATA ───────────────────────────────────────────────────────────────────
-
-  const DAYS = {
-    monday: {
-      label: 'Monday', color: '#c8f55a', type: 'kb',
-      threshold: 3,
-      exercises: [
-        { id: 'weighted_pullups', name: 'Weighted Pull Ups', progression: 'weight' },
-        { id: 'reverse_lunges', name: 'Reverse Lunges KB', progression: 'weight' },
-        { id: 'clean_press_thruster', name: 'Clean → Press → Thruster', progression: 'weight' },
-        { id: 'wall_hack_squat', name: 'Wall Hack Squat', progression: 'reps' },
-        { id: 'wall_balls_mon', name: 'Wall Balls', progression: 'reps' },
-      ]
-    },
-    tuesday: {
-      label: 'Tuesday', color: '#f5e15a', type: 'gym',
-      threshold: 2,
-      exercises: [
-        { id: 'bench_press', name: 'Barbell Bench Press', progression: 'weight' },
-        { id: 'incline_db', name: 'Incline DB Press', progression: 'weight' },
-        { id: 'lat_pulldown', name: 'Lat Pulldown', progression: 'weight' },
-        { id: 'row', name: 'Barbell / Cable Row', progression: 'weight' },
-        { id: 'lateral_raises_tue', name: 'Lateral Raises', progression: 'weight' },
-        { id: 'ez_curl', name: 'EZ Bar Curl', progression: 'weight' },
-        { id: 'tricep_pushdown', name: 'Tricep Pushdown', progression: 'weight' },
-      ]
-    },
-    wednesday: {
-      label: 'Wednesday', color: '#f55a5a', type: 'cardio',
-      threshold: 4,
-      exercises: [
-        { id: 'intervals_400', name: 'Intervalos 400m', progression: 'pace' },
-        { id: 'burpee_jumps', name: 'Burpee Broad Jumps', progression: 'reps' },
-      ]
-    },
-    thursday: {
-      label: 'Thursday', color: '#f5e15a', type: 'gym',
-      threshold: 2,
-      exercises: [
-        { id: 'leg_curl', name: 'Leg Curl', progression: 'weight' },
-        { id: 'rdl_rackpull', name: 'RDL / Rack Pull', progression: 'weight' },
-        { id: 'hack_squat', name: 'Hack Squat / Back Squat', progression: 'weight' },
-        { id: 'leg_press', name: 'Leg Press', progression: 'weight' },
-        { id: 'lunges_bike', name: 'Bike + Lunges', progression: 'reps' },
-        { id: 'calf_raises', name: 'Calf Raises', progression: 'weight' },
-      ]
-    },
-    friday: {
-      label: 'Friday', color: '#a85af5', type: 'kb',
-      threshold: 3,
-      exercises: [
-        { id: 'floor_press', name: 'KB Floor Press', progression: 'weight' },
-        { id: 'ring_dips', name: 'Ring Dips', progression: 'reps' },
-        { id: 'aussie_pullups', name: 'Australian Ring Pull Ups', progression: 'reps' },
-        { id: 'lateral_raises_fri', name: 'Lateral Raises', progression: 'weight' },
-        { id: 'kb_curl_tricep', name: 'KB Curl / Ring Tricep Ext', progression: 'weight' },
-        { id: 'snatch_emom', name: 'KB Snatch EMOM', progression: 'weight' },
-      ]
-    },
-    saturday: {
-      label: 'Saturday', color: '#f55a5a', type: 'cardio',
-      threshold: 4,
-      exercises: [
-        { id: 'z2_run_sat', name: 'Z2 Run', progression: 'duration' },
-      ]
-    },
-    sunday: {
-      label: 'Sunday', color: '#5ab4f5', type: 'hyrox',
-      threshold: 4,
-      exercises: [
-        { id: 'hyrox_sim', name: 'Hyrox Simulation', progression: 'time' },
-        { id: 'mobility_sun', name: 'Mobility Session', progression: 'none' },
-      ]
-    }
+  // ─── SESSION COMPOUND MOVEMENTS ────────────────────────────
+  const SESSIONS = {
+    s1:  { name:'S1 — Clean & Press',               moves:['KB Clean & Press','Front Squat'] },
+    s2:  { name:'S2 — The Grind',                   moves:['KB Clean','Half Rack Back Lunge','Push Press'] },
+    s3:  { name:'S3 — Pull & Push',                 moves:['Dead Stop Clean','Strict Press','Weighted Pull Up'] },
+    s4:  { name:'S4 — The Triple',                  moves:['Power Clean','Front Squat','Push Jerk'] },
+    s5:  { name:'S5 — Push · Pull · Squat',         moves:['Push Press','Single Arm Row','RDL','Goblet Squat'] },
+    s6:  { name:'S6 — Clean & Lunge',               moves:['KB Clean','Reverse Lunge'] },
+    s7:  { name:'S7 — Double Bell Ladder',           moves:['Tactical Snatch (medium)','Tactical Clean & Press (medium)','Back Racked Squat (heavy)'] },
+    s8:  { name:'S8 — Double KB Front Squat EMOM',  moves:['Double KB Front Squat'] },
+    s9:  { name:'S9 — The Sandow Complex',           moves:['Sandow Snatch','Half Kneeling Clean & Press'] },
+    s10: { name:'S10 — Heavy Complex EMOM',          moves:['Clean & Push Press','Windmill','Summersault Squat'] },
+    s11: { name:'S11 — Half Bodyweight Complex',     moves:['KB Clean','Half Rack Back Lunge','Push Press'] },
+    v1:  { name:'V1 — Snatch & Press',               moves:['KB Snatch','Strict Shoulder Press','Front Squat'] },
+    v2:  { name:'V2 — Hinge · Push · Pull',          moves:['Single Arm Row','Floor Press','RDL','Reverse Lunge'] },
+    v3:  { name:'V3 — The Classic',                  moves:['KB Clean','Front Squat','Push Press'] },
+    v4:  { name:'V4 — The Ladder',                   moves:['KB Swing','KB Clean','Squat','Push Press'] },
+    v5:  { name:'V5 — Leg Day',                      moves:['Goblet Squat','Summersault Squat','Single Arm Row','KB Swing'] },
+    v6:  { name:'V6 — Arms & Shoulders',             moves:['Strict Press','Upright Row','KB Curl','Tricep Extension'] },
+    v7:  { name:'V7 — Pull Day',                     moves:['Weighted Pull Up','Single Arm KB Row'] },
+    c1:  { name:'C1 — The Ladder EMOM',              moves:['KB Clean','Squat (ladder)','Thruster','Push Press','Row'] },
+    c2:  { name:'C2 — The Four',                     moves:['KB Row','KB Clean','Reverse Lunge','Squat'] },
+    c3:  { name:'C3 — Boxing Rounds',                moves:['KB Swing','KB Clean','KB Press','KB Snatch'] },
+    c4:  { name:'C4 — Snatch & Swing',               moves:['KB Snatch','KB Swing','High Pull'] },
+    c5:  { name:'C5 — Death by Clean & Thruster',    moves:['KB Clean','KB Thruster'] },
+    c6:  { name:'C6 — 20 Min No Rest EMOM',          moves:['KB Swing / Squat (heavy)','KB High Pull (medium)','Tac Snatch + B Stance Squat','KB Push Ups'] },
+    c7:  { name:'C7 — Snatch EMOM',                  moves:['KB Snatch'] },
+    c8:  { name:'C8 — Clean & Press / Bulgarian',    moves:['Clean & Press (heavy)','Racked Bulgarian Split Squat'] },
+    c9:  { name:'C9 — Swing · Snatch · Thruster',    moves:['KB Swing','KB Snatch','KB Thruster','Push Ups'] },
+    c10: { name:'C10 — Rep Accumulator',             moves:['KB Swing','KB High Pull','KB Snatch','KB Thruster','Squat'] },
+    f1:  { name:'F1 — The Flow',                     moves:['KB Clean','Seesaw Lunge','Thruster','Windmill','Push Press'] },
+    f2:  { name:'F2 — Power Triplet',                moves:['Power Clean','Clean Squat','Push Press / Jerk'] },
+    f3:  { name:'F3 — The Burner',                   moves:['KB Swing','Clean & Press','Front Squat'] },
+    f4:  { name:'F4 — The Chipper',                  moves:['Front Squat','KB Clean','Push Press','KB Swing'] },
+    f5:  { name:'F5 — Kickstand Quintet',            moves:['Kickstand Deadlift','Kickstand Swing','Reverse Lunge','Squat','Thruster'] },
+    f6:  { name:'F6 — Ring Upper Body',              moves:['Ring Push Ups','Australian Ring Pull Ups','Ring Dips','Ring Curl'] },
+    f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
   };
 
-  const PROGRESSION_LABELS = {
-    weight: { up: '↑ Sube 2.5kg', maintain: '= Mantén peso' },
-    reps: { up: '↑ +2 reps por set', maintain: '= Mantén reps' },
-    pace: { up: '↑ Reduce 5s por 400m', maintain: '= Mantén ritmo' },
-    duration: { up: '↑ +5 mins', maintain: '= Mantén duración' },
-    time: { up: '↑ Intenta bajar tiempo', maintain: '= Mantén intensidad' },
-    none: { up: '', maintain: '' }
-  };
+  let currentSession = null;
 
-  let selectedDay = null;
+  function selectSession(id) {
+    currentSession = id;
+    const s = SESSIONS[id];
+    document.getElementById('tr-select').style.display = 'none';
+    document.getElementById('tr-log').style.display = 'block';
+    document.getElementById('tr-session-title').textContent = s.name;
+    document.getElementById('tr-session-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-  // ─── STORAGE ─────────────────────────────────────────────────────────────────
+    // Get last session data for this session
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    const lastSession = history.filter(h => h.id === id).pop();
 
-  function getLog() {
-    try { return JSON.parse(localStorage.getItem('ironplan_log') || '{}'); } catch { return {}; }
-  }
+    const container = document.getElementById('tr-movements');
+    container.innerHTML = '';
 
-  function saveLog(log) {
-    try { localStorage.setItem('ironplan_log', JSON.stringify(log)); } catch {}
-  }
+    s.moves.forEach((move, i) => {
+      const last = lastSession ? lastSession.moves[i] : null;
+      const lastKg = last ? last.kg : '';
+      const lastReps = last ? last.reps : '';
 
-  function logSession(dayKey) {
-    const log = getLog();
-    if (!log[dayKey]) log[dayKey] = [];
-    log[dayKey].push({ date: new Date().toISOString(), ts: Date.now() });
-    saveLog(log);
-  }
-
-  function getSessionCount(dayKey) {
-    const log = getLog();
-    return (log[dayKey] || []).length;
-  }
-
-  function getLastSession(dayKey) {
-    const log = getLog();
-    const sessions = log[dayKey] || [];
-    return sessions.length ? sessions[sessions.length - 1] : null;
-  }
-
-  function shouldProgressExercise(dayKey) {
-    const count = getSessionCount(dayKey);
-    const threshold = DAYS[dayKey].threshold;
-    return count > 0 && count % threshold === 0;
-  }
-
-  // ─── UI ──────────────────────────────────────────────────────────────────────
-
-  function selectDay(dayKey) {
-    selectedDay = dayKey;
-    const day = DAYS[dayKey];
-    const count = getSessionCount(dayKey);
-    const shouldProgress = shouldProgressExercise(dayKey);
-
-    // Header
-    document.getElementById('tracker-day-header').innerHTML = `
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px">
-        <div style="width:12px;height:12px;border-radius:50%;background:${day.color}"></div>
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:${day.color}; letter-spacing:0.05em">${day.label}</div>
-      </div>
-      <div style="background:var(--card-bg); border:1px solid var(--border); padding:14px 18px; margin-bottom:20px; font-size:12px; color:var(--muted)">
-        Sesiones completadas: <span style="color:var(--off-white); font-weight:500">${count}</span>
-        &nbsp;·&nbsp; Próximo aviso en sesión: <span style="color:var(--accent); font-weight:500">${day.threshold - (count % day.threshold)}</span>
-      </div>
-    `;
-
-    // Exercises
-    let exHTML = '';
-    day.exercises.forEach(ex => {
-      const progLabel = PROGRESSION_LABELS[ex.progression];
-      const badge = shouldProgress && ex.progression !== 'none'
-        ? `<div style="background:#c8f55a22; border:1px solid #c8f55a44; color:var(--accent); font-size:11px; padding:4px 10px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; margin-top:6px; display:inline-block">${progLabel.up}</div>`
-        : ex.progression !== 'none'
-          ? `<div style="background:#2a2a2a; border:1px solid var(--border); color:var(--muted); font-size:11px; padding:4px 10px; letter-spacing:0.1em; text-transform:uppercase; margin-top:6px; display:inline-block">${progLabel.maintain}</div>`
-          : '';
-
-      exHTML += `
-        <div style="background:var(--card-bg); border:1px solid var(--border); border-left:3px solid ${shouldProgress && ex.progression !== 'none' ? 'var(--accent)' : 'var(--border)'}; padding:16px 18px; margin-bottom:2px">
-          <div style="font-size:14px; font-weight:500; color:var(--off-white)">${ex.name}</div>
-          ${badge}
+      // Progressive overload advice
+      const advice = last && last.moves[i] ? `<div style="font-size:11px; color:var(--accent); margin-top:4px;">${getAdvice(last.moves[i], i)}</div>` : "";
+      container.innerHTML += `
+        <div style="background:#141414; border:1px solid #1f1f1f; border-left:2px solid #2a2a2a; padding:16px; margin-bottom:2px;">
+          <div style="font-size:14px; font-weight:600; color:#fff; margin-bottom:10px;">${move}</div>
+          ${advice}
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+            <div>
+              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Weight (kg)</div>
+              <input type="number" id="kg_${i}" placeholder="${lastKg || '0'}" step="0.5" min="0"
+                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
+            </div>
+            <div>
+              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Reps / Rounds</div>
+              <input type="number" id="reps_${i}" placeholder="${lastReps || '0'}" min="0"
+                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
+            </div>
+          </div>
         </div>`;
     });
-
-    if (shouldProgress) {
-      exHTML = `<div style="background:#c8f55a11; border:1px solid #c8f55a33; padding:14px 18px; margin-bottom:12px; font-size:13px; color:var(--accent); font-weight:500">
-        🔥 ¡Toca progresar! Llevas ${count} sesiones. Sube en los ejercicios marcados.
-      </div>` + exHTML;
-    }
-
-    document.getElementById('tracker-exercises').innerHTML = exHTML;
-    document.getElementById('tracker-day-select').style.display = 'none';
-    document.getElementById('tracker-workout').style.display = 'block';
-    renderHistory();
   }
 
-  function logWorkout() {
-    if (!selectedDay) return;
-    logSession(selectedDay);
 
-    const count = getSessionCount(selectedDay);
-    const day = DAYS[selectedDay];
+  function saveSession() {
+    const s = SESSIONS[currentSession];
+    const moves = s.moves.map((move, i) => ({
+      name: move,
+      kg: parseFloat(document.getElementById('kg_' + i).value) || 0,
+      reps: parseInt(document.getElementById('reps_' + i).value) || 0
+    }));
 
-    document.getElementById('tracker-workout').innerHTML = `
-      <div style="text-align:center; padding:48px 24px">
-        <div style="font-size:64px; margin-bottom:16px">💪</div>
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--accent); letter-spacing:0.05em">DONE!</div>
-        <div style="color:var(--muted); font-size:14px; margin-top:8px">${day.label} · Sesión ${count}</div>
-        <div style="margin-top:32px; background:var(--card-bg); border:1px solid var(--border); padding:16px; font-size:12px; color:var(--muted)">
-          Próximo aviso de progresión en <span style="color:var(--off-white); font-weight:500">${day.threshold - (count % day.threshold) === 0 ? day.threshold : day.threshold - (count % day.threshold)}</span> sesión${day.threshold - (count % day.threshold) === 1 ? '' : 'es'} más
-        </div>
-        <button onclick="resetTracker()" style="margin-top:16px; width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; -webkit-tap-highlight-color:transparent;">
-          ← Volver
-        </button>
-      </div>`;
-    renderHistory();
+    const entry = {
+      id: currentSession,
+      name: s.name,
+      date: new Date().toISOString(),
+      moves
+    };
+
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    history.push(entry);
+    localStorage.setItem('ironplan_history', JSON.stringify(history));
+
+    showHistory();
+    backToSelect();
+    alert('Session logged ✓');
   }
 
-  function cancelWorkout() {
-    selectedDay = null;
-    document.getElementById('tracker-day-select').style.display = 'block';
-    document.getElementById('tracker-workout').style.display = 'none';
+  function backToSelect() {
+    document.getElementById('tr-log').style.display = 'none';
+    document.getElementById('tr-select').style.display = 'block';
+    currentSession = null;
   }
 
-  function resetTracker() {
-    selectedDay = null;
-    document.getElementById('tracker-day-select').style.display = 'block';
-    document.getElementById('tracker-workout').style.display = 'none';
-    document.getElementById('tracker-workout').innerHTML = `
-      <div id="tracker-day-header"></div>
-      <div id="tracker-exercises"></div>
-      <button onclick="logWorkout()" style="width:100%; background:var(--accent); border:none; color:var(--black); font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:8px; -webkit-tap-highlight-color:transparent;">✓ SESIÓN COMPLETADA</button>
-      <button onclick="cancelWorkout()" style="width:100%; background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">← Cambiar día</button>`;
-    renderHistory();
-  }
+  function showHistory() {
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    if (!history.length) return;
 
-  function renderHistory() {
-    const log = getLog();
-    const allSessions = [];
-    Object.entries(log).forEach(([dayKey, sessions]) => {
-      sessions.forEach(s => allSessions.push({ dayKey, ...s }));
-    });
-    allSessions.sort((a, b) => b.ts - a.ts);
-    const recent = allSessions.slice(0, 8);
+    document.getElementById('tr-history').style.display = 'block';
+    const list = document.getElementById('tr-history-list');
+    list.innerHTML = '';
 
-    if (!recent.length) {
-      document.getElementById('tracker-history').innerHTML = `<div style="color:var(--muted); font-size:13px; padding:16px 0">Aún no hay sesiones registradas.</div>`;
-      return;
-    }
+    // Show last 10 sessions, most recent first
+    [...history].reverse().slice(0, 10).forEach(entry => {
+      const date = new Date(entry.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+      const movesHtml = entry.moves.map(m =>
+        `<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #111; font-size:12px;">
+          <span style="color:#888;">${m.name}</span>
+          <span style="color:#fff; font-weight:500;">${m.kg}kg × ${m.reps}</span>
+        </div>`
+      ).join('');
 
-    let html = '';
-    recent.forEach(s => {
-      const day = DAYS[s.dayKey];
-      const date = new Date(s.date);
-      const dateStr = date.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
-      html += `
-        <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--card-bg); border:1px solid var(--border); margin-bottom:2px">
-          <div style="width:8px;height:8px;border-radius:50%;background:${day.color};flex-shrink:0"></div>
-          <div style="flex:1; font-size:13px; color:var(--off-white)">${day.label}</div>
-          <div style="font-size:11px; color:var(--muted)">${dateStr}</div>
+      list.innerHTML += `
+        <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div style="font-size:14px; font-weight:600; color:#fff;">${entry.name}</div>
+            <div style="font-size:10px; color:#444;">${date}</div>
+          </div>
+          ${movesHtml}
         </div>`;
     });
-    document.getElementById('tracker-history').innerHTML = html;
   }
 
-  // ─── NAV + EXISTING FUNCTIONS ────────────────────────────────────────────────
+  function getAdvice(last, moveIndex) {
+    if (!last) return '';
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]')
+      .filter(h => h.id === currentSession);
+    const count = history.length;
+    const prevKg = last.kg || 0;
+    const prevReps = last.reps || 0;
+    if (!prevKg && !prevReps) return '';
+    if (count >= 2) return `🔼 Add 1–2kg or 1 rep today`;
+    return `✓ Match: ${prevKg}kg × ${prevReps} reps`;
+  }
 
-  function setMode(dayIndex, mode, btn) {
-    document.getElementById('full-' + dayIndex).style.display = mode === 'full' ? 'block' : 'none';
-    document.getElementById('short-' + dayIndex).style.display = mode === 'short' ? 'block' : 'none';
-    btn.parentElement.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
     btn.classList.add('active');
-  }
-
-  function showSubnav(tab) {
-    const isWeekly = tab === 'weekly';
-    document.getElementById('t-weekly').style.display = isWeekly ? 'block' : 'none';
-    document.getElementById('t-quick').style.display = isWeekly ? 'none' : 'block';
-    document.getElementById('subnav-weekly').style.background = isWeekly ? '#1e1e1e' : '#111';
-    document.getElementById('subnav-weekly').style.color = isWeekly ? '#fff' : '#555';
-    document.getElementById('subnav-quick').style.background = isWeekly ? '#111' : '#1e1e1e';
-    document.getElementById('subnav-quick').style.color = isWeekly ? '#555' : '#fff';
+    if (id === 'tracker') showHistory();
   }
 
   function showTrainTab(tab) {
-    const panels = { mobility:'panel-mobility', strength:'panel-strength', volume:'panel-volume', conditioning:'panel-conditioning', fullbody:'panel-fullbody' };
+    const map = { mobility:'panel-mobility', strength:'panel-strength', volume:'panel-volume', conditioning:'panel-conditioning', fullbody:'panel-fullbody' };
     document.querySelectorAll('.train-panel').forEach(p => p.style.display = 'none');
     document.querySelectorAll('.train-tab').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
-    const panel = document.getElementById(panels[tab]);
+    const panel = document.getElementById(map[tab]);
     const btn = document.getElementById('tab-' + tab);
     if (panel) panel.style.display = 'block';
     if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
-  }
-
-  function showSubnav(tab) {
-    const isWeekly = tab === 'weekly';
-    const w = document.getElementById('t-weekly');
-    const q = document.getElementById('t-quick');
-    if (w) w.style.display = isWeekly ? 'block' : 'none';
-    if (q) q.style.display = isWeekly ? 'none' : 'block';
   }
 
   function showSeason(id, btn) {
@@ -1775,38 +1697,16 @@
     btn.classList.add('active');
   }
 
-  function toggleCat(el) {
-    el.classList.toggle('open');
-    const next = el.nextElementSibling;
-    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
-  }
-
   function toggleRow(el) {
     el.classList.toggle('open');
     const next = el.nextElementSibling;
     if (next && next.classList.contains('t-body')) next.classList.toggle('open');
   }
 
-  function selectDay(index) {
-    document.querySelectorAll('.t-day-panel').forEach((p, i) => p.classList.toggle('active', i === index));
-    document.querySelectorAll('.t-day-btn').forEach((b, i) => b.classList.toggle('active', i === index));
-  }
-
-  function showSection(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('section-' + id).classList.add('active');
-    btn.classList.add('active');
-    if (id === 'tracker') renderHistory();
-  }
-
-  function setDay(type) {
-    const isTraining = type === 'training';
-    document.querySelectorAll('.toggle-btn').forEach((btn, i) => btn.classList.toggle('active', (i === 0) === isTraining));
-    document.querySelectorAll('.training-cal').forEach(el => el.style.display = isTraining ? '' : 'none');
-    document.querySelectorAll('.rest-cal').forEach(el => el.style.display = isTraining ? 'none' : '');
-    document.querySelectorAll('.training-item').forEach(el => el.style.display = isTraining ? '' : 'none');
-    document.querySelectorAll('.rest-item').forEach(el => el.style.display = isTraining ? 'none' : '');
+  function toggleCat(el) {
+    el.classList.toggle('open');
+    const next = el.nextElementSibling;
+    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
   }
 
   if ('serviceWorker' in navigator) {
@@ -1814,42 +1714,11 @@
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('tracker-history')) renderHistory();
+    showHistory();
   });
 
-  function showDay(index) {
-    document.querySelectorAll('.day-panel').forEach((p, i) => p.classList.toggle('active', i === index));
-    document.querySelectorAll('.week-day-btn').forEach((b, i) => b.classList.toggle('active', i === index));
-  }
+  // ─── TRACKER CSS ───────────────────────────────────────────
 
-  function toggleSection(header) {
-    const body = header.nextElementSibling;
-    const toggle = header.querySelector('.section-toggle');
-    const isCollapsed = body.classList.contains('collapsed');
-    body.classList.toggle('collapsed', !isCollapsed);
-    toggle.textContent = isCollapsed ? '−' : '+';
-  }
-
-  function setDay(type) {
-    const isTraining = type === 'training';
-    document.querySelectorAll('.toggle-btn').forEach((btn, i) => {
-      btn.classList.toggle('active', (i === 0) === isTraining);
-    });
-    document.querySelectorAll('.training-cal').forEach(el => el.style.display = isTraining ? '' : 'none');
-    document.querySelectorAll('.rest-cal').forEach(el => el.style.display = isTraining ? 'none' : '');
-    document.querySelectorAll('.training-item').forEach(el => el.style.display = isTraining ? '' : 'none');
-    document.querySelectorAll('.rest-item').forEach(el => el.style.display = isTraining ? 'none' : '');
-  }
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      regs.forEach(reg => reg.unregister());
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('tracker-history')) renderHistory();
-  });
 </script>
 
 </body>
