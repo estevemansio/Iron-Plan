@@ -85,10 +85,10 @@
   }
 
   /* SECTIONS */
-  .section { display: none; padding: 24px 16px; box-sizing: border-box; width: 100%; }
+  .section { display: none; box-sizing: border-box; width: 100%; }
   .section.active { display: block; }
 
-  .container { max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+  .container { max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 24px 16px; }
 
   /* SHARED TYPOGRAPHY */
   .label {
@@ -712,7 +712,7 @@
   }
 
   /* ── SIMPLE TRAINING OUTLINE ───────────────────────── */
-  .t-container { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+  .t-container { max-width: 720px; margin: 0 auto; padding: 24px 16px; width: 100%; box-sizing: border-box; }
   .t-header { padding: 16px 0 20px; border-bottom: 1px solid #1e1e1e; margin-bottom: 20px; }
   .t-header-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 6px; }
   .t-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #fff; line-height: 1; }
@@ -785,6 +785,8 @@
   .menu-total { margin-top:20px; padding:12px 14px; background:#111; border-left:2px solid var(--accent); font-size:11px; color:#666; letter-spacing:0.05em; }
   .tr-session-btn { background:#141414; border:1px solid #1f1f1f; color:#ccc; font-family:'DM Sans',sans-serif; font-size:13px; padding:13px 16px; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:background 0.15s; width:100%; }
   .tr-session-btn:active { background:#1e1e1e; color:#fff; }
+  .train-panel { animation: fadeUp 0.25s ease both; }
+  .t-cat-label { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.05em; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #1a1a1a; }
 
 </style>
 </head>
@@ -816,7 +818,7 @@
   </div>
 
   <!-- 4-option selector -->
-  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px;">
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
     <button class="train-tab" id="tab-mobility" onclick="showTrainTab('mobility')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mobility</button>
     <button class="train-tab active" id="tab-strength" onclick="showTrainTab('strength')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Strength</button>
     <button class="train-tab" id="tab-volume" onclick="showTrainTab('volume')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Volume</button>
@@ -825,7 +827,7 @@
   </div>
 
   <!-- ── MOBILITY ─────────────────────────────── -->
-  <div class="train-panel" id="panel-mobility" style="display:none">
+  <div class="train-panel" id="panel-mobility" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#fff">Mobility</div>
     <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">10 mins before every session. Targets rotate daily so every restriction gets addressed across the week.</div>
 
@@ -921,22 +923,25 @@
   </div>
 
   <!-- ── SESSIONS ─────────────────────────────── -->
-  <div class="train-panel" id="panel-strength" style="display:block">
+  <div class="train-panel" id="panel-strength" style="display:block; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#f5a85a">⚡ Strength</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S1 — Clean & Press</span></div>
       <div class="t-body">
         <div class="t-note">→ 10 rounds for time · 1 heavy bell · rest as needed between rounds.</div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Strict Press</div><div class="t-item-detail">1 rep</div></div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">3 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Strict Press</div><div class="t-item-detail">3 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">5 reps</div></div>
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S2 — The Grind</span></div>
       <div class="t-body">
-        <div class="t-note">→ 5 rounds · 2 min rest · 1 heavy bell.</div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans · 5 Half Rack Back Lunges · 5 Push Press</div><div class="t-item-detail">per round</div></div>
+        <div class="t-note">→ 8 rounds · 2 min rest · 1 heavy bell · pull ups before or after each round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Pull Ups</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Half Rack Back Lunges</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail"></div></div>
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S3 — Pull & Push</span></div>
       <div class="t-body">
-        <div class="t-note">→ 5 rounds · 2 min rest · 1 bell · dead stop clean, reset each rep.</div>
+        <div class="t-note">→ 7 rounds · 2 min rest · 1 bell · dead stop clean, reset each rep.</div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Dead Stop Clean</div><div class="t-item-detail">reset each rep</div></div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Strict Press</div><div class="t-item-detail">each side</div></div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Weighted Pull Up / Chin Up</div><div class="t-item-detail"></div></div>
@@ -1002,7 +1007,7 @@
 
   </div>
 
-  <div class="train-panel" id="panel-volume" style="display:none">
+  <div class="train-panel" id="panel-volume" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#ffffff">💪 Volume / Hypertrophy</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V1 — Snatch & Press</span></div>
       <div class="t-body">
@@ -1054,7 +1059,7 @@
 
   </div>
 
-  <div class="train-panel" id="panel-conditioning" style="display:none">
+  <div class="train-panel" id="panel-conditioning" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#c8f55a">🔥 Conditioning</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C1 — The Ladder EMOM</span></div>
       <div class="t-body">
@@ -1063,7 +1068,7 @@
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C2 — The Four</span></div>
       <div class="t-body">
-        <div class="t-note">→ AMRAP 20 · 1 bell · as heavy as possible.</div>
+        <div class="t-note">→ AMRAP 20 · 2 bells · as heavy as possible · both bells racked throughout.</div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row → Clean → Reverse Lunge → Squat</div><div class="t-item-detail">continuous</div></div>
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C3 — Boxing Rounds</span></div>
@@ -1079,8 +1084,8 @@
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C5 — Death by Clean & Thruster</span></div>
       <div class="t-body">
-        <div class="t-note">→ EMOM · 1 bell · +1 rep each min · on failure: 3 min rest, repeat from last round.</div>
-        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean + Thruster</div><div class="t-item-detail">ladder +1 per min</div></div>
+        <div class="t-note">→ EMOM · 2 bells · +1 rep each min · on failure: 3 min rest, repeat from last round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double Clean + Double Thruster</div><div class="t-item-detail">ladder +1 per min</div></div>
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C6 — 20 Min No Rest EMOM</span></div>
       <div class="t-body">
@@ -1098,7 +1103,7 @@
       </div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C8 — Clean & Press / Bulgarian Split Squat</span></div>
       <div class="t-body">
-        <div class="t-note">→ EMOM 20 · 5 rounds · 1 bell · odd: press · even: 1 leg per min.</div>
+        <div class="t-note">→ EMOM 20 · 5 rounds · 2 bells · odd: double clean & press · even: double rack Bulgarian split squat, 1 leg per min.</div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Clean & Press</div><div class="t-item-detail">1 rep heavy</div></div>
         <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Racked Bulgarian Split Squat</div><div class="t-item-detail">3 reps · 1 leg per min</div></div>
       </div>
@@ -1121,7 +1126,7 @@
 
   </div>
 
-  <div class="train-panel" id="panel-fullbody" style="display:none">
+  <div class="train-panel" id="panel-fullbody" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#5ab4f5">🌀 Full Body</div>
       <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F1 — The Flow</span></div>
       <div class="t-body">
@@ -1686,7 +1691,7 @@
     document.querySelectorAll('.train-tab').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
     const panel = document.getElementById(map[tab]);
     const btn = document.getElementById('tab-' + tab);
-    if (panel) panel.style.display = 'block';
+    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
     if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
   }
 
