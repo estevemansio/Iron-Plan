@@ -798,6 +798,10 @@
     <div class="nav-dot" style="background:#f5a85a"></div>
     Train
   </button>
+  <button class="nav-btn" onclick="showSection('gym', this)">
+    <div class="nav-dot" style="background:#f55a5a"></div>
+    Gym
+  </button>
   <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
     Fuel
@@ -1460,6 +1464,225 @@
 </div>
 </div>
 
+<!-- ==================== GYM SECTION ==================== -->
+<div class="section" id="section-gym">
+<div class="t-container">
+
+  <div class="t-header">
+    <div class="t-header-label">Barbell · Dumbbell · Bodyweight</div>
+    <div class="t-header-title">GYM <span>PLAN</span></div>
+  </div>
+
+  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">5-day split · 1 hour per session · Strength piece + Metcon · Barbell strength, DB complexes, bodyweight.</div>
+
+  <!-- Day tabs -->
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
+    <button class="train-tab" id="gymtab-day1" onclick="showGymTab('day1')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Day 1</button>
+    <button class="train-tab" id="gymtab-day2" onclick="showGymTab('day2')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Day 2</button>
+    <button class="train-tab" id="gymtab-day3" onclick="showGymTab('day3')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Day 3</button>
+    <button class="train-tab" id="gymtab-day4" onclick="showGymTab('day4')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Day 4</button>
+    <button class="train-tab" id="gymtab-day5" onclick="showGymTab('day5')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Day 5</button>
+  </div>
+
+  <!-- ── DAY 1 — LEGS + PUSH ── -->
+  <div class="train-panel" id="gym-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">Day 1 — Legs + Push</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Back Squat / Safety Bar Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · build weight each week · alternate with Safety Bar Squat for variation. 3 min rest.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm up to working weight</div><div class="t-item-detail">3–4 ramp sets</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Squat or Safety Bar Squat</div><div class="t-item-detail">5×5 · same weight all sets</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Romanian Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · 3s eccentric · same bar from squat, reduce weight. 90s rest.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Romanian Deadlift</div><div class="t-item-detail">4×8 · 3s down</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Bulgarian Split Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 3×10 each side · controlled · 90s rest. This is where tall guys build their legs.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Bulgarian Split Squat</div><div class="t-item-detail">3×10 each · 3s eccentric</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#c8f55a; margin-bottom:16px;">🔥 Metcon — AMRAP 20</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ AMRAP 20 · dumbbells · as many rounds as possible · 60s rest between rounds. Log rounds completed.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 DB Hang Clean</div><div class="t-item-detail">explosive hip extension, catch at shoulder</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 DB Thruster</div><div class="t-item-detail">squat to press, one movement</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Push Ups</div><div class="t-item-detail">chest to floor</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Heavy KB Swings</div><div class="t-item-detail">hip drive · snap the hips · not a squat</div></div>
+    </div>
+  </div>
+
+  <!-- ── DAY 2 — PULL + HINGE ── -->
+  <div class="train-panel" id="gym-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">Day 2 — Pull + Hinge</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Work up to a heavy 3, then 3×3 at 85% · 3 min rest · dead stop every rep.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Conventional Deadlift</div><div class="t-item-detail">build to heavy 3 · then 3×3 @ 85%</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · add weight every week · stop at technique failure not grip failure. 2 min rest.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">5×5 · belt or DB between feet</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Barbell Row</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · 2s hold at top · 90s rest. This is the thickness builder.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Row</div><div class="t-item-detail">4×8 · pronated grip · 2s hold</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#c8f55a; margin-bottom:16px;">🔥 Metcon — 5 Rounds for Time</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pull Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5 rounds for time · dumbbells + bodyweight · log total time and beat it each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 DB Hang Power Snatch (each side)</div><div class="t-item-detail">hip to overhead, punch up fast</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 DB Single Arm Row (each side)</div><div class="t-item-detail">chest on bench, full range</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Pull Ups</div><div class="t-item-detail">or Australian Pull Ups</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Depth Jumps</div><div class="t-item-detail">step off box · land · immediately jump max height · minimal ground contact</div></div>
+    </div>
+  </div>
+
+  <!-- ── DAY 3 — CHEST + SHOULDERS ── -->
+  <div class="train-panel" id="gym-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">Day 3 — Chest + Shoulders</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">💪 Hypertrophy — 45 mins · No metcon · Pure volume</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bench Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×8 · 3s eccentric · 90s rest · mid chest. Build weight each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bench Press</div><div class="t-item-detail">5×8 · 3s down · controlled</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Incline DB Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×10 · 3s eccentric · 90s rest · upper chest and front delt. This is the fullness builder.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Incline DB Press</div><div class="t-item-detail">4×10 · 3s down · 30–45° incline</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Overhead Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · strict · 90s rest · shoulder width and cap. No leg drive.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Overhead Press</div><div class="t-item-detail">4×8 · strict · bar in front</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Lateral Raise</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×15 · strict, no momentum · 60s rest · this builds the shoulder cap that makes the body look wider.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Lateral Raise</div><div class="t-item-detail">4×15 · lead with elbows · slow</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Dips</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×max · bodyweight or weighted · 90s rest · lower chest and tricep. Lean forward slightly for more chest.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dips</div><div class="t-item-detail">4×max · add weight when 15+ easy</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Face Pulls + DB Curl Superset</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 3 supersets · 60s rest · face pulls protect the shoulder. Do them every chest day.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cable Face Pull</div><div class="t-item-detail">15 reps · external rotation at top</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Hammer Curl</div><div class="t-item-detail">12 reps · neutral grip</div></div>
+    </div>
+  </div>
+
+  <!-- ── DAY 4 — ATHLETIC CONDITIONING ── -->
+  <div class="train-panel" id="gym-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">Day 4 — Athletic Conditioning</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 20 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Power Clean</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 6×3 · explosive · 90s rest · not a conditioning exercise — treat it like a max effort. Reset between reps.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Power Clean</div><div class="t-item-detail">6×3 · from floor · reset each rep</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#c8f55a; margin-bottom:16px;">🔥 Metcon — 6 Rounds · 90s rest</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">The Combat Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 6 rounds · 90s rest · dumbbells · don't put them down within a round. This is the Islam session.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 DB Romanian Deadlift</div><div class="t-item-detail">hinge, feel the hamstring</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 DB Hang Clean</div><div class="t-item-detail">explosive hip drive to shoulder</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 DB Thruster</div><div class="t-item-detail">squat to press, no break</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 DB Lateral Raise</div><div class="t-item-detail">shoulders already fatigued — this is intentional</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Max Pull Ups</div><div class="t-item-detail">finish the round here</div></div>
+    </div>
+  </div>
+
+  <!-- ── DAY 5 — FULL BODY ── -->
+  <div class="train-panel" id="gym-panel-day5" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">Day 5 — Full Body</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Front Squat / Pause Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · alternate with Pause Squat (3s hold at bottom) for variation · 3 min rest · more quad emphasis than back squat.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Front Squat or Pause Squat</div><div class="t-item-detail">5×5 · elbows high · chest up</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Barbell Hip Thrust</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 3×12 · 2s hold at top · 90s rest · glute strength that transfers directly to sprinting and kicking.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Hip Thrust</div><div class="t-item-detail">3×12 · 2s squeeze at top</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Overhead Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · strict · 2 min rest · build weight each week alongside bench.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Overhead Press</div><div class="t-item-detail">5×5 · strict · add 2.5kg weekly</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#c8f55a; margin-bottom:16px;">🔥 Metcon — AMRAP 20</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">The Athletic Test</span></div>
+    <div class="t-body">
+      <div class="t-note">→ AMRAP 20 · barbell moderate weight + bodyweight · 60s rest · hardest session of the week. Log rounds.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Barbell Power Clean</div><div class="t-item-detail">moderate weight · explosive</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail">same bar · leg drive</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Pull Ups</div><div class="t-item-detail">strict or kipping</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Broad Jumps</div><div class="t-item-detail">horizontal power · max distance · reset between reps</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Burpees</div><div class="t-item-detail">to finish — this is where it gets hard</div></div>
+    </div>
+
+    <!-- Progressive overload note -->
+    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid var(--accent);">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Progressive Overload</div>
+      <div style="font-size:12px; color:#555; line-height:1.8;">
+        Squat &amp; Deadlift → +2.5kg per week<br>
+        Press &amp; Row → +2.5kg per week<br>
+        Pull Ups → +2.5kg belt weight per week<br>
+        Metcons → add 1 round or reduce rest 15s when all rounds feel manageable<br>
+        Deload every 4th week at 70% load
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
 <!-- ==================== DIET SECTION ==================== -->
 <div class="section" id="section-diet">
 <div class="container">
@@ -1954,6 +2177,15 @@
     document.getElementById('section-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'tracker') showHistory();
+  }
+
+  function showGymTab(tab) {
+    document.querySelectorAll('[id^="gym-panel-"]').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('[id^="gymtab-"]').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
+    const panel = document.getElementById('gym-panel-' + tab);
+    const btn = document.getElementById('gymtab-' + tab);
+    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
+    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
   }
 
   function showTrainTab(tab) {
