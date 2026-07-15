@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Iron Plan">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://estevemansio.github.io/Iron-Plan/icon.png">
+<title>Iron Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --off-white: #f2ede6;
+    --accent: #c8f55a;
+    --muted: #4a4a4a;
+    --card-bg: #161616;
+    --border: #2a2a2a;
+    --strength: #c8f55a;
+    --hyrox: #f55a5a;
+    --power: #f5a85a;
+    --hypertrophy: #a85af5;
+    --z2: #5ab4f5;
+    --gym: #f5e15a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    width: 100vw;
+  }
+
+  /* TOP NAV */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-btn {
+    background: #111;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .nav-btn.active {
+    background: var(--card-bg);
+    color: var(--off-white);
+  }
+
+  .nav-btn .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  /* SECTIONS */
+  .section { display: none; box-sizing: border-box; width: 100%; }
+  .section.active { display: block; }
+
+  .container { max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 24px 16px; }
+
+  /* SHARED TYPOGRAPHY */
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .version-badge {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+
+  /* DIET STYLES */
+  .macros-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .macro {
+    background: var(--card-bg);
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .macro-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .macro-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .toggle-btn {
+    background: var(--card-bg);
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .toggle-btn.active {
+    background: var(--accent);
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  .meal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+
+  .meal-card.highlight { border-color: #c8f55a33; }
+  .meal-card.highlight .meal-title { color: var(--accent); }
+
+  .meal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meal-meta { display: flex; align-items: baseline; gap: 16px; }
+
+  .meal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .meal-time {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .meal-cals {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  .meal-cals span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .meal-body {
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .food-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .food-name { font-size: 15px; font-weight: 500; color: var(--off-white); }
+
+  .food-detail {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .food-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-top: 4px;
+    width: fit-content;
+  }
+
+  .food-tag.protein { border-color: #c8f55a44; color: var(--accent); }
+  .food-tag.carb { border-color: #f5a85a44; color: #f5a85a; }
+  .food-tag.fat { border-color: #5ab4f544; color: #5ab4f5; }
+  .food-tag.fiber { border-color: #a85af544; color: #a85af5; }
+
+  .meal-note {
+    padding: 14px 28px;
+    background: #111;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .meal-note strong { color: var(--accent); font-style: normal; }
+
+  .notes-section { margin-top: 48px; }
+  .notes-section .label { margin-bottom: 20px; }
+
+  .note-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .note-item:last-child { border-bottom: none; }
+
+  .note-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .note-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .note-text strong { color: var(--off-white); font-weight: 500; }
+
+  /* TRAINING STYLES */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .phase-banner {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+  }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .week-day-btn {
+    background: var(--card-bg);
+    border: none;
+    padding: 14px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .week-day-btn:hover { background: #1e1e1e; }
+  .week-day-btn.active { background: #1e1e1e; }
+  .week-day-btn.active .day-abbr { color: var(--off-white); }
+
+  .day-abbr {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .day-dot-strip { width: 8px; height: 8px; border-radius: 50%; }
+  .week-day-btn.active .day-dot-strip { transform: scale(1.3); }
+
+  .day-location {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .day-panel { display: none; }
+  .day-panel.active { display: block; animation: fadeUp 0.35s ease both; }
+
+  .day-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .day-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 7vw, 60px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .day-type-badge {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-left: 8px;
+    margin-bottom: 6px;
+  }
+
+  .location-badge.gym { border-color: #f5e15a44; color: var(--gym); }
+  .location-badge.home { border-color: #c8f55a44; color: var(--accent); }
+
+  .goal-pills { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+
+  .goal-pill {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .goal-pill.muscle { border-color: #c8f55a44; color: var(--accent); }
+  .goal-pill.hyrox { border-color: #f55a5a44; color: #f55a5a; }
+  .goal-pill.power { border-color: #f5a85a44; color: #f5a85a; }
+  .goal-pill.recovery { border-color: #5ab4f544; color: #5ab4f5; }
+  .goal-pill.gym-tag { border-color: #f5e15a44; color: var(--gym); }
+
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+
+  .section-card.gym-card { border-color: #f5e15a22; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    flex: 1;
+  }
+
+  .section-toggle { font-size: 18px; color: var(--muted); }
+
+  .section-body { padding: 20px 24px; border-top: 1px solid var(--border); }
+  .section-body.collapsed { display: none; }
+
+  .sub-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    margin-top: 20px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sub-label:first-child { margin-top: 0; }
+
+  .exercise-list { list-style: none; display: flex; flex-direction: column; }
+
+  .exercise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .exercise-item:last-child { border-bottom: none; }
+
+  .ex-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .ex-content { flex: 1; }
+
+  .ex-name { font-size: 14px; font-weight: 500; color: var(--off-white); line-height: 1.4; }
+
+  .ex-detail { font-size: 14px; color: var(--muted); font-weight: 300; margin-top: 2px; line-height: 1.5; }
+
+  .ex-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border: 1px solid;
+    margin-top: 4px;
+  }
+
+  .ex-tag.hyrox-tag { border-color: #f55a5a44; color: #f55a5a; }
+  .ex-tag.muscle-tag { border-color: #c8f55a44; color: var(--accent); }
+  .ex-tag.gym-tag-ex { border-color: #f5e15a44; color: var(--gym); }
+
+  .complex-note {
+    background: #111;
+    border-left: 2px solid var(--accent);
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .hyrox-note {
+    background: #111;
+    border-left: 2px solid #f55a5a;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .gym-note {
+    background: #111;
+    border-left: 2px solid var(--gym);
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .stations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 12px 0;
+  }
+
+  .station { background: var(--card-bg); padding: 12px 14px; }
+
+  .station-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #f55a5a;
+    line-height: 1;
+  }
+
+  .station-name { font-size: 12px; font-weight: 500; color: var(--off-white); margin-top: 2px; }
+  .station-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .overload-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; }
+
+  .overload-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+
+  .overload-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1a1a1a;
+    color: var(--off-white);
+    vertical-align: top;
+  }
+
+  .overload-table td:last-child { color: var(--muted); }
+  .overload-table tr:last-child td { border-bottom: none; }
+
+  .sets-badge {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--gym);
+    margin-right: 4px;
+  }
+
+  .rest-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .rest-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: #2a2a2a;
+    line-height: 1;
+    letter-spacing: 0.05em;
+  }
+
+  .rest-sub { font-size: 12px; color: var(--muted); margin-top: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .progression-block { margin-top: 48px; }
+
+  .prog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  .prog-phase { background: var(--card-bg); padding: 20px 16px; }
+
+  .prog-phase-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .prog-phase-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .prog-phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 500px) {
+    .meal-body { grid-template-columns: 1fr; }
+    .macros-bar { grid-template-columns: repeat(2, 1fr); }
+    .stations-grid { grid-template-columns: 1fr; }
+    .prog-grid { grid-template-columns: 1fr; }
+    .legend { gap: 10px; }
+    .overload-table { font-size: 11px; }
+    .overload-table td, .overload-table th { padding: 8px 6px; }
+    .day-type-badge, .location-badge { font-size: 9px; padding: 3px 8px; }
+    .section-title { font-size: 17px; }
+    .week-day-btn { padding: 10px 4px; }
+    .day-abbr { font-size: 9px; }
+    .day-location { font-size: 7px; }
+    * { max-width: 100%; box-sizing: border-box; }
+    table { width: 100%; table-layout: fixed; word-wrap: break-word; }
+  }
+
+  /* ── SIMPLE TRAINING OUTLINE ───────────────────────── */
+  .t-container { max-width: 720px; margin: 0 auto; padding: 24px 16px; width: 100%; box-sizing: border-box; }
+  .t-header { padding: 16px 0 20px; border-bottom: 1px solid #1e1e1e; margin-bottom: 20px; }
+  .t-header-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 6px; }
+  .t-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #fff; line-height: 1; }
+  .t-header-title span { color: var(--accent); }
+
+  /* Week strip */
+  .t-week-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; background: #1a1a1a; border: 1px solid #1a1a1a; margin-bottom: 24px; }
+  .t-day-btn { background: #111; border: none; padding: 12px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.15s; }
+  .t-day-btn.active { background: #1e1e1e; }
+  .t-day-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dc, #333); }
+  .t-day-btn.active .t-day-btn-dot { transform: scale(1.4); }
+  .t-day-btn-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #444; font-weight: 500; }
+  .t-day-btn.active .t-day-btn-label { color: #fff; }
+
+  /* Day panels */
+  .t-day-panel { display: none; }
+  .t-day-panel.active { display: block; animation: fadeUp 0.25s ease both; }
+
+  /* Day title */
+  .t-day-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.05em; color: var(--accent); padding: 4px 0 16px; }
+
+  /* Workout title row */
+  .t-row { display: flex; align-items: center; gap: 10px; padding: 13px 0; cursor: pointer; -webkit-tap-highlight-color: transparent; border-bottom: 1px solid #181818; user-select: none; }
+  .t-row:last-child { border-bottom: none; }
+  .t-row-arrow { font-size: 10px; color: #444; width: 14px; flex-shrink: 0; transition: transform 0.2s; }
+  .t-row.open .t-row-arrow { transform: rotate(90deg); color: #888; }
+  .t-row-label { font-size: 13px; font-weight: 600; color: #fff; flex: 1; text-transform: uppercase; letter-spacing: 0.04em; }
+  .t-row.sub .t-row-label { font-size: 13px; color: #999; font-weight: 500; padding-left: 14px; text-transform: none; letter-spacing: 0; }
+  .t-row.sub .t-row-arrow { color: #333; }
+  .t-row.sub.open .t-row-arrow { color: #666; }
+
+  /* Body */
+  .t-body { display: none; padding: 4px 0 8px 24px; }
+  .t-body.open { display: block; }
+  .t-section-head { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin: 14px 0 8px; }
+  .t-section-head:first-child { margin-top: 4px; }
+
+  /* Exercise items */
+  .t-item { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; border-bottom: 1px solid #141414; }
+  .t-item:last-child { border-bottom: none; }
+  .t-dot { width: 4px; height: 4px; border-radius: 50%; background: #444; flex-shrink: 0; margin-top: 6px; }
+  .t-item-name { font-size: 14px; color: #cccccc; flex: 1; line-height: 1.4; }
+  .t-item-detail { font-size: 12px; color: #666; text-align: right; flex-shrink: 0; white-space: nowrap; }
+  .t-note { font-size: 12px; color: #555; font-style: italic; padding: 6px 0 4px; line-height: 1.5; }
+  .mode-toggle { display:flex; gap:2px; }
+  .mode-btn { background:#111; border:1px solid #222; color:#444; font-family:"DM Sans",sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
+  .mode-btn.active { background:#1e1e1e; color:#fff; border-color:#333; }
+  .season-btn { background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
+  .season-btn.active { background:#1e1e1e; color:#fff; }
+  .season-panel { display:none; animation: fadeUp 0.25s ease both; }
+  .season-panel.active { display:block; }
+  .cat-arrow { font-size:10px; color:#555; width:14px; flex-shrink:0; transition:transform 0.2s; }
+  .cat-header.open .cat-arrow { transform:rotate(90deg); }
+  .cat-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; flex:1; }
+  .cat-body { display:none; }
+  .cat-body.open { display:block; }
+  /* MENU STYLES */
+  .season-produce { font-size:11px; color:#555; margin-bottom:20px; line-height:1.6; letter-spacing:0.03em; }
+  .menu-day-header { font-family:"Bebas Neue",sans-serif; font-size:28px; color:#fff; letter-spacing:0.05em; padding:24px 0 8px; border-top:1px solid #1a1a1a; margin-top:8px; }
+  .menu-meal-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#555; margin-bottom:8px; margin-top:16px; }
+  .menu-flow { color:#333; }
+  .menu-card { background:#141414; border:1px solid #1f1f1f; padding:16px; margin-bottom:2px; }
+  .menu-card-cook { border-left:2px solid var(--accent); position:relative; }
+  .menu-cook-badge { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .menu-dish { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:8px; }
+  .menu-dish-name { font-size:16px; font-weight:600; color:#fff; flex:1; }
+  .menu-dish-macros { font-size:10px; color:#444; white-space:nowrap; flex-shrink:0; }
+  .menu-ingredients { font-size:12px; color:#888; line-height:1.6; }
+  .menu-side { font-size:12px; color:#555; margin-top:4px; }
+  .menu-total { margin-top:20px; padding:12px 14px; background:#111; border-left:2px solid var(--accent); font-size:11px; color:#666; letter-spacing:0.05em; }
+  .tr-session-btn { background:#141414; border:1px solid #1f1f1f; color:#ccc; font-family:'DM Sans',sans-serif; font-size:13px; padding:13px 16px; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:background 0.15s; width:100%; }
+  .tr-session-btn:active { background:#1e1e1e; color:#fff; }
+  .train-panel { animation: fadeUp 0.25s ease both; }
+  .t-cat-label { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.05em; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #1a1a1a; }
+
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <button class="nav-btn active" onclick="showSection('training', this)">
+    <div class="nav-dot" style="background:#f5a85a"></div>
+    Train
+  </button>
+  <button class="nav-btn" onclick="showSection('diet', this)">
+    <div class="nav-dot" style="background:#f5a85a"></div>
+    Fuel
+  </button>
+  <button class="nav-btn" onclick="showSection('tracker', this)">
+    <div class="nav-dot" style="background:#5ab4f5"></div>
+    Track
+  </button>
+</div>
+
+<!-- ==================== TRAINING SECTION ==================== -->
+<div class="section active" id="section-training">
+<div class="t-container">
+
+  <div class="t-header">
+    <div class="t-header-label">Boxing · Muscle · Longevity</div>
+    <div class="t-header-title">IRON <span>WEEK</span></div>
+  </div>
+
+  <!-- 4-option selector -->
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
+    <button class="train-tab" id="tab-mobility" onclick="showTrainTab('mobility')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mobility</button>
+    <button class="train-tab active" id="tab-strength" onclick="showTrainTab('strength')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Strength</button>
+    <button class="train-tab" id="tab-volume" onclick="showTrainTab('volume')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Volume</button>
+    <button class="train-tab" id="tab-conditioning" onclick="showTrainTab('conditioning')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Cond.</button>
+    <button class="train-tab" id="tab-fullbody" onclick="showTrainTab('fullbody')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Full</button>
+  </div>
+
+  <!-- ── MOBILITY ─────────────────────────────── -->
+  <div class="train-panel" id="panel-mobility" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#fff">Mobility</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">10 mins before every session. Targets rotate daily so every restriction gets addressed across the week.</div>
+
+    <!-- MONDAY -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Monday — Ankle + Hip</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Band around the ankle joint pulling forward, half-kneeling into the wall. The band creates joint space — most effective drill for restricted dorsiflexion. Drive the knee past the toes, keep the heel glued to the floor.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Half-kneeling, drive the knee as far past the toes as possible while keeping the heel down. Slow and controlled. You're loading the ankle joint at end range — the key is heel contact throughout.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cossack Squat</div><div class="t-item-detail">2×8 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Feet wide, shift your weight to one side into a deep lateral squat. Other leg stays straight. This is the single best drill for lateral hip range — directly transfers to kicking. Go as deep as you can without the heel lifting.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Sit on the floor, both legs at 90 degrees. Rotate both legs to the other side in one smooth movement. Breathe into the stretch at each end. This trains internal and external rotation simultaneously — the foundation of hip mobility.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Stand on one leg, hinge at the hip, rotate the pelvis so the free leg rises and turns skyward. Hold 2 seconds at end range. Trains hip internal rotation under load — critical for kicking mechanics and single leg stability.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Heels elevated on a book or plate, sit into the deepest squat you can hold. Elbows push the knees out, chest up. Each week try to reduce the heel elevation by a few millimetres. This is the long game — consistent daily exposure is what changes this.</div>
+    </div>
+
+    <!-- TUESDAY -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Tuesday — Shoulder + Neck</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Slide</div><div class="t-item-detail">2×10</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Back against the wall, arms in W position with elbows and wrists touching the wall. Slide arms up to Y while maintaining contact. This trains the overhead position — if you lose contact with the wall, that's where the restriction is. Go slow.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Extension over Foam Roller</div><div class="t-item-detail">2×60s</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Place the roller across the mid-back, hands behind the head, let the thoracic spine extend over it. Work up and down the thoracic spine in small movements. This is what's actually blocking your overhead position — not the shoulder joint, the thoracic spine. Non-negotiable.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lat Stretch in Doorframe</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Grab the door frame at shoulder height, step back, sit your hips back and away. You should feel the stretch deep into the lat and armpit. Tight lats are the main reason the bar can't go behind the head — they pull the arms forward.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates (band)</div><div class="t-item-detail">2×10</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Wide grip on a band, arms straight, pass the band from front to back overhead and behind. Widen the grip until you can complete the movement without pain. Narrow it slightly each week. This is the most direct drill for overhead shoulder range.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Chin Tucks</div><div class="t-item-detail">3×10 · 5s hold</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Standing or sitting tall, draw the chin straight back — like you're trying to make a double chin. Hold 5 seconds. This activates the deep neck flexors that are weak from forward head posture. The muscles that should be holding your head in position have switched off — this wakes them up.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suboccipital Release</div><div class="t-item-detail">60s</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Tennis or anti-stress ball at the base of the skull, lie on it with gentle pressure. Don't roll — just let the weight of your head do the work. The suboccipital muscles are chronically tight in forward head posture and pull the skull forward. Releasing them is the fastest way to feel the difference.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Levator Scapulae Stretch</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Ear to shoulder, then look down at a 45-degree angle towards your armpit, gentle pull with the hand. This targets the levator scapulae — the muscle that runs from the top of the shoulder blade to the upper neck and is almost always tight in tech neck.</div>
+    </div>
+
+    <!-- WEDNESDAY -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Wednesday — Hip + Lower Back</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Adductor Rock Back</div><div class="t-item-detail">2×10 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Half-kneeling with the non-kneeling leg out to the side, rock the hip into the stretch — shift your weight back and feel the inner thigh lengthen. Direct prep for lateral kicking range. The adductors are almost always the limiting factor for high kicks.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Hip Flexor with Rotation</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Lunge position, back knee on the floor, drive the hip forward into the stretch then rotate the torso towards the front leg and reach the arm up. Combines hip flexor stretch with thoracic rotation — hits the front of the hip and the spine simultaneously.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Figure 4 / Pigeon Stretch</div><div class="t-item-detail">2×60s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Lie on your back, cross one ankle over the opposite knee, pull both legs towards your chest. Or pigeon position on the floor — shin parallel to the top of your mat, lean forward. Targets the piriformis and deep hip rotators — the muscles that limit external rotation for round kicks.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×10</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Feet shoulder-width, hands behind the head or a band across the shoulders, hinge at the hip with a soft knee bend, lower the chest towards the floor, then drive back up through the glutes. Activates the posterior chain — hamstrings, glutes and lower back — before any hinging or squatting work.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Extensions</div><div class="t-item-detail">2×12</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Lie face down, hands behind the head, lift the chest off the floor by squeezing the glutes and extending the spine. Hold 2 seconds at the top. This counters the flexed posture of sitting and trains the erectors — essential for spine health and posture. Add a band across the shoulders for resistance.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cossack Squat</div><div class="t-item-detail">2×8 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Same as Monday. Second exposure this week — lateral hip range needs frequency to change. Go slightly deeper than Monday if possible.</div>
+    </div>
+
+    <!-- THURSDAY -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thursday — Ankle + Shoulder</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Ankle Stretch — Straight Leg</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Stand facing the wall, one foot back, press the heel into the floor and lean into the wall. Straight leg targets the gastrocnemius — the larger calf muscle that crosses the knee. This is a different restriction to the soleus. Both need to be addressed separately.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Ankle Stretch — Bent Knee</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Same position but with a bent knee. This takes the gastrocnemius out of the equation and targets the soleus — the deeper calf muscle that limits dorsiflexion most in a squat. The soleus is almost always the culprit when heels lift.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise — Slow Eccentric</div><div class="t-item-detail">2×12 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Stand on one leg on a step or edge, raise to full height then lower over 4 seconds to full stretch. This is eccentric loading of the calf — the most effective way to lengthen the muscle tissue over time. Also prevents Achilles issues.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thread the Needle</div><div class="t-item-detail">2×8 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">On all fours, thread one arm under your body rotating the thoracic spine until the shoulder touches the floor. Follow the hand with your eyes. This rotates the thoracic spine — the segment that's often stuck and limiting both your shoulder and your punching power.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Doorframe Chest Opener</div><div class="t-item-detail">2×45s</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Both arms in the door frame at 90 degrees, step one foot through, look slightly up. Stretches the pec minor and opens the anterior shoulder — directly counters the rounded shoulder position from screen time and pressing work.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates (band)</div><div class="t-item-detail">2×10</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Second exposure this week. Try narrowing the grip slightly from Tuesday if it felt comfortable.</div>
+    </div>
+
+    <!-- FRIDAY -->
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Friday — Full Body + Neck</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2×10 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Third exposure this week. By Friday these should feel easier than Monday — that's the adaptation working.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Second exposure. Compare to Monday — notice if the knee travels further past the toes. That's your progress marker.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Slide</div><div class="t-item-detail">2×10</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Second exposure. Focus on keeping the lower back neutral — don't let it arch away from the wall as the arms rise.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Chin Tucks</div><div class="t-item-detail">3×10 · 5s hold</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Second exposure this week. Before sparring this is especially important — a strong neutral neck position absorbs punches better and reduces concussion risk.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Isometrics</div><div class="t-item-detail">4 directions × 30s</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Hand against the head, resist without moving. Front, back, left, right. Builds the neck musculature that protects against punch impact — non-negotiable for boxing. A strong neck is as important as a strong guard.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Second exposure. Add a 3-second hold at the top if it felt stable on Monday.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Doorframe Pec Stretch</div><div class="t-item-detail">2×45s each</div></div>
+      <div style="font-size:12px; color:#555; padding:4px 0 10px 12px; line-height:1.5;">Arm at 90 degrees in the doorframe, step through and rotate away. Before sparring this opens the anterior shoulder and chest — you'll feel your guard position improve immediately after this stretch.</div>
+    </div>
+
+  </div>
+
+  <!-- ── SESSIONS ─────────────────────────────── -->
+  <div class="train-panel" id="panel-strength" style="display:block; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f5a85a">⚡ Strength</div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S1 — Clean & Press</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds for time · 1 heavy bell · rest as needed between rounds.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Strict Press</div><div class="t-item-detail">3 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">5 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #f5a85a44;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a88; margin-bottom:8px;">Pull Finisher — 10 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">4 sets · to technique failure</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">4 × 8 each side</div></div>
+      </div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S2 — The Grind</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 8 rounds · 2 min rest · 1 heavy bell · pull ups before or after each round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Pull Ups</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Half Rack Back Lunges</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S3 — Pull & Push</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 7 rounds · 2 min rest · 1 bell · dead stop clean, reset each rep.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Dead Stop Clean</div><div class="t-item-detail">reset each rep</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Strict Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Weighted Pull Up / Chin Up</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S4 — The Triple</span></div>
+      <div class="t-body">
+        <div class="t-note">→ E2MOM 20 · 10 windows · 1 heavy bell · if you miss, rest and restart.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Power Clean → 3 Front Squat → 3 Push Jerk</div><div class="t-item-detail">= 1 window</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #f5a85a44;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a88; margin-bottom:8px;">Pull Finisher — 10 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">4 sets · to technique failure</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">4 × 8 each side</div></div>
+      </div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S5 — Push · Pull · Squat</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 90s rest · 1 bell · push, hinge, pull, squat — complete stimulus every round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Single Arm Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 RDL</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Goblet Squat</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S6 — Clean & Lunge</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 1 min rest · descending ladder · 1 heavy bell.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 Cleans + 4 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Cleans + 3 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2 Cleans + 2 Lunges each leg</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">1 Clean + 1 Lunge each leg</div><div class="t-item-detail">= 1 round</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S7 — Double Bell Ladder</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4–6 sets · +1 rep each round · rest as needed · 2 bells: medium + heavy.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Snatch</div><div class="t-item-detail">medium · start 1/side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tactical Clean & Press</div><div class="t-item-detail">medium · start 2/side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Racked Squat</div><div class="t-item-detail">heavy · start 8 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S8 — Double KB Front Squat EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 30 · 2 bells in rack · 5 reps per min · log it and add 1 rep next session.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double KB Front Squat</div><div class="t-item-detail">5 reps / min · 30 mins</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S9 — The Sandow Complex</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4 sets · 5 per side · 90s rest · 1 bell · don't put it down.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandow Snatch</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Lunge → Half Kneeling</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Half Kneeling Clean → Press</div><div class="t-item-detail">5 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Stand with bell overhead</div><div class="t-item-detail">control the ascent</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #f5a85a44;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a88; margin-bottom:8px;">Pull Finisher — 10 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">4 sets · to technique failure</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">4 × 8 each side</div></div>
+      </div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S10 — Heavy Complex EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 5 rounds · 1 heavy bell · windmill demands full shoulder stability.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Clean → Push Press → Windmill (R)</div><div class="t-item-detail">1 sequence</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Clean → Push Press → Windmill (L)</div><div class="t-item-detail">1 sequence</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — Summersault Squats</div><div class="t-item-detail">8 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">S11 — Half Bodyweight Complex</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 4 rounds · 2 min rest · 1 bell · aim for half bodyweight. Complete one full side before switching.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Cleans (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Half Rack Back Lunge (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Push Press (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Repeat left side</div><div class="t-item-detail">then rest 2 mins</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+  </div>
+
+  <div class="train-panel" id="panel-volume" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#ffffff">💪 Volume / Hypertrophy</div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V1 — Snatch & Press</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 20 · 2 min rest between rounds · 1 bell · snatch overhead + squat = complete upper and lower stimulus.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Snatch → Strict Shoulder Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Front Squat</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V2 — Hinge · Push · Pull</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 25 · 1 bell · same weight both sides.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Floor Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 RDL</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Bulgarian Split Squat</div><div class="t-item-detail">each side</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V3 — The Classic</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 8 rounds for time · 1 bell · log time, beat it next week.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Clean → 6 Front Squat → 6 Push Press</div><div class="t-item-detail">per round</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V4 — The Ladder</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds · no rest · +1 rep each round · 1 bell · 55 total reps per movement.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing → Clean → Squat → Push Press</div><div class="t-item-detail">Round 1=1 · Round 10=10</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V5 — Leg Day</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 90s rest · 1 bell · no rest between the two squats.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Goblet Squat</div><div class="t-item-detail">no rest ↓</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Summersault Squat</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Single Arm Row</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Swing</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V6 — Arms & Shoulders</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · 1 bell · slow eccentric on everything.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Strict Press</div><div class="t-item-detail">each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Upright Row</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Curl / Ring Curl</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Ring Tricep Extension / Close Grip Floor Press</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V7 — Pull Day</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 8 sets each · bodyweight + optional load · stop at technique failure not grip failure.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups / Pull Ups</div><div class="t-item-detail">8 sets · 5–8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Arm KB Row</div><div class="t-item-detail">8 sets · 8 reps each</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">V8 — Push Day</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · 1 bell + rings · pure push stimulus.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Incline Press (feet elevated on bench or sofa)</div><div class="t-item-detail">8 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Push Ups</div><div class="t-item-detail">15 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Dips</div><div class="t-item-detail">8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Clean → Press</div><div class="t-item-detail">5 each side</div></div>
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+  </div>
+
+  <div class="train-panel" id="panel-conditioning" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#c8f55a">🔥 Conditioning</div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C1 — The Ladder EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 30 · 1 bell · +1 squat rep each min · on failure: 3 min rest, restart from 1.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean · Squat (ladder) · Thruster · Push Press · Row</div><div class="t-item-detail">squat +1 each min</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C2 — The Four</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 20 · 2 bells · as heavy as possible · both bells racked throughout.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row → Clean → Reverse Lunge → Squat</div><div class="t-item-detail">continuous</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C3 — Boxing Rounds</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds · 3 min on / 1 min off · 1 bell · exact boxing round structure.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Swing → Clean → Press → Snatch</div><div class="t-item-detail">continuous 3 mins</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C4 — Snatch & Swing</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 1 bell · alternate sides · reduce reps if you miss.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — 5 Snatch (R) then 5 Snatch (L)</div><div class="t-item-detail">alternating each min</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — 8 Swings + 5 High Pulls</div><div class="t-item-detail">more complete stimulus</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C5 — Death by Clean & Thruster</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM · 2 bells · +1 rep each min · on failure: 3 min rest, repeat from last round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double Clean + Double Thruster</div><div class="t-item-detail">ladder +1 per min</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C6 — 20 Min No Rest EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 2 bells: medium + heavy · 5 rounds · the minute change is your rest.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 1 — Swing / Squat (heavy bell)</div><div class="t-item-detail">5 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 2 — KB High Pull</div><div class="t-item-detail">10 reps · explosive</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 3 — Tac Snatch → B Stance Squat (medium bell)</div><div class="t-item-detail">3 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Min 4 — KB Push Ups</div><div class="t-item-detail">12 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C7 — Snatch EMOM</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 1 bell · alternate sides · start 5 reps, +1 every 4 mins.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Snatch (R)</div><div class="t-item-detail">5 → 6 → 7 → 8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Snatch (L)</div><div class="t-item-detail">5 → 6 → 7 → 8 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C8 — Clean & Press / Bulgarian Split Squat</span></div>
+      <div class="t-body">
+        <div class="t-note">→ EMOM 20 · 5 rounds · 2 bells · odd: double clean & press · even: double rack Bulgarian split squat, 1 leg per min.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Odd minutes — Clean & Press</div><div class="t-item-detail">1 rep heavy</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Even minutes — Racked Bulgarian Split Squat</div><div class="t-item-detail">3 reps · 1 leg per min</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C9 — Swing · Snatch · Thruster</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 sets · 90s rest · 1 bell · complete both sides before resting.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (R)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Swings → 5 Snatch → 5 Thrusters (L)</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">15 Push Ups</div><div class="t-item-detail">then rest 90s</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">C10 — Rep Accumulator</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 sets · 1–2 min rest · 1 bell · complete full ladder on right side then repeat on left before resting.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">1→2→3 Swings · 1→2→3 High Pulls · 1→2→3 Snatches · 1→2→3 Thrusters (R)</div><div class="t-item-detail">then same left</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 1–2 mins</div><div class="t-item-detail">then repeat × 6</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">3×15 to finish</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+  </div>
+
+  <div class="train-panel" id="panel-fullbody" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#5ab4f5">🌀 Full Body</div>
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F1 — The Flow</span></div>
+      <div class="t-body">
+        <div class="t-note">→ AMRAP 30 · 1 bell · continuous · each sequence = 1 round · don't rush the Windmill.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Clean → Seesaw Lunge → Thruster → Windmill → Push Press</div><div class="t-item-detail">continuous</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F2 — Power Triplet</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds for time · 1 bell · 3× the sequence = 1 round.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Power Clean → Clean Squat → Push Press / Jerk</div><div class="t-item-detail">×3 = 1 round</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F3 — The Burner</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · 1 bell · increase weight each round if possible.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Swing</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Clean → Press</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 Front Squat</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Burpee</div><div class="t-item-detail">explosive — this is where it gets hard</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F4 — The Chipper</span></div>
+      <div class="t-body">
+        <div class="t-note">→ For time · 1 bell · as few sets as possible.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">50 Front Squats</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">40 Cleans</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Push Press</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">20 Swings</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Burpees</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+            <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F5 — Kickstand Quintet</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 10 rounds for time · 1 bell · rest as needed between rounds.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Kickstand Deadlift</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Kickstand Swing</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Reverse Lunge</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Squats</div><div class="t-item-detail"></div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 Thrusters</div><div class="t-item-detail"></div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F6 — Ring Upper Body</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 5 rounds · 90s rest · rings only · slow eccentric on everything · 3 sec down, explode up.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Push Ups</div><div class="t-item-detail">10 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Australian Ring Pull Ups</div><div class="t-item-detail">10 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Dips</div><div class="t-item-detail">8 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Curl</div><div class="t-item-detail">10 reps</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Tricep Extension</div><div class="t-item-detail">10 reps</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+
+      <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">F7 — Bomber Prep</span></div>
+      <div class="t-body">
+        <div class="t-note">→ 6 rounds · 90s rest · weighted vest if available · every movement is a direct firefighter simulation.</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Stair Climb or Step Ups (weighted vest / backpack)</div><div class="t-item-detail">3 mins continuous · simulates working in gear</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pull Ups — max reps to technique failure</div><div class="t-item-detail">simulates climbing and pulling in rescue</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Heavy Suitcase Carry — both sides</div><div class="t-item-detail">40m · simulates carrying equipment</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Push Ups</div><div class="t-item-detail">15 reps · simulates pushing through debris</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Resistance Band Drag — anchor to door, drag towards you</div><div class="t-item-detail">10m × 3 · simulates dragging a casualty</div></div>
+      
+      <div style="margin-top:12px; padding:12px; background:#0f0f0f; border-left:2px solid #2a2a2a;">
+        <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Core Finisher — 5 mins</div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hollow Body Hold</div><div class="t-item-detail">10 × 5s holds</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">10 each side</div></div>
+        <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press (band)</div><div class="t-item-detail">10 each side</div></div>
+      </div>
+      </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ==================== DIET SECTION ==================== -->
+<div class="section" id="section-diet">
+<div class="container">
+
+  <header style="margin-bottom:28px; padding-top:8px; animation: fadeUp 0.5s ease both;">
+    <div class="label">Nutrición · Estacional · Anti-inflamatorio</div>
+    <h1>FUEL <span style="color:var(--accent)">PLAN</span></h1>
+  </header>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:28px;">
+    <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:6px;">Training Day</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; line-height:1;">3,500</div>
+      <div style="font-size:10px; color:#555; margin-top:4px;">kcal · 200g P · 380g C · 100g F</div>
+    </div>
+    <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:6px;">Rest Day</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; line-height:1;">2,800</div>
+      <div style="font-size:10px; color:#555; margin-top:4px;">kcal · 185g P · 280g C · 85g F</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:#1a1a1a; margin-bottom:28px;">
+    <button class="season-btn active" onclick="showSeason('spring',this)">🌱 Spring</button>
+    <button class="season-btn" onclick="showSeason('summer',this)">☀️ Summer</button>
+    <button class="season-btn" onclick="showSeason('autumn',this)">🍂 Autumn</button>
+    <button class="season-btn" onclick="showSeason('winter',this)">❄️ Winter</button>
+  </div>
+
+  <!-- SPRING -->
+  <div class="season-panel active" id="season-spring">
+    <div class="season-produce">April – June · Asparagus · Artichokes · Broad beans · Strawberries · New potatoes</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Greek Yogurt Bowl</div><div class="menu-dish-macros">650 kcal · 35g P · 90g C · 12g F</div></div>
+      <div class="menu-ingredients">Greek yogurt 300g · Oats 80g · Strawberries 150g · Honey · Cinnamon · Ginger</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Esqueixada de Bacallà</div><div class="menu-dish-macros">720 kcal · 52g P · 68g C · 22g F</div></div>
+      <div class="menu-ingredients">Desalted cod 200g · Tomato · Red onion · Roasted peppers · Olives · EVOO · Parsley</div>
+      <div class="menu-side">+ New potatoes 250g boiled with bay leaf</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Chicken Fried Rice</div><div class="menu-dish-macros">880 kcal · 65g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken thighs 300g · Brown rice fried in wok · 2 eggs · Garlic · Ginger · Soy sauce · Sesame oil</div>
+      <div class="menu-side">+ Artichokes &amp; asparagus chopped in · Lemon · Smoked paprika · Spring onion · Black pepper</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Chicken Fried Rice</div><div class="menu-dish-macros">880 kcal · 65g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken · Brown rice · Eggs · Artichokes &amp; asparagus — reheated in wok, 2 mins</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Turmeric Salmon</div><div class="menu-dish-macros">850 kcal · 60g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon 220g · Turmeric · Ginger · Black pepper · Pan-seared</div>
+      <div class="menu-side">+ Broad beans &amp; peas · Garlic · Mint · Olive oil</div>
+      <div class="menu-side">+ Quinoa 160g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Turmeric Salmon</div><div class="menu-dish-macros">850 kcal · 60g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon · Broad beans &amp; peas · Quinoa — reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Esqueixada de Bacallà</div><div class="menu-dish-macros">720 kcal · 52g P · 68g C · 22g F</div></div>
+      <div class="menu-ingredients">Desalted cod 200g · Tomato · Red onion · Roasted peppers · Olives · EVOO · Parsley</div>
+      <div class="menu-side">+ New potatoes 250g boiled with bay leaf</div>
+    </div>
+    <div class="menu-total">Daily total ~3,400 kcal · 197g P · 346g C · 96g F</div>
+  </div>
+
+  <!-- SUMMER -->
+  <div class="season-panel" id="season-summer">
+    <div class="season-produce">July – September · Tomatoes · Aubergine · Courgette · Peppers · Caballa · Peaches</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Eggs &amp; Tomato on Sourdough</div><div class="menu-dish-macros">620 kcal · 28g P · 65g C · 22g F</div></div>
+      <div class="menu-ingredients">3 scrambled eggs · 2 slices sourdough · Tomato with EVOO &amp; sea salt · Fresh peach or watermelon</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Red Meat &amp; Escalivada</div><div class="menu-dish-macros">880 kcal · 58g P · 62g C · 38g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 220g sliced · Escalivada — roasted aubergine, peppers &amp; onion · Garlic · EVOO</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Pasta Salad with Caballa</div><div class="menu-dish-macros">860 kcal · 55g P · 88g C · 26g F</div></div>
+      <div class="menu-ingredients">Pasta 200g cooked and cooled · Canned caballa/mackerel 160g · Cherry tomatoes · Cucumber · Roasted peppers · Capers · Basil</div>
+      <div class="menu-side">+ EVOO · Lemon · Black pepper · Served cold</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Pasta Salad with Caballa</div><div class="menu-dish-macros">860 kcal · 55g P · 88g C · 26g F</div></div>
+      <div class="menu-ingredients">Pasta salad from last night — better cold, straight from the fridge</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Potato Salad with Chicken</div><div class="menu-dish-macros">880 kcal · 62g P · 75g C · 28g F</div></div>
+      <div class="menu-ingredients">New potatoes 300g boiled and cooled · Chicken thighs 250g grilled and sliced cold · 2 boiled eggs · Red onion · Parsley</div>
+      <div class="menu-side">+ Dijon mustard · Red wine vinegar · EVOO · Black pepper</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Potato Salad with Chicken</div><div class="menu-dish-macros">880 kcal · 62g P · 75g C · 28g F</div></div>
+      <div class="menu-ingredients">Potato salad from last night — cold, fresh, even better the next day</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Red Meat &amp; Escalivada</div><div class="menu-dish-macros">880 kcal · 58g P · 62g C · 38g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 220g — grill, slice and refrigerate for tomorrow</div>
+      <div class="menu-side">+ Big tray escalivada — roasted aubergine, peppers &amp; onion · Garlic · EVOO · Keeps 3 days cold</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-total">Daily total ~3,440 kcal · 198g P · 348g C · 96g F</div>
+  </div>
+
+  <!-- AUTUMN -->
+  <div class="season-panel" id="season-autumn">
+    <div class="season-produce">October – December · Pumpkin · Mushrooms · Cauliflower · Pomegranate · Mackerel</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Yogurt &amp; Pomegranate Bowl</div><div class="menu-dish-macros">650 kcal · 35g P · 88g C · 12g F</div></div>
+      <div class="menu-ingredients">Greek yogurt 300g · Oats 80g · Pomegranate seeds · Cinnamon · Turmeric · Black pepper · Honey</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Escalivada &amp; Beef</div><div class="menu-dish-macros">820 kcal · 52g P · 62g C · 32g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 200g sliced · Escalivada — roasted aubergine, peppers &amp; onion · Garlic · EVOO</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Arroz con Pollo</div><div class="menu-dish-macros">960 kcal · 68g P · 102g C · 28g F</div></div>
+      <div class="menu-ingredients">Chicken thighs 300g · Bomba rice 180g dry · Sofrito — tomato, garlic, paprika, saffron · Chicken stock</div>
+      <div class="menu-side">+ Green beans · Rosemary · Wide pan until socarrat forms</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Arroz con Pollo</div><div class="menu-dish-macros">960 kcal · 68g P · 102g C · 28g F</div></div>
+      <div class="menu-ingredients">Arroz con pollo reheated — socarrat even better the next day</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Grilled Mackerel &amp; Cauliflower</div><div class="menu-dish-macros">820 kcal · 55g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Mackerel 220g · Turmeric · Lemon · Black pepper · Grilled</div>
+      <div class="menu-side">+ Roasted cauliflower · Curry powder · Garlic · Olive oil</div>
+      <div class="menu-side">+ Brown rice 180g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Grilled Mackerel &amp; Cauliflower</div><div class="menu-dish-macros">820 kcal · 55g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Mackerel · Cauliflower · Brown rice — reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Escalivada &amp; Beef</div><div class="menu-dish-macros">820 kcal · 52g P · 62g C · 32g F</div></div>
+      <div class="menu-ingredients">Beef entrecot 200g — grill and slice cold for tomorrow</div>
+      <div class="menu-side">+ Big tray escalivada — keeps 3 days in fridge · Garlic · EVOO</div>
+      <div class="menu-side">+ Sourdough 2 slices</div>
+    </div>
+    <div class="menu-total">Daily total ~3,450 kcal · 198g P · 330g C · 96g F</div>
+  </div>
+
+  <!-- WINTER -->
+  <div class="season-panel" id="season-winter">
+    <div class="season-produce">January – March · Citrus · Cabbage · Leeks · Spinach · Sweet potato · Cod</div>
+    <div class="menu-meal-label">Breakfast — every day</div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Spinach Eggs &amp; Citrus Oats</div><div class="menu-dish-macros">620 kcal · 34g P · 70g C · 20g F</div></div>
+      <div class="menu-ingredients">3 eggs scrambled with spinach &amp; garlic · Oats 70g with orange zest, cinnamon &amp; ginger · Orange segments</div>
+    </div>
+    <div class="menu-day-header">Day 1</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 3 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Lentils with Fried Egg</div><div class="menu-dish-macros">860 kcal · 55g P · 95g C · 20g F</div></div>
+      <div class="menu-ingredients">Green lentils 200g dry · Leeks · Carrot · Garlic · Smoked paprika · Cumin · Sherry vinegar</div>
+      <div class="menu-side">+ Fried egg on top</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 2 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Slow-Cooked Beef</div><div class="menu-dish-macros">960 kcal · 65g P · 78g C · 36g F</div></div>
+      <div class="menu-ingredients">Beef chuck or shin 250g · Leeks · Carrot · Tomato · Garlic · Bay leaf · Rosemary · Red wine · Pressure cooker 45 mins</div>
+      <div class="menu-side">+ Roasted sweet potato 250g · Turmeric · Olive oil</div>
+      <div class="menu-side">+ Wilted spinach with garlic</div>
+    </div>
+    <div class="menu-day-header">Day 2</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 1 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Slow-Cooked Beef</div><div class="menu-dish-macros">960 kcal · 65g P · 78g C · 36g F</div></div>
+      <div class="menu-ingredients">Beef stew · Sweet potato · Spinach — always better reheated</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 3 lunch</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Citrus Glazed Salmon</div><div class="menu-dish-macros">840 kcal · 58g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon 220g · Citrus glaze — orange juice, ginger, garlic, honey</div>
+      <div class="menu-side">+ Roasted cabbage · Caraway seeds · Olive oil</div>
+      <div class="menu-side">+ Quinoa 160g cooked</div>
+    </div>
+    <div class="menu-day-header">Day 3</div>
+    <div class="menu-meal-label">Lunch <span class="menu-flow">← Day 2 dinner</span></div>
+    <div class="menu-card">
+      <div class="menu-dish"><div class="menu-dish-name">Citrus Glazed Salmon</div><div class="menu-dish-macros">840 kcal · 58g P · 78g C · 28g F</div></div>
+      <div class="menu-ingredients">Salmon · Cabbage · Quinoa — reheated or room temp</div>
+    </div>
+    <div class="menu-meal-label">Dinner <span class="menu-flow">→ Day 1 lunch · cycle resets</span></div>
+    <div class="menu-card menu-card-cook">
+      <div class="menu-cook-badge">Cook double</div>
+      <div class="menu-dish"><div class="menu-dish-name">Lentils with Fried Egg</div><div class="menu-dish-macros">860 kcal · 55g P · 95g C · 20g F</div></div>
+      <div class="menu-ingredients">Green lentils 200g dry · Leeks · Carrot · Garlic · Smoked paprika · Cumin · Sherry vinegar</div>
+      <div class="menu-side">+ Fried egg on top · Cook a big pot — tomorrow is Day 1 lunch</div>
+    </div>
+    <div class="menu-total">Daily total ~3,480 kcal · 200g P · 360g C · 98g F</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ==================== TRACKER SECTION ==================== -->
+<div class="section" id="section-tracker">
+<div class="container">
+
+  <header style="margin-bottom:28px; padding-top:8px; animation: fadeUp 0.5s ease both;">
+    <div class="label">Progressive Overload Tracker</div>
+    <h1>TRACK <span style="color:var(--accent)">IT</span></h1>
+    <div class="subtitle" style="font-size:13px; color:#555; margin-top:8px;">Select session → log key lifts → app tells you when to go heavier.</div>
+  </header>
+
+  <!-- Session selector -->
+  <div id="tr-select">
+    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:12px;">Select today's session</div>
+
+    <!-- Strength -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a; margin-bottom:8px; margin-top:16px;">⚡ Strength</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('s1')">S1 — Clean &amp; Press</button>
+      <button class="tr-session-btn" onclick="selectSession('s2')">S2 — The Grind</button>
+      <button class="tr-session-btn" onclick="selectSession('s3')">S3 — Pull &amp; Push</button>
+      <button class="tr-session-btn" onclick="selectSession('s4')">S4 — The Triple</button>
+      <button class="tr-session-btn" onclick="selectSession('s5')">S5 — Push · Pull · Squat</button>
+      <button class="tr-session-btn" onclick="selectSession('s6')">S6 — Clean &amp; Lunge</button>
+      <button class="tr-session-btn" onclick="selectSession('s7')">S7 — Double Bell Ladder</button>
+      <button class="tr-session-btn" onclick="selectSession('s8')">S8 — Double KB Front Squat EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('s9')">S9 — The Sandow Complex</button>
+      <button class="tr-session-btn" onclick="selectSession('s10')">S10 — Heavy Complex EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('s11')">S11 — Half Bodyweight Complex</button>
+    </div>
+
+    <!-- Volume -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#ffffff; margin-bottom:8px;">💪 Volume</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('v1')">V1 — Snatch &amp; Press</button>
+      <button class="tr-session-btn" onclick="selectSession('v2')">V2 — Hinge · Push · Pull</button>
+      <button class="tr-session-btn" onclick="selectSession('v3')">V3 — The Classic</button>
+      <button class="tr-session-btn" onclick="selectSession('v4')">V4 — The Ladder</button>
+      <button class="tr-session-btn" onclick="selectSession('v5')">V5 — Leg Day</button>
+      <button class="tr-session-btn" onclick="selectSession('v6')">V6 — Arms &amp; Shoulders</button>
+      <button class="tr-session-btn" onclick="selectSession('v7')">V7 — Pull Day</button>
+    </div>
+
+    <!-- Conditioning -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#c8f55a; margin-bottom:8px;">🔥 Conditioning</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('c1')">C1 — The Ladder EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c2')">C2 — The Four</button>
+      <button class="tr-session-btn" onclick="selectSession('c3')">C3 — Boxing Rounds</button>
+      <button class="tr-session-btn" onclick="selectSession('c4')">C4 — Snatch &amp; Swing</button>
+      <button class="tr-session-btn" onclick="selectSession('c5')">C5 — Death by Clean &amp; Thruster</button>
+      <button class="tr-session-btn" onclick="selectSession('c6')">C6 — 20 Min No Rest EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c7')">C7 — Snatch EMOM</button>
+      <button class="tr-session-btn" onclick="selectSession('c8')">C8 — Clean &amp; Press / Bulgarian Split Squat</button>
+      <button class="tr-session-btn" onclick="selectSession('c9')">C9 — Swing · Snatch · Thruster</button>
+      <button class="tr-session-btn" onclick="selectSession('c10')">C10 — Rep Accumulator</button>
+    </div>
+
+    <!-- Full Body -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#5ab4f5; margin-bottom:8px;">🌀 Full Body</div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
+      <button class="tr-session-btn" onclick="selectSession('f1')">F1 — The Flow</button>
+      <button class="tr-session-btn" onclick="selectSession('f2')">F2 — Power Triplet</button>
+      <button class="tr-session-btn" onclick="selectSession('f3')">F3 — The Burner</button>
+      <button class="tr-session-btn" onclick="selectSession('f4')">F4 — The Chipper</button>
+      <button class="tr-session-btn" onclick="selectSession('f5')">F5 — Kickstand Quintet</button>
+      <button class="tr-session-btn" onclick="selectSession('f6')">F6 — Ring Upper Body</button>
+      <button class="tr-session-btn" onclick="selectSession('f7')">F7 — Bomber Prep</button>
+    </div>
+  </div>
+
+  <!-- Logging screen -->
+  <div id="tr-log" style="display:none">
+    <div id="tr-session-title" style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#fff; margin-bottom:4px;"></div>
+    <div id="tr-session-date" style="font-size:10px; color:#444; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:24px;"></div>
+
+    <div id="tr-movements"></div>
+
+    <button onclick="saveSession()" style="width:100%; background:var(--accent); border:none; color:#000; font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:16px; -webkit-tap-highlight-color:transparent;">✓ LOG SESSION</button>
+    <button onclick="backToSelect()" style="width:100%; background:transparent; border:1px solid #222; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">← Back</button>
+  </div>
+
+  <!-- History -->
+  <div id="tr-history" style="margin-top:40px; display:none">
+    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:16px;">History</div>
+    <div id="tr-history-list"></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  // ─── SESSION COMPOUND MOVEMENTS ────────────────────────────
+  const SESSIONS = {
+    s1:  { name:'S1 — Clean & Press',               moves:['KB Clean & Press','Front Squat'] },
+    s2:  { name:'S2 — The Grind',                   moves:['KB Clean','Half Rack Back Lunge','Push Press'] },
+    s3:  { name:'S3 — Pull & Push',                 moves:['Dead Stop Clean','Strict Press','Weighted Pull Up'] },
+    s4:  { name:'S4 — The Triple',                  moves:['Power Clean','Front Squat','Push Jerk'] },
+    s5:  { name:'S5 — Push · Pull · Squat',         moves:['Push Press','Single Arm Row','RDL','Goblet Squat'] },
+    s6:  { name:'S6 — Clean & Lunge',               moves:['KB Clean','Reverse Lunge'] },
+    s7:  { name:'S7 — Double Bell Ladder',           moves:['Tactical Snatch (medium)','Tactical Clean & Press (medium)','Back Racked Squat (heavy)'] },
+    s8:  { name:'S8 — Double KB Front Squat EMOM',  moves:['Double KB Front Squat'] },
+    s9:  { name:'S9 — The Sandow Complex',           moves:['Sandow Snatch','Half Kneeling Clean & Press'] },
+    s10: { name:'S10 — Heavy Complex EMOM',          moves:['Clean & Push Press','Windmill','Summersault Squat'] },
+    s11: { name:'S11 — Half Bodyweight Complex',     moves:['KB Clean','Half Rack Back Lunge','Push Press'] },
+    v1:  { name:'V1 — Snatch & Press',               moves:['KB Snatch','Strict Shoulder Press','Front Squat'] },
+    v2:  { name:'V2 — Hinge · Push · Pull',          moves:['Single Arm Row','Push Ups','RDL','Bulgarian Split Squat'] },
+    v3:  { name:'V3 — The Classic',                  moves:['KB Clean','Front Squat','Push Press'] },
+    v4:  { name:'V4 — The Ladder',                   moves:['KB Swing','KB Clean','Squat','Push Press'] },
+    v5:  { name:'V5 — Leg Day',                      moves:['Goblet Squat','Summersault Squat','Single Arm Row','KB Swing'] },
+    v6:  { name:'V6 — Arms & Shoulders',             moves:['Strict Press','Upright Row','KB Curl','Tricep Extension'] },
+    v7:  { name:'V7 — Pull Day',                     moves:['Weighted Pull Up','Single Arm KB Row'] },
+    c1:  { name:'C1 — The Ladder EMOM',              moves:['KB Clean','Squat (ladder)','Thruster','Push Press','Row'] },
+    c2:  { name:'C2 — The Four',                     moves:['KB Row','KB Clean','Reverse Lunge','Squat'] },
+    c3:  { name:'C3 — Boxing Rounds',                moves:['KB Swing','KB Clean','KB Press','KB Snatch'] },
+    c4:  { name:'C4 — Snatch & Swing',               moves:['KB Snatch','KB Swing','High Pull'] },
+    c5:  { name:'C5 — Death by Clean & Thruster',    moves:['KB Clean','KB Thruster'] },
+    c6:  { name:'C6 — 20 Min No Rest EMOM',          moves:['KB Swing / Squat (heavy)','KB High Pull (medium)','Tac Snatch + B Stance Squat','KB Push Ups'] },
+    c7:  { name:'C7 — Snatch EMOM',                  moves:['KB Snatch'] },
+    c8:  { name:'C8 — Clean & Press / Bulgarian',    moves:['Clean & Press (heavy)','Racked Bulgarian Split Squat'] },
+    c9:  { name:'C9 — Swing · Snatch · Thruster',    moves:['KB Swing','KB Snatch','KB Thruster','Push Ups'] },
+    c10: { name:'C10 — Rep Accumulator',             moves:['KB Swing','KB High Pull','KB Snatch','KB Thruster','Squat'] },
+    f1:  { name:'F1 — The Flow',                     moves:['KB Clean','Seesaw Lunge','Thruster','Windmill','Push Press'] },
+    f2:  { name:'F2 — Power Triplet',                moves:['Power Clean','Clean Squat','Push Press / Jerk'] },
+    f3:  { name:'F3 — The Burner',                   moves:['KB Swing','Clean & Press','Front Squat'] },
+    f4:  { name:'F4 — The Chipper',                  moves:['Front Squat','KB Clean','Push Press','KB Swing'] },
+    f5:  { name:'F5 — Kickstand Quintet',            moves:['Kickstand Deadlift','Kickstand Swing','Reverse Lunge','Squat','Thruster'] },
+    f6:  { name:'F6 — Ring Upper Body',              moves:['Ring Push Ups','Australian Ring Pull Ups','Ring Dips','Ring Curl'] },
+    f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
+  };
+
+  let currentSession = null;
+
+  function selectSession(id) {
+    currentSession = id;
+    const s = SESSIONS[id];
+    document.getElementById('tr-select').style.display = 'none';
+    document.getElementById('tr-log').style.display = 'block';
+    document.getElementById('tr-session-title').textContent = s.name;
+    document.getElementById('tr-session-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+    // Get last session data for this session
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    const lastSession = history.filter(h => h.id === id).pop();
+
+    const container = document.getElementById('tr-movements');
+    container.innerHTML = '';
+
+    s.moves.forEach((move, i) => {
+      const last = lastSession ? lastSession.moves[i] : null;
+      const lastKg = last ? last.kg : '';
+      const lastReps = last ? last.reps : '';
+
+      // Progressive overload advice
+      const advice = last && last.moves[i] ? `<div style="font-size:11px; color:var(--accent); margin-top:4px;">${getAdvice(last.moves[i], i)}</div>` : "";
+      container.innerHTML += `
+        <div style="background:#141414; border:1px solid #1f1f1f; border-left:2px solid #2a2a2a; padding:16px; margin-bottom:2px;">
+          <div style="font-size:14px; font-weight:600; color:#fff; margin-bottom:10px;">${move}</div>
+          ${advice}
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+            <div>
+              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Weight (kg)</div>
+              <input type="number" id="kg_${i}" placeholder="${lastKg || '0'}" step="0.5" min="0"
+                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
+            </div>
+            <div>
+              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Reps / Rounds</div>
+              <input type="number" id="reps_${i}" placeholder="${lastReps || '0'}" min="0"
+                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+
+  function saveSession() {
+    const s = SESSIONS[currentSession];
+    const moves = s.moves.map((move, i) => ({
+      name: move,
+      kg: parseFloat(document.getElementById('kg_' + i).value) || 0,
+      reps: parseInt(document.getElementById('reps_' + i).value) || 0
+    }));
+
+    const entry = {
+      id: currentSession,
+      name: s.name,
+      date: new Date().toISOString(),
+      moves
+    };
+
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    history.push(entry);
+    localStorage.setItem('ironplan_history', JSON.stringify(history));
+
+    showHistory();
+    backToSelect();
+    alert('Session logged ✓');
+  }
+
+  function backToSelect() {
+    document.getElementById('tr-log').style.display = 'none';
+    document.getElementById('tr-select').style.display = 'block';
+    currentSession = null;
+  }
+
+  function showHistory() {
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    if (!history.length) return;
+
+    document.getElementById('tr-history').style.display = 'block';
+    const list = document.getElementById('tr-history-list');
+    list.innerHTML = '';
+
+    // Show last 10 sessions, most recent first
+    [...history].reverse().slice(0, 10).forEach(entry => {
+      const date = new Date(entry.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+      const movesHtml = entry.moves.map(m =>
+        `<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #111; font-size:12px;">
+          <span style="color:#888;">${m.name}</span>
+          <span style="color:#fff; font-weight:500;">${m.kg}kg × ${m.reps}</span>
+        </div>`
+      ).join('');
+
+      list.innerHTML += `
+        <div style="background:#141414; border:1px solid #1f1f1f; padding:14px 16px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div style="font-size:14px; font-weight:600; color:#fff;">${entry.name}</div>
+            <div style="font-size:10px; color:#444;">${date}</div>
+          </div>
+          ${movesHtml}
+        </div>`;
+    });
+  }
+
+  function getAdvice(last, moveIndex) {
+    if (!last) return '';
+    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]')
+      .filter(h => h.id === currentSession);
+    const count = history.length;
+    const prevKg = last.kg || 0;
+    const prevReps = last.reps || 0;
+    if (!prevKg && !prevReps) return '';
+    if (count >= 2) return `🔼 Add 1–2kg or 1 rep today`;
+    return `✓ Match: ${prevKg}kg × ${prevReps} reps`;
+  }
+
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'tracker') showHistory();
+  }
+
+  function showTrainTab(tab) {
+    const map = { mobility:'panel-mobility', strength:'panel-strength', volume:'panel-volume', conditioning:'panel-conditioning', fullbody:'panel-fullbody' };
+    document.querySelectorAll('.train-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.train-tab').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
+    const panel = document.getElementById(map[tab]);
+    const btn = document.getElementById('tab-' + tab);
+    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
+    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
+  }
+
+  function showSeason(id, btn) {
+    document.querySelectorAll('.season-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('season-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleRow(el) {
+    el.classList.toggle('open');
+    const next = el.nextElementSibling;
+    if (next && next.classList.contains('t-body')) next.classList.toggle('open');
+  }
+
+  function toggleCat(el) {
+    el.classList.toggle('open');
+    const next = el.nextElementSibling;
+    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    showHistory();
+  });
+
+  // ─── TRACKER CSS ───────────────────────────────────────────
+
+</script>
+
+</body>
+</html>
