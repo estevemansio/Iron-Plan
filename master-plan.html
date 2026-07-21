@@ -794,13 +794,13 @@
 
 <!-- TOP NAV -->
 <div class="top-nav">
-  <button class="nav-btn active" onclick="showSection('training', this)">
-    <div class="nav-dot" style="background:#f5a85a"></div>
-    Train
-  </button>
-<button class="nav-btn" onclick="showSection('kb', this)">
+  <button class="nav-btn active" onclick="showSection('kb', this)">
     <div class="nav-dot" style="background:#c8f55a"></div>
-    KB
+    Iron
+  </button>
+  <button class="nav-btn" onclick="showSection('training', this)">
+    <div class="nav-dot" style="background:#f5a85a"></div>
+    Quick
   </button>
   <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
@@ -813,7 +813,7 @@
 </div>
 
 <!-- ==================== TRAINING SECTION ==================== -->
-<div class="section active" id="section-training">
+<div class="section" id="section-training">
 <div class="t-container">
 
   <div class="t-header">
@@ -1465,12 +1465,12 @@
 </div>
 
 <!-- ==================== KB SECTION ==================== -->
-<div class="section" id="section-kb">
+<div class="section active" id="section-kb">
 <div class="t-container">
 
   <div class="t-header">
     <div class="t-header-label">Kettlebells · Rings · Bodyweight</div>
-    <div class="t-header-title">KB <span>PLAN</span></div>
+    <div class="t-header-title">IRON <span>PLAN</span></div>
   </div>
 
   <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Legs + Push &nbsp;·&nbsp; Tue: Pull + Hinge &nbsp;·&nbsp; Wed: Movement Workout &nbsp;·&nbsp; Thu: Press + Shoulders &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Movement Workout</div>
@@ -1511,11 +1511,11 @@
 
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push Complex</span></div>
     <div class="t-body">
-      <div class="t-note">→ AMRAP 20 · 1 bell · 60s rest between rounds · log rounds completed.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Hang Clean</div><div class="t-item-detail">hip snap, catch in rack</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Thruster</div><div class="t-item-detail">clean to squat to press, one movement</div></div>
+      <div class="t-note">→ AMRAP 20 · 2 bells · 60s rest between rounds · log rounds completed.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Double KB Hang Clean</div><div class="t-item-detail">both bells · explosive · catch in rack</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Double KB Thruster</div><div class="t-item-detail">both bells · squat to press · one movement</div></div>
       <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Push Ups</div><div class="t-item-detail">chest to floor</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Heavy KB Swings</div><div class="t-item-detail">hip drive · snap · not a squat</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Goblet Squat or Summersault Squat</div><div class="t-item-detail">choose based on feel</div></div>
     </div>
   </div>
 
@@ -1596,31 +1596,6 @@
 
   <!-- ── DAY 4 — ATHLETIC CONDITIONING ── -->
   <div class="train-panel" id="kb-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#c8f55a">Day 4 — Athletic Conditioning</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 20 mins</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">KB Power Clean</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6×3 · 1 heavy bell · explosive · 90s rest · treat each rep like a max effort. Reset between reps.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Power Clean</div><div class="t-item-detail">6×3 · from floor · reset each rep</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#c8f55a; margin-bottom:16px;">🔥 Metcon — 6 Rounds · 90s rest</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">The Combat Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 rounds · 90s rest · 1 bell · don't put it down within a round. Complete right side then left.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Romanian Deadlift</div><div class="t-item-detail">hinge, feel the hamstring load</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 KB Hang Clean</div><div class="t-item-detail">explosive hip drive to rack</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6 KB Thruster</div><div class="t-item-detail">squat to press, no break</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 KB Lateral Raise</div><div class="t-item-detail">shoulders fatigued — intentional</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Max Pull Ups</div><div class="t-item-detail">finish the round here</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Box Jumps</div><div class="t-item-detail">explosive · land soft · step down</div></div>
-    </div>
-  </div>
-
   <!-- ── DAY 5 — FULL BODY ── -->
   <div class="train-panel" id="kb-panel-day5" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#c8f55a">Friday — Full Body</div>
