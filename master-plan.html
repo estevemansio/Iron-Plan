@@ -56,10 +56,10 @@
     border: none;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    font-size: 10px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 18px 4px;
+    padding: 18px 2px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -801,6 +801,10 @@
   <button class="nav-btn" onclick="showSection('training', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
     Quick
+  </button>
+  <button class="nav-btn" onclick="showSection('ff', this)">
+    <div class="nav-dot" style="background:#f55a5a"></div>
+    FF
   </button>
   <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
@@ -1648,6 +1652,462 @@
 </div>
 </div>
 
+<!-- ==================== FIREFIGHTER SECTION ==================== -->
+<div class="section" id="section-ff">
+<div class="t-container">
+
+  <div class="t-header">
+    <div class="t-header-label">Strength · Conditioning · Selection Prep</div>
+    <div class="t-header-title">BOMBER <span>PREP</span></div>
+  </div>
+
+  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Lower + Aerobic &nbsp;·&nbsp; Tue: Pull + Carry &nbsp;·&nbsp; Wed: Mobility &nbsp;·&nbsp; Thu: Push + Press &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Mobility</div>
+
+  <!-- Day tabs -->
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
+    <button class="train-tab" id="fftab-day1" onclick="showFFTab('day1')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mon</button>
+    <button class="train-tab" id="fftab-day2" onclick="showFFTab('day2')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Tue</button>
+    <button class="train-tab" id="fftab-day5" onclick="showFFTab('day5')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Wed</button>
+    <button class="train-tab" id="fftab-day3" onclick="showFFTab('day3')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Thu</button>
+    <button class="train-tab" id="fftab-day4" onclick="showFFTab('day4')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Fri</button>
+    <button class="train-tab" id="fftab-day6" onclick="showFFTab('day6')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sat</button>
+    <button class="train-tab" id="fftab-day7" onclick="showFFTab('day7')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sun</button>
+  </div>
+
+  <!-- ── MONDAY — LOWER + AEROBIC ── -->
+  <div class="train-panel" id="ff-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Monday — Lower Body + Aerobic</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Back Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · barbell · 3 min rest · build weight each week. Alternate with Safety Bar Squat for variation.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Squat</div><div class="t-item-detail">5×5 · same weight all sets</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Romanian Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · barbell · 3s eccentric · 90s rest · same bar, reduce weight from squat.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Romanian Deadlift</div><div class="t-item-detail">4×8 · 3s down</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bulgarian Split Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 3×10 each side · barbell or dumbbells · 3s eccentric · 90s rest. Non-negotiable for tall frame leg development.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bulgarian Split Squat</div><div class="t-item-detail">3×10 each · 3s down</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — AMRAP 20</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ AMRAP 20 · 60s rest between rounds · log rounds. Ski-erg opens each round — rowing machine if no ski-erg.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">200m Ski-Erg</div><div class="t-item-detail">or 250m row · full pull · stay aerobic</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Double KB Hang Clean</div><div class="t-item-detail">both bells · explosive · catch in rack</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Double KB Thruster</div><div class="t-item-detail">both bells · squat to press · one movement</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Push Ups</div><div class="t-item-detail">chest to floor · strict</div></div>
+    </div>
+  </div>
+
+  <!-- ── TUESDAY — PULL + CARRY ── -->
+  <div class="train-panel" id="ff-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Tuesday — Pull + Carry</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Build to heavy 3, then 3×3 at 85% · barbell · 3 min rest · dead stop every rep.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Conventional Deadlift</div><div class="t-item-detail">build to heavy 3 · then 3×3 @ 85%</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · add weight weekly · selection test pull ups come from here. Stop at technique failure.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">5×5 · belt or KB between feet</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pendlay Row</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · barbell · explosive pull from dead stop · 90s rest · back to horizontal each rep. Back thickness builder.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pendlay Row</div><div class="t-item-detail">4×8 · dead stop · explosive pull</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — 5 Rounds · 90s rest</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pull Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5 rounds · 90s rest · KB · don't put them down within a round.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Swings</div><div class="t-item-detail">heavy · hip snap</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB High Pull</div><div class="t-item-detail">lead with elbow · explosive</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Power Snatch (each side)</div><div class="t-item-detail">hip to overhead · punch up fast</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Gorilla Row (each side)</div><div class="t-item-detail">both KBs on floor · row one · brace on other · alternate</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">🏋 Loaded Carry — 4 rounds</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Carry Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4 rounds · 90s rest · the most specific firefighter movement. Heavy and uncomfortable.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">100m · both hands · heaviest possible · simulates equipment carry</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suitcase Carry</div><div class="t-item-detail">40m each side · one hand · anti-lateral flexion · simulates asymmetric load</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag Drag or Band Drag</div><div class="t-item-detail">20m · anchor low · pull towards you · simulates casualty drag</div></div>
+    </div>
+  </div>
+
+  <!-- ── THURSDAY — PUSH + PRESS ── -->
+  <div class="train-panel" id="ff-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Thursday — Push + Press</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">KB Incline Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×10 · feet elevated on bench · 3s eccentric · 90s rest · upper chest and front delt.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Incline Press</div><div class="t-item-detail">4×10 each side · 3s down</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">KB Strict Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 each side · no leg drive · 2 min rest · build weight each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Strict Press</div><div class="t-item-detail">5×5 each side · strict · no momentum</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ring Dips</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×max · lean forward for chest emphasis · add weight when 15+ easy · 90s rest.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Dips</div><div class="t-item-detail">4×max · add weight when 15+ easy</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — 5 Rounds · 90s rest</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Firefighter Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5 rounds · 90s rest · every movement simulates a real firefighting demand.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">15 Cal Assault Bike</div><div class="t-item-detail">full effort · simulates sustained aerobic work in gear</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Weighted Box Step Ups (each leg)</div><div class="t-item-detail">vest or dumbbells · simulates stair climb in gear</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">5 Sandbag Reverse Lunge (each leg)</div><div class="t-item-detail">sandbag on shoulder · simulates carrying casualty</div></div>
+    </div>
+  </div>
+
+  <!-- ── FRIDAY — FULL BODY ── -->
+  <div class="train-panel" id="ff-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Friday — Full Body</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Zercher Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · barbell in the crook of elbows · 3 min rest · brutal core and quad demand · directly mimics carrying a casualty.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Zercher Squat</div><div class="t-item-detail">5×5 · elbows under bar · chest up</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · barbell · leg drive allowed · 2 min rest · builds explosive overhead power.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Push Press</div><div class="t-item-detail">5×5 · leg drive · add 2.5kg weekly</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — 4 Rounds · 90s rest</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">The Bomber Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4 rounds · 90s rest · selection test and job-specific movements combined.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">25 Push Ups</div><div class="t-item-detail">strict · chest to floor · selection test standard</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Chin Ups</div><div class="t-item-detail">supinated grip · full range · selection test standard</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">25 Wall Balls</div><div class="t-item-detail">9kg · full squat · hit the target</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Sandbag Clean to Shoulder (each side)</div><div class="t-item-detail">power clean to one shoulder · then the other · simulates casualty lift</div></div>
+    </div>
+
+    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid #f55a5a;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Selection Test Targets</div>
+      <div style="font-size:12px; color:#555; line-height:1.8;">
+        Pull Ups → 10+ unweighted · build via weighted 5×5<br>
+        Push Ups → 25+ per round · 4 rounds means 100 total<br>
+        Aerobic → beep test level 10+ · build via ski-erg and bike intervals<br>
+        Carry → 40kg+ for 100m · build via weighted step ups and farmer carry<br>
+        Drag → bodyweight load 20m · build via sandbag and band drag
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── MOBILITY — WED + SAT ── -->
+  <div class="train-panel" id="ff-panel-mob" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Wed + Sat — Mobility · Joint Health · Grip</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">45–60 mins · same session both days · focus on ankle, hip, shoulder, neck · joint health and injury prevention.</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px;">Warm Up — 5 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Joint Circles</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 10 reps each direction · wake up every joint before loading.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle circles</div><div class="t-item-detail">10 each direction each foot</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip circles</div><div class="t-item-detail">10 each direction</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder circles + arm swings</div><div class="t-item-detail">10 each direction</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck circles + chin tucks</div><div class="t-item-detail">slow · controlled</div></div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Ankle — 10 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Banded Ankle Distraction</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Band around ankle pulling forward · half-kneeling into wall · drive knee past toes · heel stays down. Priority number one for your dorsiflexion.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Kneeling Ankle Rocks</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Half-kneeling · drive knee past toes · heel stays glued · slow and controlled · loading the ankle at end range.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Single Leg Calf Raise Eccentric</span></div>
+    <div class="t-body">
+      <div class="t-note">→ On a step · raise to full height · lower over 4 seconds to full stretch · most effective way to lengthen calf tissue long term.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise Eccentric</div><div class="t-item-detail">2×12 each · 4s down</div></div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Hip — 15 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">90/90 Hip Transitions</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Both legs at 90 degrees · rotate to the other side · breathe into the stretch · trains internal and external rotation together.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">3×10 each side · slow</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Cossack Squat</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Feet wide · shift into deep lateral squat · other leg straight · best drill for lateral hip range and kicking mobility.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cossack Squat</div><div class="t-item-detail">3×8 each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pigeon Stretch</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Shin parallel to mat · lean forward · targets piriformis and deep hip rotators. Minimum 60s hold.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Copenhagen Plank</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Side plank · top leg on bench · bottom leg hanging · builds adductor strength that protects the groin and improves hip stability for kicking.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">3×20–30s each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip Airplanes</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Stand on one leg · hinge · rotate pelvis so free leg rises skyward · 2s hold · trains hip internal rotation under load.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each side · 2s hold</div></div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Shoulder + Thoracic — 10 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thoracic Extension on Foam Roller</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Roller at mid-back · hands behind head · extend over it · work up and down the thoracic spine. Unlocks overhead position more than any shoulder stretch.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Extension on Foam Roller</div><div class="t-item-detail">2×60s</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thread the Needle</span></div>
+    <div class="t-body">
+      <div class="t-note">→ All fours · thread one arm under body rotating thoracic spine · follow hand with eyes · unsticks the thoracic segments limiting shoulder and punch power.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thread the Needle</div><div class="t-item-detail">2×8 each side</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Scapular Push Ups</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Push up position · arms locked · protract and retract shoulder blades only · builds serratus anterior, the muscle that stabilises the scapula under load.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">3×12 · slow</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Shoulder Dislocates (band)</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Wide grip on band · pass from front to back overhead · widen grip until comfortable · narrow slightly each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates</div><div class="t-item-detail">2×10 · widen grip as needed</div></div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Neck — 5 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Chin Tucks + Neck Isometrics</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Chin tucks activate deep neck flexors. Isometrics build the neck that absorbs punches. Non-negotiable for boxing and forward head posture.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Chin Tucks</div><div class="t-item-detail">3×10 · 5s hold each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Isometrics — 4 directions</div><div class="t-item-detail">30s each · front, back, left, right</div></div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Bodyweight Strength + Hanging + Grip — 15 mins</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Dead Hang</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Hang from bar · arms straight · shoulders active · decompresses spine · builds grip endurance and shoulder mobility simultaneously. Most underrated longevity exercise.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×max · aim 60s · rest 60s</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Scapular Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-note">→ From dead hang · depress and retract the scapula without bending the elbow · slight rise in the body · builds the foundation for pull ups and protects the shoulder.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Pull Ups</div><div class="t-item-detail">3×10 · slow · feel the blade move</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Good Mornings</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Feet shoulder-width · hands behind head · hinge at hip · lower chest towards floor · drive back up through glutes. Activates posterior chain and lower back.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×12 · slow</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deep Squat Hold</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Heels elevated on plates · sit into deepest squat possible · elbows push knees out · chest up · reduce heel elevation by a few mm each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s · reduce heel elevation weekly</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Grip Work</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Firefighter grip is everything — hoses, ladders, casualties. Towel pull ups add rotation. Farmer carry builds sustained grip under load. No straps.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Towel Pull Ups or Towel Hang</div><div class="t-item-detail">3×max · towel over bar · double grip</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">3×40m · heaviest you can hold · no straps</div></div>
+    </div>
+
+  </div>
+
+  <!-- ── WEDNESDAY — MOBILITY + JOINT HEALTH ── -->
+  <div class="train-panel" id="ff-panel-day5" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Wednesday — Mobility + Joint Health</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">45–60 mins · focus on hips, ankles and shoulders · bodyweight strength for joint health and injury prevention.</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip Mobility</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">3×10 each side · breathe into the stretch</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cossack Squat</div><div class="t-item-detail">3×8 each side · lateral hip range for kicking</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">3×8 each · 3s hold at end range</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Hip Flexor + Rotation</div><div class="t-item-detail">3×45s each · lunge position, rotate torso towards front leg</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Figure 4 / Pigeon</div><div class="t-item-detail">3×60s each · deep hip rotators</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ankle Dorsiflexion</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">3×45s each · band at joint, drive knee past toes</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each · heel stays down</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Ankle Stretch — bent knee</div><div class="t-item-detail">3×45s each · targets soleus</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise — slow eccentric</div><div class="t-item-detail">3×12 each · 4s down · off a step</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Shoulder + Thoracic</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Extension over Foam Roller</div><div class="t-item-detail">3×60s · work up and down the mid back</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Slide</div><div class="t-item-detail">3×10 · W to Y · keep contact throughout</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thread the Needle</div><div class="t-item-detail">3×8 each · thoracic rotation</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates (band)</div><div class="t-item-detail">3×10 · widen grip until pain-free</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Doorframe Chest Opener</div><div class="t-item-detail">3×45s · pec minor and anterior shoulder</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Neck + Tech Neck</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Chin Tucks</div><div class="t-item-detail">3×10 · 5s hold · activates deep neck flexors</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Isometrics</div><div class="t-item-detail">4 directions × 30s · hand against head, resist</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suboccipital Release</div><div class="t-item-detail">60s · tennis ball at base of skull · gentle pressure</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bodyweight Joint Strength</span></div>
+    <div class="t-body">
+      <div class="t-note">→ These build joint resilience — tendons, ligaments and connective tissue that weights alone don't reach.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s · decompress spine · grip and shoulder health</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Active Hang — Scapular Pull Ups</div><div class="t-item-detail">3×10 · depress and retract scapula without bending elbows</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">3×30s each · side plank with top leg on bench · adductor and hip health</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">3×15 · straight arms · protract and retract · serratus anterior</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×12 · bodyweight · hinge pattern · lower back and hamstring health</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Extensions</div><div class="t-item-detail">3×12 · 2s hold at top · counters flexion posture</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Grip Strength</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Firefighter grip is non-negotiable — hoses, ladders, casualties. Train it directly.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang — Fat Grip or Towel</div><div class="t-item-detail">3×max · towel over bar doubles grip demand</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">3×40m heavy · don't let the wrist break</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Plate Pinch</div><div class="t-item-detail">3×30s each hand · pinch two plates smooth side out</div></div>
+    </div>
+  </div>
+
+  <!-- ── SATURDAY — MOBILITY + GRIP ── -->
+  <div class="train-panel" id="ff-panel-day6" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Saturday — Mobility + Grip</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">45–60 mins · second mobility session · different exercises to Wednesday · full body flow + grip focus.</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Full Body Flow</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Move continuously for 10 mins. Don't rush. Breathe into each position.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s · heels elevated · reduce elevation over time</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">World's Greatest Stretch</div><div class="t-item-detail">3×5 each side · lunge + rotation + reach</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Adductor Rock Back</div><div class="t-item-detail">3×10 each · inner thigh for lateral kicking range</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cat-Cow + Thoracic Rotation</div><div class="t-item-detail">3×10 each · spine health</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Lower Body Joint Health</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">VMO Pulse Squats</div><div class="t-item-detail">3×20 · quarter squat · 2–3cm pulse · wakes up inner quad</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Ankle Stretch — straight leg</div><div class="t-item-detail">3×45s each · gastrocnemius</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Glute Bridge</div><div class="t-item-detail">3×15 each · 2s hold · hip stability</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lateral Band Walk</div><div class="t-item-detail">3×15 each direction · glute med · knee health</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Upper Body Joint Health</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bar Hang</div><div class="t-item-detail">3×60s · passive hang · decompress and lengthen</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Bug</div><div class="t-item-detail">3×10 each side · core stability without spinal flexion</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lat Stretch in Doorframe</div><div class="t-item-detail">3×45s each · unlocks overhead position</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">3×15 · serratus anterior · shoulder blade control</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Grip + Pulling Endurance</span></div>
+    <div class="t-body">
+      <div class="t-note">→ End of week grip work. Hands should be challenged but not destroyed.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Max Pull Ups — 5 sets</div><div class="t-item-detail">bodyweight · stop at technique failure · rest 2 mins</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Towel Pull Ups</div><div class="t-item-detail">3×max · towel over bar · extreme grip demand</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suitcase Carry</div><div class="t-item-detail">3×40m each side · heavy · anti-lateral flexion + grip</div></div>
+    </div>
+  </div>
+
+  <!-- ── SUNDAY — RUNNING ── -->
+  <div class="train-panel" id="ff-panel-day7" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Sunday — Running</div>
+    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Rotate across the 4 sessions week by week. Don't repeat the same one two weeks in a row. Each builds a different quality.</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 1 — Z2 Long Run</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 45–60 mins · conversational pace · can hold a full conversation throughout · heart rate 130–150bpm · aerobic base builder.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Easy run</div><div class="t-item-detail">45–60 mins · never breathless · nasal breathing if possible</div></div>
+      <div class="t-note" style="margin-top:8px;">This is the most important session for firefighter aerobic capacity. The base everything else sits on.</div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 2 — Beep Test Prep</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 10 min warm up jog · then beep test intervals · simulate the exact selection test format. Track your level each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Beep Test — full attempt</div><div class="t-item-detail">20m shuttle · keep up with the beeps · log the level you reach</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
+      <div class="t-note" style="margin-top:8px;">Target: level 10+ for Bomber selection. If you don't have the app, search "20m shuttle run beep test" — free versions available.</div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 3 — Tempo Run</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 10 min warm up · 20 mins at tempo pace · 10 min cool down · total 40 mins. Tempo = comfortably hard, 3-4 words max per breath.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tempo Run</div><div class="t-item-detail">20 mins · 85–90% max HR · sustained effort · not a sprint</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
+      <div class="t-note" style="margin-top:8px;">This bridges the gap between your Z2 base and the high intensity of the beep test. Do it once every 3-4 weeks.</div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 4 — Hill Sprints</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 10 min warm up · 8–10 hill sprints · walk back down · 10 min cool down. Find a hill 60–100m long. Full effort up.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins flat · get the legs warm</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hill Sprints</div><div class="t-item-detail">8–10 × 60–100m · full effort up · walk down · rest at bottom</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins flat and easy</div></div>
+      <div class="t-note" style="margin-top:8px;">Hill sprints build explosive leg power, VO2max and mental toughness simultaneously. One of the best bang-for-buck sessions in existence. Barcelona has plenty of hills — Montjuïc is perfect.</div>
+    </div>
+
+    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid #f55a5a;">
+      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Recommended Weekly Rotation</div>
+      <div style="font-size:12px; color:#555; line-height:1.8;">
+        Week 1 → Z2 Long Run<br>
+        Week 2 → Beep Test Prep<br>
+        Week 3 → Tempo Run<br>
+        Week 4 → Hill Sprints<br>
+        Then repeat. Every 4 weeks you've hit all four qualities.
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
 <!-- ==================== DIET SECTION ==================== -->
 <div class="section" id="section-diet">
 <div class="container">
@@ -2142,6 +2602,19 @@
     document.getElementById('section-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'tracker') showHistory();
+  }
+
+  function showFFTab(tab) {
+    document.querySelectorAll('[id^="ff-panel-"]').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('[id^="fftab-"]').forEach(b => { b.style.background='#111'; b.style.color='#555'; });
+    const panel = document.getElementById('ff-panel-' + tab);
+    const btn = document.getElementById('fftab-' + tab);
+    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
+    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
+  }
+
+  function showFFTab_init() {
+    showFFTab('day1');
   }
 
   function showKBTab(tab) {
