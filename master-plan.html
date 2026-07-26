@@ -794,17 +794,17 @@
 
 <!-- TOP NAV -->
 <div class="top-nav">
-  <button class="nav-btn active" onclick="showSection('kb', this)">
+  <button class="nav-btn active" onclick="showSection('ff', this)">
+    <div class="nav-dot" style="background:#f55a5a"></div>
+    FF
+  </button>
+  <button class="nav-btn" onclick="showSection('kb', this)">
     <div class="nav-dot" style="background:#c8f55a"></div>
     Iron
   </button>
   <button class="nav-btn" onclick="showSection('training', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
     Quick
-  </button>
-  <button class="nav-btn" onclick="showSection('ff', this)">
-    <div class="nav-dot" style="background:#f55a5a"></div>
-    FF
   </button>
   <button class="nav-btn" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:#f5a85a"></div>
@@ -1469,7 +1469,7 @@
 </div>
 
 <!-- ==================== KB SECTION ==================== -->
-<div class="section active" id="section-kb">
+<div class="section" id="section-kb">
 <div class="t-container">
 
   <div class="t-header">
@@ -1653,7 +1653,7 @@
 </div>
 
 <!-- ==================== FIREFIGHTER SECTION ==================== -->
-<div class="section" id="section-ff">
+<div class="section active" id="section-ff">
 <div class="t-container">
 
   <div class="t-header">
@@ -1661,7 +1661,7 @@
     <div class="t-header-title">BOMBER <span>PREP</span></div>
   </div>
 
-  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Lower + Aerobic &nbsp;·&nbsp; Tue: Pull + Carry &nbsp;·&nbsp; Wed: Mobility &nbsp;·&nbsp; Thu: Push + Press &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Mobility</div>
+  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Lower + Aerobic &nbsp;·&nbsp; Tue: Push + Press &nbsp;·&nbsp; Wed: Mobility &nbsp;·&nbsp; Thu: Pull + Carry &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Mobility</div>
 
   <!-- Day tabs -->
   <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
@@ -1713,53 +1713,7 @@
 
   <!-- ── TUESDAY — PULL + CARRY ── -->
   <div class="train-panel" id="ff-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f55a5a">Tuesday — Pull + Carry</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deadlift</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Build to heavy 3, then 3×3 at 85% · barbell · 3 min rest · dead stop every rep.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Conventional Deadlift</div><div class="t-item-detail">build to heavy 3 · then 3×3 @ 85%</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5×5 · add weight weekly · selection test pull ups come from here. Stop at technique failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">5×5 · belt or KB between feet</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pendlay Row</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×8 · barbell · explosive pull from dead stop · 90s rest · back to horizontal each rep. Back thickness builder.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pendlay Row</div><div class="t-item-detail">4×8 · dead stop · explosive pull</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — 5 Rounds · 90s rest</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pull Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 rounds · 90s rest · KB · don't put them down within a round.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Swings</div><div class="t-item-detail">heavy · hip snap</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB High Pull</div><div class="t-item-detail">lead with elbow · explosive</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Power Snatch (each side)</div><div class="t-item-detail">hip to overhead · punch up fast</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Gorilla Row (each side)</div><div class="t-item-detail">both KBs on floor · row one · brace on other · alternate</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">🏋 Loaded Carry — 4 rounds</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Carry Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 rounds · 90s rest · the most specific firefighter movement. Heavy and uncomfortable.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">100m · both hands · heaviest possible · simulates equipment carry</div></div>
-    </div>
-  </div>
-
-  <!-- ── THURSDAY — PUSH + PRESS ── -->
-  <div class="train-panel" id="ff-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f55a5a">Thursday — Push + Press</div>
+    <div class="t-cat-label" style="color:#f55a5a">Tuesday — Push + Press</div>
 
     <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
 
@@ -1794,6 +1748,46 @@
   </div>
 
   <!-- ── FRIDAY — FULL BODY ── -->
+  <div class="train-panel" id="ff-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Thursday — Pull + Carry</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-note">→ Build to heavy 3, then 3×3 at 85% · barbell · 3 min rest · dead stop every rep.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Conventional Deadlift</div><div class="t-item-detail">build to heavy 3 · then 3×3 @ 85%</div></div>
+    </div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5×5 · add weight weekly · selection test pull ups come from here. Stop at technique failure.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">5×5 · belt or KB between feet</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f55a5a; margin-bottom:16px;">🔥 Metcon — 5 Rounds · 90s rest</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pull Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 5 rounds · 90s rest · KB · don't put them down within a round.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Swings</div><div class="t-item-detail">heavy · hip snap</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB High Pull</div><div class="t-item-detail">lead with elbow · explosive</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Power Snatch (each side)</div><div class="t-item-detail">hip to overhead · punch up fast</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 KB Gorilla Row (each side)</div><div class="t-item-detail">both KBs on floor · row one · brace on other · alternate</div></div>
+    </div>
+
+    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">🏋 Loaded Carry — 4 rounds</div>
+
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Carry Complex</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4 rounds · 90s rest · the most specific firefighter movement. Heavy and uncomfortable.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">100m · both hands · heaviest possible · simulates equipment carry</div></div>
+    </div>
+  </div>
+
+  <!-- ── THURSDAY — PUSH + PRESS ── -->
   <div class="train-panel" id="ff-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
     <div class="t-cat-label" style="color:#f55a5a">Friday — Full Body</div>
 
@@ -1817,8 +1811,8 @@
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">The Bomber Complex</span></div>
     <div class="t-body">
       <div class="t-note">→ 4 rounds · 90s rest · selection test and job-specific movements combined.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">25 Push Ups</div><div class="t-item-detail">strict · chest to floor · selection test standard</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Chin Ups</div><div class="t-item-detail">supinated grip · full range · selection test standard</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">20 Push Ups</div><div class="t-item-detail">strict · chest to floor · selection test standard</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 Gorilla Row (each side)</div><div class="t-item-detail">2 KBs on floor · row one · brace on other · alternate</div></div>
       <div class="t-item"><div class="t-dot"></div><div class="t-item-name">25 Wall Balls</div><div class="t-item-detail">9kg · full squat · hit the target</div></div>
       <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Sandbag Clean to Shoulder (each side)</div><div class="t-item-detail">power clean to one shoulder · then the other · simulates casualty lift</div></div>
       <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag or Band Drag</div><div class="t-item-detail">20m · anchor low · pull towards you · simulates casualty drag</div></div>
@@ -2053,13 +2047,13 @@
       <div class="t-note" style="margin-top:8px;">This is the most important session for firefighter aerobic capacity. The base everything else sits on.</div>
     </div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 2 — Beep Test Prep</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 2 — Norwegian 4×4</span></div>
     <div class="t-body">
-      <div class="t-note">→ 10 min warm up jog · then beep test intervals · simulate the exact selection test format. Track your level each week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Beep Test — full attempt</div><div class="t-item-detail">20m shuttle · keep up with the beeps · log the level you reach</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-note" style="margin-top:8px;">Target: level 10+ for Bomber selection. If you don't have the app, search "20m shuttle run beep test" — free versions available.</div>
+      <div class="t-note">→ 10 min warm up · 4 rounds × 4 mins at 90–95% max HR · 3 mins easy jog between rounds · 10 min cool down · total ~50 mins.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy · get the heart rate up gradually</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 × 4 min intervals</div><div class="t-item-detail">90–95% max HR · should be very hard to speak · 3 mins easy jog between each</div></div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy · let the heart rate drop fully</div></div>
+      <div class="t-note" style="margin-top:8px;">The most effective VO2max protocol that exists. Used by Norwegian elite runners and cross-country skiers. Directly builds the aerobic ceiling you need for Hyrox and firefighter selection.</div>
     </div>
 
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 3 — Tempo Run</span></div>
@@ -2084,7 +2078,7 @@
       <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Recommended Weekly Rotation</div>
       <div style="font-size:12px; color:#555; line-height:1.8;">
         Week 1 → Z2 Long Run<br>
-        Week 2 → Beep Test Prep<br>
+        Week 2 → Norwegian 4×4<br>
         Week 3 → Tempo Run<br>
         Week 4 → Hill Sprints<br>
         Then repeat. Every 4 weeks you've hit all four qualities.
@@ -2351,59 +2345,13 @@
   <div id="tr-select">
     <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:12px;">Select today's session</div>
 
-    <!-- Strength -->
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a85a; margin-bottom:8px; margin-top:16px;">⚡ Strength</div>
+    <!-- Firefighter -->
+    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f55a5a; margin-bottom:8px; margin-top:16px;">🔥 Firefighter</div>
     <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-      <button class="tr-session-btn" onclick="selectSession('s1')">S1 — Clean &amp; Press</button>
-      <button class="tr-session-btn" onclick="selectSession('s2')">S2 — The Grind</button>
-      <button class="tr-session-btn" onclick="selectSession('s3')">S3 — Pull &amp; Push</button>
-      <button class="tr-session-btn" onclick="selectSession('s4')">S4 — The Triple</button>
-      <button class="tr-session-btn" onclick="selectSession('s5')">S5 — Push · Pull · Squat</button>
-      <button class="tr-session-btn" onclick="selectSession('s6')">S6 — Clean &amp; Lunge</button>
-      <button class="tr-session-btn" onclick="selectSession('s7')">S7 — Double Bell Ladder</button>
-      <button class="tr-session-btn" onclick="selectSession('s8')">S8 — Double KB Front Squat EMOM</button>
-      <button class="tr-session-btn" onclick="selectSession('s9')">S9 — The Sandow Complex</button>
-      <button class="tr-session-btn" onclick="selectSession('s10')">S10 — Heavy Complex EMOM</button>
-      <button class="tr-session-btn" onclick="selectSession('s11')">S11 — Half Bodyweight Complex</button>
-    </div>
-
-    <!-- Volume -->
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#ffffff; margin-bottom:8px;">💪 Volume</div>
-    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-      <button class="tr-session-btn" onclick="selectSession('v1')">V1 — Snatch &amp; Press</button>
-      <button class="tr-session-btn" onclick="selectSession('v2')">V2 — Hinge · Push · Pull</button>
-      <button class="tr-session-btn" onclick="selectSession('v3')">V3 — The Classic</button>
-      <button class="tr-session-btn" onclick="selectSession('v4')">V4 — The Ladder</button>
-      <button class="tr-session-btn" onclick="selectSession('v5')">V5 — Leg Day</button>
-      <button class="tr-session-btn" onclick="selectSession('v6')">V6 — Arms &amp; Shoulders</button>
-      <button class="tr-session-btn" onclick="selectSession('v7')">V7 — Pull Day</button>
-    </div>
-
-    <!-- Conditioning -->
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#c8f55a; margin-bottom:8px;">🔥 Conditioning</div>
-    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-      <button class="tr-session-btn" onclick="selectSession('c1')">C1 — The Ladder EMOM</button>
-      <button class="tr-session-btn" onclick="selectSession('c2')">C2 — The Four</button>
-      <button class="tr-session-btn" onclick="selectSession('c3')">C3 — Boxing Rounds</button>
-      <button class="tr-session-btn" onclick="selectSession('c4')">C4 — Snatch &amp; Swing</button>
-      <button class="tr-session-btn" onclick="selectSession('c5')">C5 — Death by Clean &amp; Thruster</button>
-      <button class="tr-session-btn" onclick="selectSession('c6')">C6 — 20 Min No Rest EMOM</button>
-      <button class="tr-session-btn" onclick="selectSession('c7')">C7 — Snatch EMOM</button>
-      <button class="tr-session-btn" onclick="selectSession('c8')">C8 — Clean &amp; Press / Bulgarian Split Squat</button>
-      <button class="tr-session-btn" onclick="selectSession('c9')">C9 — Swing · Snatch · Thruster</button>
-      <button class="tr-session-btn" onclick="selectSession('c10')">C10 — Rep Accumulator</button>
-    </div>
-
-    <!-- Full Body -->
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#5ab4f5; margin-bottom:8px;">🌀 Full Body</div>
-    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-      <button class="tr-session-btn" onclick="selectSession('f1')">F1 — The Flow</button>
-      <button class="tr-session-btn" onclick="selectSession('f2')">F2 — Power Triplet</button>
-      <button class="tr-session-btn" onclick="selectSession('f3')">F3 — The Burner</button>
-      <button class="tr-session-btn" onclick="selectSession('f4')">F4 — The Chipper</button>
-      <button class="tr-session-btn" onclick="selectSession('f5')">F5 — Kickstand Quintet</button>
-      <button class="tr-session-btn" onclick="selectSession('f6')">F6 — Ring Upper Body</button>
-      <button class="tr-session-btn" onclick="selectSession('f7')">F7 — Bomber Prep</button>
+      <button class="tr-session-btn" onclick="selectSession('ff1')">Mon — Lower Body + Aerobic</button>
+      <button class="tr-session-btn" onclick="selectSession('ff2')">Tue — Push + Press</button>
+      <button class="tr-session-btn" onclick="selectSession('ff3')">Thu — Pull + Carry</button>
+      <button class="tr-session-btn" onclick="selectSession('ff4')">Fri — Full Body</button>
     </div>
   </div>
 
@@ -2465,6 +2413,12 @@
     f5:  { name:'F5 — Kickstand Quintet',            moves:['Kickstand Deadlift','Kickstand Swing','Reverse Lunge','Squat','Thruster'] },
     f6:  { name:'F6 — Ring Upper Body',              moves:['Ring Push Ups','Australian Ring Pull Ups','Ring Dips','Ring Curl'] },
     f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
+
+    // Firefighter Program
+    ff1: { name:'FF Mon — Lower Body + Aerobic',     moves:['Back Squat','Romanian Deadlift','Bulgarian Split Squat'] },
+    ff2: { name:'FF Tue — Push + Press',             moves:['Deadlift','Weighted Pull Ups','Farmer Carry'] },
+    ff3: { name:'FF Thu — Pull + Carry',             moves:['KB Incline Press','KB Strict Press','Ring Dips'] },
+    ff4: { name:'FF Fri — Full Body',                moves:['Zercher Squat','Push Press','Wall Balls'] },
   };
 
   let currentSession = null;
