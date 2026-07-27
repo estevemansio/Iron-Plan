@@ -1661,7 +1661,7 @@
     <div class="t-header-title">BOMBER <span>PREP</span></div>
   </div>
 
-  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Lower + Aerobic &nbsp;·&nbsp; Tue: Push + Press &nbsp;·&nbsp; Wed: Mobility &nbsp;·&nbsp; Thu: Pull + Carry &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Mobility</div>
+  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Push + Press &nbsp;·&nbsp; Tue: Legs + Lower &nbsp;·&nbsp; Wed: Mobility &nbsp;·&nbsp; Thu: Pull + Carry &nbsp;·&nbsp; Fri: Full Body &nbsp;·&nbsp; Sat: Mobility</div>
 
   <!-- Day tabs -->
   <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
@@ -1675,15 +1675,15 @@
   </div>
 
   <!-- ── MONDAY — LOWER + AEROBIC ── -->
-  <div class="train-panel" id="ff-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f55a5a">Monday — Lower Body + Aerobic</div>
+  <div class="train-panel" id="ff-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Tuesday — Legs + Lower Body</div>
 
     <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Back Squat</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Zercher Squat</span></div>
     <div class="t-body">
-      <div class="t-note">→ 5×5 · barbell · 3 min rest · build weight each week. Alternate with Safety Bar Squat for variation.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Squat</div><div class="t-item-detail">5×5 · same weight all sets</div></div>
+      <div class="t-note">→ 5×5 · barbell in crook of elbows · 3 min rest · brutal core and quad demand · directly simulates carrying a casualty.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Zercher Squat</div><div class="t-item-detail">5×5 · elbows under bar · chest up</div></div>
     </div>
 
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Romanian Deadlift</span></div>
@@ -1712,8 +1712,8 @@
   </div>
 
   <!-- ── TUESDAY — PULL + CARRY ── -->
-  <div class="train-panel" id="ff-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f55a5a">Tuesday — Push + Press</div>
+  <div class="train-panel" id="ff-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
+    <div class="t-cat-label" style="color:#f55a5a">Monday — Push + Press</div>
 
     <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
 
@@ -1793,10 +1793,10 @@
 
     <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
 
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Zercher Squat</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Back Squat</span></div>
     <div class="t-body">
-      <div class="t-note">→ 5×5 · barbell in the crook of elbows · 3 min rest · brutal core and quad demand · directly mimics carrying a casualty.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Zercher Squat</div><div class="t-item-detail">5×5 · elbows under bar · chest up</div></div>
+      <div class="t-note">→ 5×5 · barbell · 3 min rest · less spinal demand than Zercher · build weight each week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Back Squat</div><div class="t-item-detail">5×5 · same weight all sets</div></div>
     </div>
 
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Push Press</span></div>
@@ -2376,8 +2376,8 @@
     <!-- Firefighter -->
     <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f55a5a; margin-bottom:8px; margin-top:16px;">🔥 Firefighter</div>
     <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-      <button class="tr-session-btn" onclick="selectSession('ff1')">Mon — Lower Body + Aerobic</button>
-      <button class="tr-session-btn" onclick="selectSession('ff2')">Tue — Push + Press</button>
+      <button class="tr-session-btn" onclick="selectSession('ff1')">Mon — Push + Press</button>
+      <button class="tr-session-btn" onclick="selectSession('ff2')">Tue — Legs + Lower</button>
       <button class="tr-session-btn" onclick="selectSession('ff3')">Thu — Pull + Carry</button>
       <button class="tr-session-btn" onclick="selectSession('ff4')">Fri — Full Body</button>
     </div>
@@ -2443,10 +2443,10 @@
     f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
 
     // Firefighter Program
-    ff1: { name:'FF Mon — Lower Body + Aerobic',     moves:[{name:'Back Squat', sets:5},{name:'Romanian Deadlift', sets:4},{name:'Bulgarian Split Squat', sets:3}] },
-    ff2: { name:'FF Tue — Push + Press',             moves:[{name:'KB Incline Press', sets:4},{name:'KB Strict Press', sets:5},{name:'Ring Dips', sets:4}] },
+    ff1: { name:'FF Mon — Push + Press',     moves:[{name:'Back Squat', sets:5},{name:'Romanian Deadlift', sets:4},{name:'Bulgarian Split Squat', sets:3}] },
+    ff2: { name:'FF Tue — Legs + Lower',             moves:[{name:'Zercher Squat',sets:5},{name:'Romanian Deadlift',sets:4},{name:'Bulgarian Split Squat',sets:3}] },
     ff3: { name:'FF Thu — Pull + Carry',             moves:[{name:'Deadlift', sets:6},{name:'Weighted Pull Ups', sets:5},{name:'Farmer Carry', sets:4}] },
-    ff4: { name:'FF Fri — Full Body',                moves:[{name:'Zercher Squat', sets:5},{name:'Push Press', sets:5},{name:'Wall Balls', sets:4}] },
+    ff4: { name:'FF Fri — Full Body',                moves:[{name:'Back Squat', sets:5},{name:'Push Press', sets:5},{name:'Wall Balls', sets:4}] },
   };
 
   let currentSession = null;
