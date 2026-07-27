@@ -2415,76 +2415,71 @@
     f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
 
     // Firefighter Program
-    ff1: { name:'FF Mon — Lower Body + Aerobic',     moves:['Back Squat','Romanian Deadlift','Bulgarian Split Squat'] },
-    ff2: { name:'FF Tue — Push + Press',             moves:['Deadlift','Weighted Pull Ups','Farmer Carry'] },
-    ff3: { name:'FF Thu — Pull + Carry',             moves:['KB Incline Press','KB Strict Press','Ring Dips'] },
-    ff4: { name:'FF Fri — Full Body',                moves:['Zercher Squat','Push Press','Wall Balls'] },
+    ff1: { name:'FF Mon — Lower Body + Aerobic',     moves:[{name:'Back Squat', sets:5},{name:'Romanian Deadlift', sets:4},{name:'Bulgarian Split Squat', sets:3}] },
+    ff2: { name:'FF Tue — Push + Press',             moves:[{name:'KB Incline Press', sets:4},{name:'KB Strict Press', sets:5},{name:'Ring Dips', sets:4}] },
+    ff3: { name:'FF Thu — Pull + Carry',             moves:[{name:'Deadlift', sets:6},{name:'Weighted Pull Ups', sets:5},{name:'Farmer Carry', sets:4}] },
+    ff4: { name:'FF Fri — Full Body',                moves:[{name:'Zercher Squat', sets:5},{name:'Push Press', sets:5},{name:'Wall Balls', sets:4}] },
   };
 
   let currentSession = null;
 
   function selectSession(id) {
     currentSession = id;
-    const s = SESSIONS[id];
+    var sess = SESSIONS[id];
     document.getElementById('tr-select').style.display = 'none';
     document.getElementById('tr-log').style.display = 'block';
-    document.getElementById('tr-session-title').textContent = s.name;
+    document.getElementById('tr-session-title').textContent = sess.name;
     document.getElementById('tr-session-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 
-    // Get last session data for this session
-    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    const lastSession = history.filter(h => h.id === id).pop();
-
-    const container = document.getElementById('tr-movements');
+    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    var lastSession = hist.filter(function(h){ return h.id === id; }).pop();
+    var container = document.getElementById('tr-movements');
     container.innerHTML = '';
+    var inp = 'width:100%;background:#0f0f0f;border:1px solid #222;color:#fff;font-size:16px;padding:8px 10px;box-sizing:border-box;-webkit-appearance:none;';
 
-    s.moves.forEach((move, i) => {
-      const last = lastSession ? lastSession.moves[i] : null;
-      const lastKg = last ? last.kg : '';
-      const lastReps = last ? last.reps : '';
-
-      // Progressive overload advice
-      const advice = last && last.moves[i] ? `<div style="font-size:11px; color:var(--accent); margin-top:4px;">${getAdvice(last.moves[i], i)}</div>` : "";
-      container.innerHTML += `
-        <div style="background:#141414; border:1px solid #1f1f1f; border-left:2px solid #2a2a2a; padding:16px; margin-bottom:2px;">
-          <div style="font-size:14px; font-weight:600; color:#fff; margin-bottom:10px;">${move}</div>
-          ${advice}
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-            <div>
-              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Weight (kg)</div>
-              <input type="number" id="kg_${i}" placeholder="${lastKg || '0'}" step="0.5" min="0"
-                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
-            </div>
-            <div>
-              <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:6px;">Reps / Rounds</div>
-              <input type="number" id="reps_${i}" placeholder="${lastReps || '0'}" min="0"
-                style="width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; font-family:'DM Sans',sans-serif; font-size:18px; padding:10px 12px; box-sizing:border-box; -webkit-appearance:none;">
-            </div>
-          </div>
-        </div>`;
+    sess.moves.forEach(function(move, i) {
+      var moveName = typeof move === 'object' ? move.name : move;
+      var numSets  = typeof move === 'object' ? move.sets : 1;
+      var lastMove = lastSession ? lastSession.moves[i] : null;
+      var rows = '';
+      for (var j = 0; j < numSets; j++) {
+        var ls    = lastMove && lastMove.sets ? lastMove.sets[j] : null;
+        var lkg   = ls ? ls.kg   : '';
+        var lreps = ls ? ls.reps : '';
+        rows += '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">'
+          + '<div style="font-size:10px;color:#555;text-align:center;">S'+(j+1)+'</div>'
+          + '<div><input type="number" id="kg_'+i+'_'+j+'" placeholder="'+(lkg||'kg')+'" step="0.5" min="0" style="'+inp+'"></div>'
+          + '<div><input type="number" id="rp_'+i+'_'+j+'" placeholder="'+(lreps||'reps')+'" min="0" style="'+inp+'"></div>'
+          + '</div>';
+      }
+      container.innerHTML +=
+        '<div style="background:#141414;border:1px solid #1f1f1f;border-left:2px solid #2a2a2a;padding:16px;margin-bottom:2px;">'
+        + '<div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">'+moveName+'</div>'
+        + '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;margin-bottom:6px;">'
+        + '<div></div>'
+        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">kg</div>'
+        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">reps</div>'
+        + '</div>'+rows+'</div>';
     });
   }
 
-
   function saveSession() {
-    const s = SESSIONS[currentSession];
-    const moves = s.moves.map((move, i) => ({
-      name: move,
-      kg: parseFloat(document.getElementById('kg_' + i).value) || 0,
-      reps: parseInt(document.getElementById('reps_' + i).value) || 0
-    }));
-
-    const entry = {
-      id: currentSession,
-      name: s.name,
-      date: new Date().toISOString(),
-      moves
-    };
-
-    const history = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    history.push(entry);
-    localStorage.setItem('ironplan_history', JSON.stringify(history));
-
+    var sess = SESSIONS[currentSession];
+    var moves = sess.moves.map(function(move, i) {
+      var moveName = typeof move === 'object' ? move.name : move;
+      var numSets  = typeof move === 'object' ? move.sets : 1;
+      var sets = [];
+      for (var j = 0; j < numSets; j++) {
+        var ke = document.getElementById('kg_'+i+'_'+j);
+        var re = document.getElementById('rp_'+i+'_'+j);
+        sets.push({ kg: ke ? (parseFloat(ke.value)||0) : 0, reps: re ? (parseInt(re.value)||0) : 0 });
+      }
+      return { name: moveName, sets: sets };
+    });
+    var entry = { id: currentSession, name: sess.name, date: new Date().toISOString(), moves: moves };
+    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
+    hist.push(entry);
+    localStorage.setItem('ironplan_history', JSON.stringify(hist));
     showHistory();
     backToSelect();
     alert('Session logged ✓');
