@@ -1716,6 +1716,12 @@
 
     <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">⚡ Strength — 30 mins</div>
 
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bench Press</span></div>
+    <div class="t-body">
+      <div class="t-note">→ 4×8 · barbell · 3s eccentric · 90s rest · flat chest pressing · progressive load every week.</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bench Press</div><div class="t-item-detail">4×8 · 3s down · controlled</div></div>
+    </div>
+
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Incline Press</span></div>
     <div class="t-body">
       <div class="t-note">→ 4×10 · 3s eccentric · 90s rest · upper chest and front delt · progressive load every week.</div>
@@ -1726,12 +1732,6 @@
     <div class="t-body">
       <div class="t-note">→ 5×5 each side · no leg drive · 2 min rest · build weight each week.</div>
       <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Strict Press</div><div class="t-item-detail">5×5 each side · strict · no momentum</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ring Dips</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×max · lean forward for chest emphasis · add weight when 15+ easy · 90s rest.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ring Dips</div><div class="t-item-detail">4×max · add weight when 15+ easy</div></div>
     </div>
 
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Lateral Raise</span></div>
@@ -2427,7 +2427,7 @@
     f7:  { name:'F7 — Bomber Prep',                  moves:['Step Ups (weighted)','Pull Ups','Suitcase Carry','Push Ups','Band Drag'] },
 
     // Firefighter Program
-    ff1: { name:'FF Mon — Push + Press',     moves:[{name:'DB Incline Press', sets:4},{name:'KB Strict Press', sets:5},{name:'Ring Dips', sets:4}] },
+    ff1: { name:'FF Mon — Push + Press',     moves:[{name:'DB Incline Press', sets:4},{name:'KB Strict Press', sets:5},{name:'Bench Press', sets:4}] },
     ff2: { name:'FF Tue — Legs + Lower',     moves:[{name:'Zercher Squat', sets:5},{name:'Romanian Deadlift', sets:4},{name:'Bulgarian Split Squat', sets:3}] },
     ff3: { name:'FF Thu — Pull + Carry',     moves:[{name:'Deadlift', sets:6},{name:'Weighted Pull Ups', sets:5}] },
     ff4: { name:'FF Fri — Full Body',        moves:[{name:'Back Squat', sets:5},{name:'Push Press', sets:5}] },
