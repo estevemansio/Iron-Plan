@@ -806,10 +806,7 @@
     <div class="nav-dot" style="background:#999"></div>
     Fuel
   </button>
-  <button class="nav-btn" onclick="showSection('tracker', this)">
-    <div class="nav-dot" style="background:#5ab4f5"></div>
-    Track
-  </button>
+
 </div>
 
 <!-- ==================== FIREFIGHTER SECTION ==================== -->
@@ -1978,215 +1975,12 @@
 </div>
 </div>
 
-<!-- ==================== TRACKER SECTION ==================== -->
-<div class="section" id="section-tracker">
-<div class="container">
-
-  <header style="margin-bottom:28px; padding-top:8px; animation: fadeUp 0.5s ease both;">
-    <div class="label">Progressive Overload Tracker</div>
-    <h1>TRACK <span style="color:var(--accent)">IT</span></h1>
-    <div class="subtitle" style="font-size:13px; color:#555; margin-top:8px;">Select session → log key lifts → app tells you when to go heavier.</div>
-  </header>
-
-  <!-- Session selector -->
-  <div id="tr-select">
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:16px;">Select today's session</div>
-
-    <!-- Tab switcher -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#1a1a1a; margin-bottom:20px;">
-      <button id="trtab-hyrox" onclick="showTrackerTab('hyrox')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px; cursor:pointer; -webkit-tap-highlight-color:transparent;">🎯 Hyrox</button>
-      <button id="trtab-hybrid" onclick="showTrackerTab('hybrid')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:11px; cursor:pointer; -webkit-tap-highlight-color:transparent;">⚡ Hybrid</button>
-    </div>
-
-    <!-- Hyrox Sessions -->
-    <div id="tr-hyrox" style="display:block;">
-      <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-        <button class="tr-session-btn" onclick="selectSession('hx1')">Mon — Push · Bench · Incline · Strict Press</button>
-        <button class="tr-session-btn" onclick="selectSession('hx2')">Tue — Pull · Deadlift · Pull Ups · Row</button>
-        <button class="tr-session-btn" onclick="selectSession('hx3')">Thu — Legs · Back Squat · Leg Press · Hamstrings</button>
-        <button class="tr-session-btn" onclick="selectSession('hx4')">Wed — Conditioning</button>
-        <button class="tr-session-btn" onclick="selectSession('hx5')">Fri — Intervals / Race Sim</button>
-      </div>
-    </div>
-
-    <!-- Hybrid Sessions -->
-    <div id="tr-hybrid" style="display:none;">
-      <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:16px;">
-        <button class="tr-session-btn" onclick="selectSession('hy1')">Mon — Legs · Squats · Hamstrings · Calves</button>
-        <button class="tr-session-btn" onclick="selectSession('hy2')">Tue — Push · Bench · Incline · Strict Press</button>
-        <button class="tr-session-btn" onclick="selectSession('hy3')">Thu — Pull · Deadlift · Pull Ups · Row</button>
-        <button class="tr-session-btn" onclick="selectSession('hy4')">Fri — Conditioning</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Logging screen -->
-  <div id="tr-log" style="display:none">
-    <div id="tr-session-title" style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#fff; margin-bottom:4px;"></div>
-    <div id="tr-session-date" style="font-size:10px; color:#444; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:24px;"></div>
-
-    <div id="tr-movements"></div>
-
-    <button onclick="saveSession()" style="width:100%; background:var(--accent); border:none; color:#000; font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; padding:20px; cursor:pointer; margin-top:16px; -webkit-tap-highlight-color:transparent;">✓ LOG SESSION</button>
-    <button onclick="backToSelect()" style="width:100%; background:transparent; border:1px solid #222; color:#555; font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; padding:14px; cursor:pointer; margin-top:2px; -webkit-tap-highlight-color:transparent;">← Back</button>
-  </div>
-
-  <!-- History -->
-  <div id="tr-history" style="margin-top:40px; display:none">
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:16px;">History</div>
-    <div id="tr-history-list"></div>
-  </div>
-
-</div>
-</div>
-
 <script>
-  // ─── SESSION COMPOUND MOVEMENTS ────────────────────────────
-  var SESSIONS = {
-    // ── Hyrox ──
-    hx1: { name:'Hyrox Mon — Push',        moves:[{name:'Barbell Bench Press', sets:4},{name:'DB Incline Press', sets:4},{name:'Barbell Strict Press', sets:4},{name:'DB Lateral Raise', sets:4}] },
-    hx2: { name:'Hyrox Tue — Pull',        moves:[{name:'Deadlift', sets:4},{name:'Pull Ups', sets:4},{name:'Barbell Row', sets:4}] },
-    hx3: { name:'Hyrox Thu — Legs',        moves:[{name:'Back Squat', sets:4},{name:'Leg Press or Hack Squat', sets:4},{name:'Hamstring Curls', sets:4}] },
-    hx4: { name:'Hyrox Wed — Conditioning',moves:[{name:'Ski Erg 400m', sets:4},{name:'Barbell Push Press', sets:4},{name:'Row 500m', sets:4}] },
-    hx5: { name:'Hyrox Fri — Race Sim',    moves:[{name:'Row 500m', sets:4},{name:'Walking Lunges', sets:4}] },
-    // ── Hybrid ──
-    hy1: { name:'Hybrid Mon — Legs',       moves:[{name:'Hamstring Curls', sets:4},{name:'Leg Extensions', sets:4},{name:'Back Squat', sets:4},{name:'Cable Zercher Squat', sets:4},{name:'Calf Raises', sets:4}] },
-    hy2: { name:'Hybrid Tue — Push',       moves:[{name:'Bench Press', sets:4},{name:'DB Incline Press', sets:4},{name:'Barbell Strict Press', sets:4},{name:'Lateral Raises', sets:4},{name:'Tricep Extensions', sets:4}] },
-    hy3: { name:'Hybrid Thu — Pull',       moves:[{name:'Deadlift', sets:4},{name:'Pull Ups', sets:4},{name:'Barbell Row', sets:4}] },
-    hy4: { name:'Hybrid Fri — Conditioning',moves:[{name:'Hang Clean and Press', sets:4},{name:'Row 500m', sets:4}] },
-  };
-
-  function showTrackerTab(tab) {
-    ['hyrox','hybrid'].forEach(function(t) {
-      var el = document.getElementById('tr-' + t);
-      var btn = document.getElementById('trtab-' + t);
-      if (el) el.style.display = 'none';
-      if (btn) { btn.style.background = '#111'; btn.style.color = '#555'; }
-    });
-    var panel = document.getElementById('tr-' + tab);
-    var active = document.getElementById('trtab-' + tab);
-    if (panel) panel.style.display = 'block';
-    if (active) { active.style.background = '#1e1e1e'; active.style.color = '#fff'; }
-  }
-
-  var currentSession = null;
-
-  function selectSession(id) {
-    currentSession = id;
-    var sess = SESSIONS[id];
-    document.getElementById('tr-select').style.display = 'none';
-    document.getElementById('tr-log').style.display = 'block';
-    document.getElementById('tr-session-title').textContent = sess.name;
-    document.getElementById('tr-session-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    var lastSession = hist.filter(function(h){ return h.id === id; }).pop();
-    var container = document.getElementById('tr-movements');
-    container.innerHTML = '';
-    var inp = 'width:100%;background:#0f0f0f;border:1px solid #222;color:#fff;font-size:16px;padding:8px 10px;box-sizing:border-box;-webkit-appearance:none;';
-
-    sess.moves.forEach(function(move, i) {
-      var moveName = typeof move === 'object' ? move.name : move;
-      var numSets  = typeof move === 'object' ? move.sets : 1;
-      var lastMove = lastSession ? lastSession.moves[i] : null;
-      var rows = '';
-      for (var j = 0; j < numSets; j++) {
-        var ls    = lastMove && lastMove.sets ? lastMove.sets[j] : null;
-        var lkg   = ls ? ls.kg   : '';
-        var lreps = ls ? ls.reps : '';
-        rows += '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">'
-          + '<div style="font-size:10px;color:#555;text-align:center;">S'+(j+1)+'</div>'
-          + '<div><input type="number" id="kg_'+i+'_'+j+'" placeholder="'+(lkg||'kg')+'" step="0.5" min="0" style="'+inp+'"></div>'
-          + '<div><input type="number" id="rp_'+i+'_'+j+'" placeholder="'+(lreps||'reps')+'" min="0" style="'+inp+'"></div>'
-          + '</div>';
-      }
-      container.innerHTML +=
-        '<div style="background:#141414;border:1px solid #1f1f1f;border-left:2px solid #2a2a2a;padding:16px;margin-bottom:2px;">'
-        + '<div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">'+moveName+'</div>'
-        + '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;margin-bottom:6px;">'
-        + '<div></div>'
-        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">kg</div>'
-        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">reps</div>'
-        + '</div>'+rows+'</div>';
-    });
-  }
-
-  function saveSession() {
-    var sess = SESSIONS[currentSession];
-    var moves = sess.moves.map(function(move, i) {
-      var moveName = typeof move === 'object' ? move.name : move;
-      var numSets  = typeof move === 'object' ? move.sets : 1;
-      var sets = [];
-      for (var j = 0; j < numSets; j++) {
-        var ke = document.getElementById('kg_'+i+'_'+j);
-        var re = document.getElementById('rp_'+i+'_'+j);
-        sets.push({ kg: ke ? (parseFloat(ke.value)||0) : 0, reps: re ? (parseInt(re.value)||0) : 0 });
-      }
-      return { name: moveName, sets: sets };
-    });
-    var entry = { id: currentSession, name: sess.name, date: new Date().toISOString(), moves: moves };
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    hist.push(entry);
-    localStorage.setItem('ironplan_history', JSON.stringify(hist));
-    showHistory();
-    backToSelect();
-    alert('Session logged ✓');
-  }
-
-  function backToSelect() {
-    document.getElementById('tr-log').style.display = 'none';
-    document.getElementById('tr-select').style.display = 'block';
-    currentSession = null;
-  }
-
-  function showHistory() {
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    if (!hist.length) return;
-    document.getElementById('tr-history').style.display = 'block';
-    var list = document.getElementById('tr-history-list');
-    list.innerHTML = '';
-    hist.slice().reverse().slice(0, 10).forEach(function(entry) {
-      var date = new Date(entry.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
-      var movesHtml = entry.moves.map(function(m) {
-        var moveName = m.name || '';
-        var detail = '';
-        if (m.sets && m.sets.length) {
-          detail = m.sets.map(function(s, j) { return 'S'+(j+1)+': '+s.kg+'kg x '+s.reps; }).join(' | ');
-        } else if (m.kg !== undefined) {
-          detail = m.kg+'kg x '+m.reps;
-        }
-        return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #111;font-size:12px;">'
-          +'<span style="color:#888;">'+moveName+'</span>'
-          +'<span style="color:#fff;font-weight:500;">'+detail+'</span></div>';
-      }).join('');
-      list.innerHTML += '<div style="background:#141414;border:1px solid #1f1f1f;padding:14px 16px;margin-bottom:4px;">'
-        +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">'
-        +'<div style="font-size:14px;font-weight:600;color:#fff;">'+entry.name+'</div>'
-        +'<div style="font-size:11px;color:#444;">'+date+'</div></div>'
-        +movesHtml+'</div>';
-    });
-  }
-
-  function getAdvice(last, moveIndex) {
-    if (!last) return '';
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    var sessions = hist.filter(function(h) { return h.id === currentSession; });
-    var count = sessions.length;
-    var prev = sessions.length ? sessions[sessions.length-1] : null;
-    var prevMove = prev && prev.moves[moveIndex] ? prev.moves[moveIndex] : null;
-    if (!prevMove) return '';
-    var prevKg = prevMove.sets ? prevMove.sets[0].kg : prevMove.kg;
-    var prevReps = prevMove.sets ? prevMove.sets[0].reps : prevMove.reps;
-    if (count >= 2) return 'Add 1-2kg or 1 rep today';
-    return 'Match: '+prevKg+'kg x '+prevReps+' reps';
-  }
-
   function showSection(id, btn) {
     document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
     document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
     document.getElementById('section-' + id).classList.add('active');
     btn.classList.add('active');
-    if (id === 'tracker') showHistory();
   }
 
   function showFFTab(tab) {
@@ -2198,24 +1992,11 @@
     if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
   }
 
-  function showFFTab_init() {
-    showFFTab('day1');
-  }
-
   function showKBTab(tab) {
     document.querySelectorAll('[id^="kb-panel-"]').forEach(function(p) { p.style.display = 'none'; });
     document.querySelectorAll('[id^="kbtab-"]').forEach(function(b) { b.style.background='#111'; b.style.color='#555'; });
     var panel = document.getElementById('kb-panel-' + tab);
     var btn = document.getElementById('kbtab-' + tab);
-    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
-    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
-  }
-
-  function showGymTab(tab) {
-    document.querySelectorAll('[id^="gym-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="gymtab-"]').forEach(function(b) { b.style.background='#111'; b.style.color='#555'; });
-    var panel = document.getElementById('gym-panel-' + tab);
-    var btn = document.getElementById('gymtab-' + tab);
     if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
     if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
   }
@@ -2233,27 +2014,19 @@
   }
 
   function toggleRow(el) {
-    el.classList.toggle('open');
     var next = el.nextElementSibling;
-    if (next && next.classList.contains('t-body')) next.classList.toggle('open');
-  }
-
-  function toggleCat(el) {
-    el.classList.toggle('open');
-    var next = el.nextElementSibling;
-    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
-  }
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
+    if (next && next.classList.contains('t-body')) {
+      var isOpen = next.style.display === 'block';
+      next.style.display = isOpen ? 'none' : 'block';
+      el.querySelector('.t-row-arrow').style.transform = isOpen ? '' : 'rotate(90deg)';
+    }
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    showHistory();
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
+    }
   });
-
-  // ─── TRACKER CSS ───────────────────────────────────────────
-
 </script>
 
 </body>
