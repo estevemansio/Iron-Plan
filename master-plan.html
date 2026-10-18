@@ -6,2011 +6,770 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Iron Plan">
-<meta name="theme-color" content="#0d0d0d">
+<meta name="theme-color" content="#0b0c0e">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="https://estevemansio.github.io/Iron-Plan/icon.PNG">
 <title>Iron Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0d0d0d;
-    --off-white: #f2ede6;
-    --accent: #c8f55a;
-    --muted: #4a4a4a;
-    --card-bg: #161616;
-    --border: #2a2a2a;
-    --strength: #c8f55a;
-    --hyrox: #f5c842;
-    --power: #f5a85a;
-    --hypertrophy: #a85af5;
-    --z2: #5ab4f5;
-    --gym: #f5e15a;
+    --bg: #0b0c0e;
+    --surface: #15171a;
+    --surface-2: #1b1e22;
+    --border: #262a2f;
+    --text: #eef0f2;
+    --muted: #8a9099;
+    --faint: #565b62;
+    --accent: #c9a24a;
+    --hyrox: #c9a24a;
+    --hybrid: #c7cad0;
+    --fuel: #6abf4b;
+    --good: #6fae6f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-tap-highlight-color: transparent; }
 
   body {
-    background: var(--black);
-    color: var(--off-white);
+    background: var(--bg);
+    color: var(--text);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     width: 100vw;
   }
 
-  /* TOP NAV */
   .top-nav {
     position: sticky;
     top: 0;
     z-index: 100;
     display: flex;
-    flex-direction: row;
-    background: var(--border);
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
     width: 100%;
-    box-sizing: border-box;
   }
 
   .nav-btn {
-    background: #111;
+    flex: 1;
+    background: none;
     border: none;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 18px 2px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 16px 0 13px;
     cursor: pointer;
-    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    flex: 1;
-    min-width: 0;
-    white-space: nowrap;
+    gap: 7px;
+    border-bottom: 2px solid transparent;
   }
+  .nav-btn.active { color: var(--text); }
+  .nav-btn[data-tab="ff"].active { border-bottom-color: var(--hyrox); }
+  .nav-btn[data-tab="kb"].active { border-bottom-color: var(--hybrid); }
+  .nav-btn[data-tab="diet"].active { border-bottom-color: var(--fuel); }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-  .nav-btn.active {
-    background: var(--card-bg);
-    color: var(--off-white);
-  }
-
-  .nav-btn .nav-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-  }
-
-  /* SECTIONS */
-  .section { display: none; box-sizing: border-box; width: 100%; }
+  .section { display: none; }
   .section.active { display: block; }
 
-  .container { max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 24px 16px; }
+  .t-container { max-width: 720px; margin: 0 auto; padding: 28px 18px 60px; }
 
-  /* SHARED TYPOGRAPHY */
-  .label {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 12px;
-  }
+  .t-header-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .t-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 0.01em; line-height: 1; margin-bottom: 18px; }
 
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(52px, 10vw, 88px);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
-    color: var(--off-white);
-  }
+  .week-pool { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
 
-  h1 span { color: var(--accent); }
-
-  .subtitle {
-    margin-top: 20px;
-    color: var(--muted);
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.6;
-    max-width: 520px;
-  }
-
-  .version-badge {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-  }
-
-  /* DIET STYLES */
-  .macros-bar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
+  .day-nav { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 26px; }
+  .day-nav button {
+    background: var(--surface);
     border: 1px solid var(--border);
-    margin-bottom: 32px;
-  }
-
-  .macro {
-    background: var(--card-bg);
-    padding: 20px 16px;
-    text-align: center;
-  }
-
-  .macro-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .macro-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .day-toggle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 32px;
-  }
-
-  .toggle-btn {
-    background: var(--card-bg);
-    border: none;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .toggle-btn.active {
-    background: var(--accent);
-    color: var(--black);
-    font-weight: 500;
-  }
-
-  .meal-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    margin-bottom: 2px;
-    overflow: hidden;
-  }
-
-  .meal-card.highlight { border-color: #c8f55a33; }
-  .meal-card.highlight .meal-title { color: var(--accent); }
-
-  .meal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 28px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .meal-meta { display: flex; align-items: baseline; gap: 16px; }
-
-  .meal-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 0.05em;
-  }
-
-  .meal-time {
     font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .meal-cals {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    color: var(--accent);
-  }
-
-  .meal-cals span {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-left: 4px;
-  }
-
-  .meal-body {
-    padding: 24px 28px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .food-item { display: flex; flex-direction: column; gap: 4px; }
-
-  .food-name { font-size: 15px; font-weight: 500; color: var(--off-white); }
-
-  .food-detail {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.5;
-  }
-
-  .food-tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    margin-top: 4px;
-    width: fit-content;
-  }
-
-  .food-tag.protein { border-color: #c8f55a44; color: var(--accent); }
-  .food-tag.carb { border-color: #f5a85a44; color: #f5a85a; }
-  .food-tag.fat { border-color: #5ab4f544; color: #5ab4f5; }
-  .food-tag.fiber { border-color: #a85af544; color: #a85af5; }
-
-  .meal-note {
-    padding: 14px 28px;
-    background: #111;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--muted);
-    font-style: italic;
-  }
-
-  .meal-note strong { color: var(--accent); font-style: normal; }
-
-  .notes-section { margin-top: 48px; }
-  .notes-section .label { margin-bottom: 20px; }
-
-  .note-item {
-    display: flex;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    align-items: flex-start;
-  }
-
-  .note-item:last-child { border-bottom: none; }
-
-  .note-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-
-  .note-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .note-text strong { color: var(--off-white); font-weight: 500; }
-
-  /* TRAINING STYLES */
-  .legend {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-  .phase-banner {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    padding: 16px 20px;
-    margin-bottom: 32px;
-  }
-
-  .phase-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
-  .phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-  .week-strip {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 32px;
-  }
-
-  .week-day-btn {
-    background: var(--card-bg);
-    border: none;
-    padding: 14px 6px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .week-day-btn:hover { background: #1e1e1e; }
-  .week-day-btn.active { background: #1e1e1e; }
-  .week-day-btn.active .day-abbr { color: var(--off-white); }
-
-  .day-abbr {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
     font-weight: 500;
-  }
-
-  .day-dot-strip { width: 8px; height: 8px; border-radius: 50%; }
-  .week-day-btn.active .day-dot-strip { transform: scale(1.3); }
-
-  .day-location {
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .day-panel { display: none; }
-  .day-panel.active { display: block; animation: fadeUp 0.35s ease both; }
-
-  .day-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .day-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(38px, 7vw, 60px);
-    line-height: 1;
-    letter-spacing: 0.03em;
-  }
-
-  .day-type-badge {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border: 1px solid;
-    margin-bottom: 6px;
-    display: inline-block;
-  }
-
-  .location-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    margin-left: 8px;
-    margin-bottom: 6px;
-  }
-
-  .location-badge.gym { border-color: #f5e15a44; color: var(--gym); }
-  .location-badge.home { border-color: #c8f55a44; color: var(--accent); }
-
-  .goal-pills { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
-
-  .goal-pill {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .goal-pill.muscle { border-color: #c8f55a44; color: var(--accent); }
-  .goal-pill.hyrox { border-color: #f5c84244; color: #f5c842; }
-  .goal-pill.power { border-color: #f5a85a44; color: #f5a85a; }
-  .goal-pill.recovery { border-color: #5ab4f544; color: #5ab4f5; }
-  .goal-pill.gym-tag { border-color: #f5e15a44; color: var(--gym); }
-
-  .section-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    margin-bottom: 2px;
-    overflow: hidden;
-  }
-
-  .section-card.gym-card { border-color: #f5e15a22; }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 24px;
+    padding: 10px 2px;
     cursor: pointer;
-    user-select: none;
+    border-radius: 6px;
   }
+  .day-nav button.active { background: var(--surface-2); color: var(--text); border-color: var(--faint); }
 
-  .section-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+  .train-panel { max-width: 720px; margin: 0 auto; }
+  .panel-label { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.01em; margin-bottom: 4px; }
+  .panel-intro { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .block-label { font-size: 11px; color: var(--muted); font-weight: 600; margin: 18px 0 8px; }
+
+  .t-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.05em;
-    flex: 1;
-  }
-
-  .section-toggle { font-size: 18px; color: var(--muted); }
-
-  .section-body { padding: 20px 24px; border-top: 1px solid var(--border); }
-  .section-body.collapsed { display: none; }
-
-  .sub-label {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-    margin-top: 20px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .sub-label:first-child { margin-top: 0; }
-
-  .exercise-list { list-style: none; display: flex; flex-direction: column; }
-
-  .exercise-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #1a1a1a;
-  }
-
-  .exercise-item:last-child { border-bottom: none; }
-
-  .ex-bullet {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-top: 7px;
-    flex-shrink: 0;
-  }
-
-  .ex-content { flex: 1; }
-
-  .ex-name { font-size: 14px; font-weight: 500; color: var(--off-white); line-height: 1.4; }
-
-  .ex-detail { font-size: 14px; color: var(--muted); font-weight: 300; margin-top: 2px; line-height: 1.5; }
-
-  .ex-tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 1px 6px;
-    border: 1px solid;
-    margin-top: 4px;
-  }
-
-  .ex-tag.hyrox-tag { border-color: #f5c84244; color: #f5c842; }
-  .ex-tag.muscle-tag { border-color: #c8f55a44; color: var(--accent); }
-  .ex-tag.gym-tag-ex { border-color: #f5e15a44; color: var(--gym); }
-
-  .complex-note {
-    background: #111;
-    border-left: 2px solid var(--accent);
-    padding: 10px 14px;
-    font-size: 14px;
-    color: var(--muted);
-    font-style: italic;
-    margin: 12px 0;
-    line-height: 1.5;
-  }
-
-  .hyrox-note {
-    background: #111;
-    border-left: 2px solid #f5c842;
-    padding: 10px 14px;
-    font-size: 14px;
-    color: var(--muted);
-    font-style: italic;
-    margin: 12px 0;
-    line-height: 1.5;
-  }
-
-  .gym-note {
-    background: #111;
-    border-left: 2px solid var(--gym);
-    padding: 10px 14px;
-    font-size: 14px;
-    color: var(--muted);
-    font-style: italic;
-    margin: 12px 0;
-    line-height: 1.5;
-  }
-
-  .stations-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
+    gap: 10px;
+    padding: 13px 14px;
+    background: var(--surface);
     border: 1px solid var(--border);
-    margin: 12px 0;
+    border-radius: 7px;
+    margin-bottom: 1px;
+    cursor: pointer;
+    font-size: 14px;
   }
+  .t-row-arrow { color: var(--faint); font-size: 14px; transition: transform .15s ease; }
+  .t-row.open .t-row-arrow { transform: rotate(90deg); }
+  .t-row-label { flex: 1; font-weight: 500; }
+  .row-sub { font-size: 11px; color: var(--faint); }
 
-  .station { background: var(--card-bg); padding: 12px 14px; }
+  .t-row.static { cursor: default; justify-content: space-between; }
+  .week-detail-inline { font-size: 12.5px; color: var(--muted); }
 
-  .station-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: #f5c842;
-    line-height: 1;
-  }
+  .steps-heading { font-size: 10.5px; color: var(--muted); font-weight: 600; margin: 10px 0 4px; }
+  .steps-heading:first-child { margin-top: 0; }
+  .steps-list { list-style: none; margin: 0 0 10px; padding: 0; }
+  .steps-list:last-child { margin-bottom: 0; }
+  .steps-list li { font-size: 12.5px; color: var(--text); padding: 5px 0 5px 14px; position: relative; border-bottom: 1px solid var(--border); }
+  .steps-list li:last-child { border-bottom: none; }
+  .steps-list li::before { content: '–'; position: absolute; left: 0; color: var(--faint); }
 
-  .station-name { font-size: 12px; font-weight: 500; color: var(--off-white); margin-top: 2px; }
-  .station-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .t-body { max-height: 0; overflow: hidden; background: var(--surface-2); border-radius: 0 0 7px 7px; margin-bottom: 1px; }
+  .t-body.open { max-height: 600px; padding: 10px 14px 14px; }
 
-  .overload-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; }
-
-  .overload-table th {
-    text-align: left;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-    font-weight: 500;
-  }
-
-  .overload-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #1a1a1a;
-    color: var(--off-white);
-    vertical-align: top;
-  }
-
-  .overload-table td:last-child { color: var(--muted); }
-  .overload-table tr:last-child td { border-bottom: none; }
-
-  .sets-badge {
-    display: inline-block;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    color: var(--gym);
-    margin-right: 4px;
-  }
-
-  .rest-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    padding: 60px 24px;
-    text-align: center;
-  }
-
-  .rest-big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: #2a2a2a;
-    line-height: 1;
-    letter-spacing: 0.05em;
-  }
-
-  .rest-sub { font-size: 12px; color: var(--muted); margin-top: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
-
-  .progression-block { margin-top: 48px; }
-
-  .prog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-top: 20px;
-  }
-
-  .prog-phase { background: var(--card-bg); padding: 20px 16px; }
-
-  .prog-phase-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .prog-phase-title {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-    margin-bottom: 10px;
-  }
-
-  .prog-phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-  footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 11px;
-    color: #333;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 500px) {
-    .meal-body { grid-template-columns: 1fr; }
-    .macros-bar { grid-template-columns: repeat(2, 1fr); }
-    .stations-grid { grid-template-columns: 1fr; }
-    .prog-grid { grid-template-columns: 1fr; }
-    .legend { gap: 10px; }
-    .overload-table { font-size: 11px; }
-    .overload-table td, .overload-table th { padding: 8px 6px; }
-    .day-type-badge, .location-badge { font-size: 9px; padding: 3px 8px; }
-    .section-title { font-size: 17px; }
-    .week-day-btn { padding: 10px 4px; }
-    .day-abbr { font-size: 9px; }
-    .day-location { font-size: 7px; }
-    * { max-width: 100%; box-sizing: border-box; }
-    table { width: 100%; table-layout: fixed; word-wrap: break-word; }
-  }
-
-  /* ── SIMPLE TRAINING OUTLINE ───────────────────────── */
-  .t-container { max-width: 720px; margin: 0 auto; padding: 24px 16px; width: 100%; box-sizing: border-box; }
-  .t-header { padding: 16px 0 20px; border-bottom: 1px solid #1e1e1e; margin-bottom: 20px; }
-  .t-header-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 6px; }
-  .t-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #fff; line-height: 1; }
-  .t-header-title span { color: var(--accent); }
-
-  /* Week strip */
-  .t-week-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; background: #1a1a1a; border: 1px solid #1a1a1a; margin-bottom: 24px; }
-  .t-day-btn { background: #111; border: none; padding: 12px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.15s; }
-  .t-day-btn.active { background: #1e1e1e; }
-  .t-day-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dc, #333); }
-  .t-day-btn.active .t-day-btn-dot { transform: scale(1.4); }
-  .t-day-btn-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #444; font-weight: 500; }
-  .t-day-btn.active .t-day-btn-label { color: #fff; }
-
-  /* Day panels */
-  .t-day-panel { display: none; }
-  .t-day-panel.active { display: block; animation: fadeUp 0.25s ease both; }
-
-  /* Day title */
-  .t-day-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.05em; color: var(--accent); padding: 4px 0 16px; }
-
-  /* Workout title row */
-  .t-row { display: flex; align-items: center; gap: 10px; padding: 13px 0; cursor: pointer; -webkit-tap-highlight-color: transparent; border-bottom: 1px solid #181818; user-select: none; }
-  .t-row:last-child { border-bottom: none; }
-  .t-row-arrow { font-size: 10px; color: #444; width: 14px; flex-shrink: 0; transition: transform 0.2s; }
-  .t-row.open .t-row-arrow { transform: rotate(90deg); color: #888; }
-  .t-row-label { font-size: 13px; font-weight: 600; color: #fff; flex: 1; text-transform: uppercase; letter-spacing: 0.04em; }
-  .t-row.sub .t-row-label { font-size: 13px; color: #999; font-weight: 500; padding-left: 14px; text-transform: none; letter-spacing: 0; }
-  .t-row.sub .t-row-arrow { color: #333; }
-  .t-row.sub.open .t-row-arrow { color: #666; }
-
-  /* Body */
-  .t-body { display: none; padding: 4px 0 8px 24px; }
-  .t-body.open { display: block; }
-  .t-section-head { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin: 14px 0 8px; }
-  .t-section-head:first-child { margin-top: 4px; }
-
-  /* Exercise items */
-  .t-item { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; border-bottom: 1px solid #141414; }
+  .t-item { display: flex; justify-content: space-between; gap: 14px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12.5px; }
   .t-item:last-child { border-bottom: none; }
-  .t-dot { width: 4px; height: 4px; border-radius: 50%; background: #444; flex-shrink: 0; margin-top: 6px; }
-  .t-item-name { font-size: 14px; color: #cccccc; flex: 1; line-height: 1.4; }
-  .t-item-detail { font-size: 12px; color: #666; text-align: right; flex-shrink: 0; max-width: 45%; line-height: 1.4; }
-  .t-note { font-size: 12px; color: #555; font-style: italic; padding: 6px 0 4px; line-height: 1.5; }
-  .mode-toggle { display:flex; gap:2px; }
-  .mode-btn { background:#111; border:1px solid #222; color:#444; font-family:"DM Sans",sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:5px 12px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
-  .mode-btn.active { background:#1e1e1e; color:#fff; border-color:#333; }
-  .season-btn { background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:all 0.15s; }
-  .season-btn.active { background:#1e1e1e; color:#fff; }
-  .season-panel { display:none; animation: fadeUp 0.25s ease both; }
-  .season-panel.active { display:block; }
-  .cat-arrow { font-size:10px; color:#555; width:14px; flex-shrink:0; transition:transform 0.2s; }
-  .cat-header.open .cat-arrow { transform:rotate(90deg); }
-  .cat-label { font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; flex:1; }
-  .cat-body { display:none; }
-  .cat-body.open { display:block; }
-  /* MENU STYLES */
-  .season-produce { font-size:11px; color:#555; margin-bottom:20px; line-height:1.6; letter-spacing:0.03em; }
-  .menu-day-header { font-family:"Bebas Neue",sans-serif; font-size:28px; color:#fff; letter-spacing:0.05em; padding:24px 0 8px; border-top:1px solid #1a1a1a; margin-top:8px; }
-  .menu-meal-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#555; margin-bottom:8px; margin-top:16px; }
-  .menu-flow { color:#333; }
-  .menu-card { background:#141414; border:1px solid #1f1f1f; padding:16px; margin-bottom:2px; }
-  .menu-card-cook { border-left:2px solid #888; position:relative; }
-  .menu-cook-badge { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#999; margin-bottom:8px; }
-  .menu-dish { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:8px; }
-  .menu-dish-name { font-size:16px; font-weight:600; color:#fff; flex:1; }
-  .menu-dish-macros { font-size:10px; color:#444; white-space:nowrap; flex-shrink:0; }
-  .menu-ingredients { font-size:12px; color:#888; line-height:1.6; }
-  .menu-side { font-size:12px; color:#555; margin-top:4px; }
-  .menu-total { margin-top:20px; padding:12px 14px; background:#111; border-left:2px solid #888; font-size:11px; color:#666; letter-spacing:0.05em; }
-  .tr-session-btn { background:#141414; border:1px solid #1f1f1f; color:#ccc; font-family:'DM Sans',sans-serif; font-size:13px; padding:13px 16px; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:background 0.15s; width:100%; }
-  .tr-session-btn:active { background:#1e1e1e; color:#fff; }
-  .train-panel { animation: fadeUp 0.25s ease both; }
-  .t-cat-label { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.05em; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #1a1a1a; }
+  .t-item-name { color: var(--muted); }
+  .t-item-detail { color: var(--text); text-align: right; }
+  .t-note { font-size: 12px; color: var(--faint); padding: 4px 0 8px; }
 
-
-  /* ── DIET TAB ── */
-  .d-card { background:#111; border-left:3px solid #6abf4b; padding:14px 16px; margin-bottom:8px; }
-  .d-card-label { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#555; margin-bottom:4px; }
-  .d-card-title { font-size:15px; color:#fff; font-weight:600; margin-bottom:4px; }
-  .d-card-text { font-size:12px; color:#666; line-height:1.7; }
-  .d-meal { background:#111; padding:14px 16px; margin-bottom:8px; }
-  .d-meal-title { font-size:15px; color:#fff; font-weight:600; margin-bottom:4px; }
-  .d-meal-text { font-size:12px; color:#666; line-height:1.7; }
-  .d-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:#1a1a1a; margin-bottom:20px; }
-  .d-tab { border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer; background:#111; }
-  .d-tab.active { background:#1e1e1e; color:#fff; }
-  .d-panel { display:none; }
-  .d-panel.active { display:block; }
-  .d-section-title { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#6abf4b; margin:20px 0 12px; }
-  .d-sub { font-size:11px; color:#555; margin-bottom:12px; }
+  .progression {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+  .progression-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap:10px; flex-wrap: wrap; }
+  .progression-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .wk-pills { display: grid; grid-template-columns: repeat(10,1fr); gap: 4px; margin-bottom: 0; }
+  .wk-pill {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    padding: 7px 0;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .wk-pill.active { font-weight: 600; }
+  .wk-pill[data-tab="ff"].active { background: var(--hyrox); color: #0b0c0e; border-color: var(--hyrox); }
+  .wk-pill[data-tab="kb"].active { background: var(--hybrid); color: #0b0c0e; border-color: var(--hybrid); }
+  .week-detail { font-size: 14px; font-weight: 500; }
+  .week-detail .deload { color: var(--muted); font-weight: 400; }
+  .week-detail .pr { color: var(--good); font-weight: 400; }
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
 <div class="top-nav">
-  <button class="nav-btn active" onclick="showSection('ff', this)">
-    <div class="nav-dot" style="background:#f5c842"></div>
+  <button class="nav-btn active" data-tab="ff" onclick="showSection('ff', this)">
+    <div class="nav-dot" style="background:var(--hyrox)"></div>
     Hyrox
   </button>
-  <button class="nav-btn" onclick="showSection('kb', this)">
-    <div class="nav-dot" style="background:#f5a742"></div>
+  <button class="nav-btn" data-tab="kb" onclick="showSection('kb', this)">
+    <div class="nav-dot" style="background:var(--hybrid)"></div>
     Hybrid
   </button>
-  <button class="nav-btn" onclick="showSection('diet', this)">
-    <div class="nav-dot" style="background:#999"></div>
+  <button class="nav-btn" data-tab="diet" onclick="showSection('diet', this)">
+    <div class="nav-dot" style="background:var(--fuel)"></div>
     Fuel
   </button>
-
 </div>
 
-<!-- ==================== FIREFIGHTER SECTION ==================== -->
+<!-- ==================== HYROX SECTION ==================== -->
 <div class="section active" id="section-ff">
 <div class="t-container">
 
-  <div class="t-header">
-    <div class="t-header-label">Strength · Conditioning · Selection Prep</div>
-    <div class="t-header-title">HYROX <span style="color:#f5c842">PREP</span></div>
+  <div class="t-header-label">Strength · Conditioning · Hyrox prep</div>
+  <div class="t-header-title">HYROX <span style="color:var(--hyrox)">PLAN</span></div>
+
+  <div class="week-pool">Mon Lower Strength · Tue Upper Strength (1) · Wed Long Run · Thu Hyrox Circuit · Fri Upper Strength (2) · Sat Tempo Run · Sun Mobility + Easy Run</div>
+
+  <div class="day-nav">
+    <button id="fftab-day1" onclick="showFFTab('day1')" class="active">Mon</button>
+    <button id="fftab-day2" onclick="showFFTab('day2')">Tue</button>
+    <button id="fftab-day3" onclick="showFFTab('day3')">Wed</button>
+    <button id="fftab-day4" onclick="showFFTab('day4')">Thu</button>
+    <button id="fftab-day5" onclick="showFFTab('day5')">Fri</button>
+    <button id="fftab-day6" onclick="showFFTab('day6')">Sat</button>
+    <button id="fftab-day7" onclick="showFFTab('day7')">Sun</button>
   </div>
 
-  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Push &nbsp;·&nbsp; Tue: Pull &nbsp;·&nbsp; Wed: Legs &nbsp;·&nbsp; Thu: Conditioning / Race Sim &nbsp;·&nbsp; Fri: Intervals &nbsp;·&nbsp; Sat: Run + Mobility &nbsp;·&nbsp; Sun: Simulation</div>
-  <div style="background:#111; border:1px solid #1a1a1a; border-left:3px solid #f5c842; padding:14px 16px; margin-bottom:24px; font-size:12px; color:#666; line-height:1.9;">
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5c842; margin-bottom:10px;">Reps In Reserve Guide</div>
-    <div><span style="color:#ccc; font-weight:600;">Strength — Heavy</span> &nbsp;·&nbsp; 2 RIR &nbsp;·&nbsp; you could do 7, you do 5</div>
-    <div><span style="color:#ccc; font-weight:600;">Volume — 65%</span> &nbsp;·&nbsp; 1 RIR &nbsp;·&nbsp; you could do 11, you do 10</div>
-    <div><span style="color:#ccc; font-weight:600;">Practice — 60%</span> &nbsp;·&nbsp; 4-5 RIR &nbsp;·&nbsp; light, fast, perfect · never a workout</div>
-    <div><span style="color:#ccc; font-weight:600;">Accessory</span> &nbsp;·&nbsp; 2 RIR &nbsp;·&nbsp; controlled · quality over intensity</div>
-    <div><span style="color:#ccc; font-weight:600;">Explosive</span> &nbsp;·&nbsp; max intent · every rep full effort · not to failure</div>
-  </div>
+  <div class="train-panel" id="ff-panel-day1" style="display:none;display:block;">
+    <div class="panel-label">Monday — Lower Body Strength</div>
+    
 
-  <!-- Day tabs -->
-  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
-    <button class="train-tab" id="fftab-day1" onclick="showFFTab('day1')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mon</button>
-    <button class="train-tab" id="fftab-day2" onclick="showFFTab('day2')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Tue</button>
-    <button class="train-tab" id="fftab-day5" onclick="showFFTab('day5')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Wed</button>
-    <button class="train-tab" id="fftab-day3" onclick="showFFTab('day3')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Thu</button>
-    <button class="train-tab" id="fftab-day4" onclick="showFFTab('day4')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Fri</button>
-    <button class="train-tab" id="fftab-day6" onclick="showFFTab('day6')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sat</button>
-    <button class="train-tab" id="fftab-day7" onclick="showFFTab('day7')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sun</button>
-  </div>
-
-  <!-- ── MONDAY — LOWER + AEROBIC ── -->
-  <!-- ── MONDAY — PUSH + PRESS ── -->
-  <!-- ── MONDAY — PUSH + PRESS ── -->
-  
-
-  <!-- ── MONDAY — LOWER + AEROBIC ── -->
-  <!-- ── MONDAY — PUSH + PRESS ── -->
-  <!-- ── MONDAY — PUSH + PRESS ── -->
-  <div class="train-panel" id="ff-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Monday — Push</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bench Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×5 · 80% of max · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bench Press</div><div class="t-item-detail">4×5 · 80% · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Strict Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×6 · strict, no leg drive · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Strict Press</div><div class="t-item-detail">4×6 · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Reverse Lunge</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 3×10 each side · controlled · barbell or dumbbells.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Reverse Lunge</div><div class="t-item-detail">3×10 each side</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 1 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Push Press</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Renegade Row (with Push-Up)</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmers Carry</div><div class="t-item-detail">40m · DB or KB</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 2 — 4 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 rounds · heavier and more controlled than Devil Press — lets the press actually reach muscular fatigue instead of cardio cutting the set short.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Hang Clean and Press</div><div class="t-item-detail">10 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmers Carry</div><div class="t-item-detail">40m · DB or KB</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lateral Raises</div><div class="t-item-detail">15</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Tuesday — Pull</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Rack Pull or Deadlift</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×5 · your choice each week depending on how you feel · Rack Pull is above the knee, partial range; Deadlift is full range from the floor · straps allowed if grip fails first · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rack Pull or Deadlift</div><div class="t-item-detail">4×5 · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
-    <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 4×5 · added weight · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">4×5 · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×8 · lighter weight · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">2×8 · lighter · close to failure</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Incline DB Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×8-10 · upper chest, distinct emphasis from flat Bench Press · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Incline DB Press</div><div class="t-item-detail">4×8-10 · 2 RIR</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 1 — 5 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hang Clean</div><div class="t-item-detail">6</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dips</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag Carry or Sled Drag</div><div class="t-item-detail">40m</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 2 — 5 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Power Clean to Push Press</div><div class="t-item-detail">6 each side · single arm, heavy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Gorilla Row</div><div class="t-item-detail">10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag Carry or Sled Drag</div><div class="t-item-detail">40m</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Thursday — Conditioning</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Rotating pool · pick whichever session you haven't done recently · these blend Hyrox stations with barbell/dumbbell compounds and, for some, genuine race-format run-station-run-station structure — closer to a second Race Simulation than pure conditioning.</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Two-Block Circuit</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 35–40 mins · two blocks of 4 rounds, 90s rest within each block, 2 mins between blocks.</div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin:16px 0 8px;">Block 1 — 4 Rounds</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ski Erg 500m</div><div class="t-item-detail">target 2:10–2:20 per 500m · hinge from hips · drive with lats · damper 3-5</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Hang Clean</div><div class="t-item-detail">explosive hip drive · reset each rep · sled pull power</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg) or Thrusters</div><div class="t-item-detail">full squat · unbroken if possible</div></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin:16px 0 8px;">Block 2 — 4 Rounds</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row 500m</div><div class="t-item-detail">target 2:05–2:10 per 500m · legs first · lean back · then pull</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 Burpees to Box</div><div class="t-item-detail">chest to floor · jump onto the box · step or jump down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">15 Sandbag or DB Lunges</div><div class="t-item-detail">alternating legs · controlled</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 15 — The Full Circuit</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 5 run segments alternating with stations · no rest between run and station · 2.5km total running + 5 high volume stations · genuine race-format · one of the hardest sessions in the program.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 500m</div><div class="t-item-detail">race pace · set the tone</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">100 Burpee Broad Jumps</div><div class="t-item-detail">explosive · max distance each jump · straight off the run</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 500m</div><div class="t-item-detail">race pace · legs already burning</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">500m Rowerg</div><div class="t-item-detail">strong pace · target 2:05–2:10 per 500m</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 500m</div><div class="t-item-detail">race pace · hold it</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">100 Lunges</div><div class="t-item-detail">alternating legs · 50 each · controlled</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 500m</div><div class="t-item-detail">race pace · this is where it gets hard</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">100 Farmer March Steps</div><div class="t-item-detail">heavy DBs or KBs · high knees · 50 each leg</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 500m</div><div class="t-item-detail">race pace · last run · give everything</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">100 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible · finish here</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 13 — Compromised Running Circuit</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6 rounds · 600m run before every station · 3.6km total running · genuine race-format · covers legs, engine, pull, push, and full-body power in one session.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up</div><div class="t-item-detail">10 mins easy jog + dynamic mobility</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → 25 Lunges</div><div class="t-item-detail">alternating legs · total reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → Ski Erg 500m</div><div class="t-item-detail">strong pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → 12 DB/KB Thrusters</div><div class="t-item-detail">squat to press · unbroken if possible</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → 15 Burpee Broad Jumps</div><div class="t-item-detail">explosive · max distance each jump</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → 20 KB Gorilla Rows</div><div class="t-item-detail">10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 600m → Push-Ups to Failure</div><div class="t-item-detail">strict · chest to floor</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down</div><div class="t-item-detail">5 mins easy walk/jog + breathing</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 14 — Two-Block AMRAP</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Two 25-min AMRAPs, one rest between them · Block 1 is running/legs/engine, Block 2 is pull/sled/legs · log rounds completed each block. Lunge distance converted to reps — roughly 1m per stride, so 50m ≈ 50 total steps.</div>
-
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up</div><div class="t-item-detail">10 mins easy jog + dynamic mobility</div></div>
-
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin:16px 0 8px;">AMRAP 1 — 25 mins</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 400m</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls</div><div class="t-item-detail">unbroken if possible</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ski Erg 100m</div><div class="t-item-detail">strong pace · then repeat from the top, log rounds</div></div>
-
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin:16px 0 8px;">Rest 3–5 mins between blocks</div>
-
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin:16px 0 8px;">AMRAP 2 — 25 mins</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Row 500m</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sled Push 50m</div><div class="t-item-detail">curved treadmill · max resistance</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">50 Walking Lunges</div><div class="t-item-detail">25 each leg · then repeat from the top, log rounds</div></div>
-
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down</div><div class="t-item-detail">10 mins easy jog</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 8 — The Engine Builder</span></div>
-    <div class="t-body">
-      <div class="t-note">→ The biggest Hyrox gains come from learning how quickly you get back to race pace after a station · the 8-round block has no rest at transitions, genuinely continuous like a race.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2km Ski-Erg</div><div class="t-item-detail">strong pace · prime the engine</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8 rounds: 400m Run → 20 Burpee Broad Jumps → 400m Row</div><div class="t-item-detail">no rest at transitions · get back to pace immediately</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">100 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible · this is your race finish</div></div>
-    </div>
-
-    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid #f5c842;">
-      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Rotation</div>
-      <div style="font-size:12px; color:#555; line-height:1.8;">
-        Pick whichever session you haven't done recently · mix it up week to week — this pool exists so Thursday doesn't get stale, and some of these sessions (15, 13) are close enough to real race format to double as extra race practice.
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="ff">—</div>
       </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
+    </div>
+      <div class="block-label">Compound</div>
+    <div class="t-row static"><span class="t-row-label">Squat</span><span class="week-detail-inline" data-tab="ff">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Romanian Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hamstring Curls</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Reverse Lunge</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Abductions</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Calf Raises</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
     </div>
   </div>
 
-  <div class="train-panel" id="ff-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Friday — Intervals</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">30 mins light mobility first · then pick from the pool below · pure interval/threshold/VO2max work, every week — no more alternating, this is the dedicated day to raise your ceiling.</div>
+  <div class="train-panel" id="ff-panel-day2" style="display:none;">
+    <div class="panel-label">Tuesday — Upper Body Strength (1)</div>
+    
 
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#f5c842; margin-bottom:16px; margin-top:8px;">Pure Running</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 1 — Threshold Work</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×2km or 5×1km at race pace · 60–90s rest · this is where you stop surviving race pace and start owning it.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4×2km or 5×1km at race pace</div><div class="t-item-detail">60–90s rest between efforts</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 9 — Cruise Intervals</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6×1km at 10–15 secs faster than target race pace · 90s rest · if race pace is 5:10/km run these at 4:55 · teaches your body to hold race pace comfortably because training pace is harder.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6×1km at 10–15s faster than race pace</div><div class="t-item-detail">90s rest between each · controlled effort</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 10 — Progression Run</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8km continuous · no rest · first 3km easy · next 3km at race pace · last 2km faster than race pace · teaches you to negative split and finish strong.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3km easy</div><div class="t-item-detail">conversational pace · warm up</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3km at race pace</div><div class="t-item-detail">controlled · this should feel hard but sustainable</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2km faster than race pace</div><div class="t-item-detail">push here · finish strong · this is where sub-70 is built</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 11 — 800m Repeats</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8×800m at 5km race pace · 90s rest · at your level that is around 3:43–3:50 per 800m · builds raw speed and VO2max from a different angle than Norwegian 4×4.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8×800m at 5km pace</div><div class="t-item-detail">90s rest between each · hard but controlled</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 12 — Norwegian 4×4</span></div>
-    <div class="t-body">
-      <div class="t-note">→ The most effective VO2max protocol. Used by Norwegian elite athletes. Directly builds the aerobic ceiling needed for sub-70.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 mins easy warm up jog</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 mins at 90–95% max HR</div><div class="t-item-detail">very hard to speak · full effort</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 mins easy jog</div><div class="t-item-detail">active recovery · bring HR down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Repeat 3 more times</div><div class="t-item-detail">4 intervals total</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 mins easy cool down jog</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 5 — The Threshold Ladder</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 2 mins rest between each effort · all at race pace · pure running, no stations · builds the aerobic ceiling. This is where sub-70 gets built.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 2km at race pace</div><div class="t-item-detail">establish rhythm early</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 2 mins</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 3km at race pace</div><div class="t-item-detail">hold the same pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 2 mins</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 4km at race pace</div><div class="t-item-detail">hardest effort · don't slow down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 2 mins</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 3km at race pace</div><div class="t-item-detail">legs heavy · hold the pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 2 mins</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 2km at race pace</div><div class="t-item-detail">finish strong · this is where sub-70 is decided</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">Interval + Station</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 3 — Post-Station Runs</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Ski erg then straight into race-pace running, no rest at the transition · heavy legs, high heart rate, no excuses · sized for a full ~60 min session.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ski Erg 500m → Run 500m at race pace</div><div class="t-item-detail">6 rounds · 90s rest between rounds</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 4 — The Transition Builder</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4–5 rounds · 3–4 mins rest · trains the exact moment most Hyrox races fall apart — producing force immediately after sustained running.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 1.2km at threshold pace</div><div class="t-item-detail">hard but controlled · not a sprint</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Curved treadmill push at max resistance · 20 secs</div><div class="t-item-detail">straight off the run · no rest · sled substitute</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg)</div><div class="t-item-detail">no rest · unbroken if possible</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 400m at threshold pace</div><div class="t-item-detail">finish strong · this is the hardest part</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 3–4 mins · repeat 4–5 rounds</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 6 — The Race Simulator</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Trains pace control under station fatigue. Composure after HR spikes — exactly what happens from station 3 onwards when most athletes start unravelling.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6×1km at race pace</div><div class="t-item-detail">after each km: 20 wall balls or curved treadmill push · 90s rest</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 7 — The Lactate Flush</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8 rounds · teaches your body to clear lactate mid-session. Holds splits in the second half — where sub-70 is won or lost.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 400m at 5km pace</div><div class="t-item-detail">hard · faster than race pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">60s easy ski erg or row</div><div class="t-item-detail">active recovery · flush the lactate</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rest 90s · repeat 8 rounds</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 9 — Triple Station Threshold</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 3 blocks · no rest between movements within a block · 2 mins rest between blocks · trains all three cardio machines against wall ball fatigue. Trimmed down from the original 4×1km/50-rep version — still brutal, no longer roughly double the volume of everything else in this pool.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Block 1: 3×1km Run</div><div class="t-item-detail">60s rest between sets</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible · straight after the run</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Block 2: 3×1km Row</div><div class="t-item-detail">60s rest between sets</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible · straight after the row</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Block 3: 3×1km Ski-Erg</div><div class="t-item-detail">60s rest between sets</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible · finish here</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Session 16 — The Long Grind</span></div>
-    <div class="t-body">
-      <div class="t-note">→ AMRAP 60 mins · log rounds completed each week and beat it over time · the longest single session in the pool, builds the ability to keep producing quality output deep into fatigue.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Run 800m</div><div class="t-item-detail">steady, sustainable pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">30 Wall Balls (9kg)</div><div class="t-item-detail">unbroken if possible</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ski Erg 800m</div><div class="t-item-detail">strong, controlled pace</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">50 Lunges</div><div class="t-item-detail">alternating legs · ~1m per stride, so 50m ≈ 50 total steps · then repeat from the top, log rounds</div></div>
-    </div>
-
-    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid #f5c842;">
-      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Rotation</div>
-      <div style="font-size:12px; color:#555; line-height:1.8;">
-        Every week, pick whichever session you haven't done recently · no more alternating pools — this is now a dedicated VO2max/threshold/lactate day, every Friday, to move the needle on your engine.
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="ff">—</div>
       </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Bench Press</span><span class="week-detail-inline" data-tab="ff">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Strict Press</span><span class="week-detail-inline" data-tab="ff">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Weighted Dips</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×8</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×5</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Tricep Extensions</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
     </div>
   </div>
 
-  <div class="train-panel" id="ff-panel-mob" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Wed + Sat — Mobility · Joint Health · Grip</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">45–60 mins · same session both days · focus on ankle, hip, shoulder, neck · joint health and injury prevention.</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px;">Warm Up — 5 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Joint Circles</span></div>
+  <div class="train-panel" id="ff-panel-day3" style="display:none;">
+    <div class="panel-label">Wednesday — Long Run</div>
+    
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Long Run</span></div>
     <div class="t-body">
-      <div class="t-note">→ 10 reps each direction · wake up every joint before loading.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Ankle circles</div><div class="t-item-detail">10 each direction each foot</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip circles</div><div class="t-item-detail">10 each direction</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder circles + arm swings</div><div class="t-item-detail">10 each direction</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck circles + chin tucks</div><div class="t-item-detail">slow · controlled</div></div>
-    </div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Ankle — 10 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Banded Ankle Distraction</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Band around ankle pulling forward · half-kneeling into wall · drive knee past toes · heel stays down. Priority number one for your dorsiflexion.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Kneeling Ankle Rocks</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Half-kneeling · drive knee past toes · heel stays glued · slow and controlled · loading the ankle at end range.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Single Leg Calf Raise Eccentric</span></div>
-    <div class="t-body">
-      <div class="t-note">→ On a step · raise to full height · lower over 4 seconds to full stretch · most effective way to lengthen calf tissue long term.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise Eccentric</div><div class="t-item-detail">2×12 each · 4s down</div></div>
-    </div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Hip — 15 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">90/90 Hip Transitions</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Both legs at 90 degrees · rotate to the other side · breathe into the stretch · trains internal and external rotation together.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">3×10 each side · slow</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Cossack Squat</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Feet wide · shift into deep lateral squat · other leg straight · best drill for lateral hip range and kicking mobility.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cossack Squat</div><div class="t-item-detail">3×8 each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pigeon Stretch</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Shin parallel to mat · lean forward · targets piriformis and deep hip rotators. Minimum 60s hold.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Copenhagen Plank</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Side plank · top leg on bench · bottom leg hanging · builds adductor strength that protects the groin and improves hip stability for kicking.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">3×20–30s each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip Airplanes</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Stand on one leg · hinge · rotate pelvis so free leg rises skyward · 2s hold · trains hip internal rotation under load.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each side · 2s hold</div></div>
-    </div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Shoulder + Thoracic — 10 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thoracic Extension on Foam Roller</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Roller at mid-back · hands behind head · extend over it · work up and down the thoracic spine. Unlocks overhead position more than any shoulder stretch.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thoracic Extension on Foam Roller</div><div class="t-item-detail">2×60s</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Thread the Needle</span></div>
-    <div class="t-body">
-      <div class="t-note">→ All fours · thread one arm under body rotating thoracic spine · follow hand with eyes · unsticks the thoracic segments limiting shoulder and punch power.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Thread the Needle</div><div class="t-item-detail">2×8 each side</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Scapular Push Ups</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Push up position · arms locked · protract and retract shoulder blades only · builds serratus anterior, the muscle that stabilises the scapula under load.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Push Ups</div><div class="t-item-detail">3×12 · slow</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Shoulder Dislocates (band)</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Wide grip on band · pass from front to back overhead · widen grip until comfortable · narrow slightly each week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Shoulder Dislocates</div><div class="t-item-detail">2×10 · widen grip as needed</div></div>
-    </div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Neck — 5 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Chin Tucks + Neck Isometrics</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Chin tucks activate deep neck flexors. Isometrics build the neck that absorbs punches. Non-negotiable for boxing and forward head posture.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Chin Tucks</div><div class="t-item-detail">3×10 · 5s hold each</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Isometrics — 4 directions</div><div class="t-item-detail">30s each · front, back, left, right</div></div>
-    </div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:20px;">Bodyweight Strength + Hanging + Grip — 15 mins</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Dead Hang</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Hang from bar · arms straight · shoulders active · decompresses spine · builds grip endurance and shoulder mobility simultaneously. Most underrated longevity exercise.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×max · aim 60s · rest 60s</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Scapular Pull Ups</span></div>
-    <div class="t-body">
-      <div class="t-note">→ From dead hang · depress and retract the scapula without bending the elbow · slight rise in the body · builds the foundation for pull ups and protects the shoulder.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Pull Ups</div><div class="t-item-detail">3×10 · slow · feel the blade move</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Good Mornings</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Feet shoulder-width · hands behind head · hinge at hip · lower chest towards floor · drive back up through glutes. Activates posterior chain and lower back.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Good Mornings</div><div class="t-item-detail">3×12 · slow</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Deep Squat Hold</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Heels elevated on plates · sit into deepest squat possible · elbows push knees out · chest up · reduce heel elevation by a few mm each week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s · reduce heel elevation weekly</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Pull Ups</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 3×6 · practice sets · 2 reps in reserve · controlled · keeps pulling pattern fresh between Tuesday and next Tuesday.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pull Ups</div><div class="t-item-detail">3×6 · practice · 2 reps in reserve</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Grip Work</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Hyrox grip is everything — sandbags, farmer's carry, sled pull. Towel pull ups add rotation. Farmer carry builds sustained grip under load. No straps.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Towel Pull Ups or Towel Hang</div><div class="t-item-detail">3×max · towel over bar · double grip</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">3×40m · heaviest you can hold · no straps</div></div>
-    </div>
-
-  </div>
-
-    <!-- ── WEDNESDAY — LEGS ── -->
-  <div class="train-panel" id="ff-panel-day5" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Wednesday — Legs</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Warm Up</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Calf Raises</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 3×15 · bodyweight · slow, full range, pause at the top.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Calf Raises</div><div class="t-item-detail">3×15 · bodyweight · full range</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Squats</span></div>
-    <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 4×5 · 80% of max · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">4×5 · 80% · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×10 · 65% · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">2×10 · 65% · close to failure</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Romanian Deadlift</span></div>
-    <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 3×8 · controlled eccentric · feel the hamstring stretch · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Romanian Deadlift</div><div class="t-item-detail">3×8 · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×10-12 · lighter · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Romanian Deadlift</div><div class="t-item-detail">2×10-12 · close to failure</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 1 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Box Step Ups</div><div class="t-item-detail">10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pull Ups</div><div class="t-item-detail">8-10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Toes to Bar</div><div class="t-item-detail">10</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🔥 WOD 2 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Reverse Lunge</div><div class="t-item-detail">50 reps unbroken · firefighter stairs prep</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Row</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Toes to Bar</div><div class="t-item-detail">10</div></div>
+      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">Zone 2 aerobic base · 60–75 minutes · conversational pace</div></div>
     </div>
   </div>
 
-  <div class="train-panel" id="ff-panel-day6" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Saturday — Run + Mobility</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Early long run, then mobility · no strength or conditioning — this is what makes the rest of the week sustainable with no other rest day. Moved here from Monday for consistency — an early run you'll actually do beats a perfectly-sequenced one you won't.</div>
-
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#f5c842; margin-bottom:16px;">🏃 Early — Long Run (Aerobic Base)</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Very Slow Long Run</span></div>
+  <div class="train-panel" id="ff-panel-day4" style="display:none;">
+    <div class="panel-label">Thursday — Hyrox Circuit</div>
+    <div class="panel-intro">One session from the pool below.</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Baseline</span></div>
     <div class="t-body">
-      <div class="t-note">→ 10–15km · conversational pace throughout · extend distance gradually over the block, pace stays slow · this builds the aerobic base everything else sits on top of · do it early, then move into mobility.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Long Run</div><div class="t-item-detail">10–15km · very easy, conversational pace</div></div>
+      <ul class="steps-list"><li>4×1km Run (60s rest)</li><li>50 WB's</li><li>4×1km Row (60s rest)</li><li>50 WB's</li><li>4×1km Ski (60s rest)</li></ul>
     </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">🧘 Mobility — ~60 mins</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Still no strength or conditioning · this is the deep, unhurried version — pulled from the same drills used in the Hybrid tab, curated to the most effective ones for your ankle, hip, shoulder, and neck restrictions.</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ankle — 10 mins</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Devil's Touch</span></div>
     <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise — slow eccentric</div><div class="t-item-detail">3×12 each · 4s down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s · checks what ankle + hip work just unlocked</div></div>
+      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>30 WB's</li><li>15 Devil Press</li></ul>
+      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>500m Ski</li><li>50m Sled Push</li><li>20 BBJ</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip — 15 mins</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hail Mary</span></div>
     <div class="t-body">
-      <div class="t-note">→ 15 mins · hip mobility and posterior chain.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2 mins · slow transitions · internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each side · 2s hold · hip internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">2×20–30s each side · adductor strength and hip stability</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10 each side · kneeling hip flexor stretch with posterior tilt</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each side · glute and hip flexor</div></div>
+      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>1km Run</li><li>1km Row</li><li>30 Barbell Walking Lunges</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Neck — 10 mins</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Leg Commitment</span></div>
     <div class="t-body">
-      <div class="t-note">→ Release first · then all three planes.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suboccipital Release</div><div class="t-item-detail">60s · base of skull · finger pressure · release tension first</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Flexion — Weighted</div><div class="t-item-detail">3×12 · plate or harness · flex forward · front neck · sternocleidomastoid · add weight over time</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Extension — Weighted</div><div class="t-item-detail">3×12 · plate or harness · extend back · back neck · upper traps tie-in · add weight over time</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Lateral Flexion — Weighted</div><div class="t-item-detail">3×10 each side · plate or harness · pull ear to shoulder · lateral neck thickness · add weight over time</div></div>
+      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>10 Front Squats</li><li>40m Sled Push</li><li>30 Reverse Lunge</li><li>400m Run</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Arms + Grip — 12 mins</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Burpee Road</span></div>
     <div class="t-body">
-      <div class="t-note">→ Consolidated grip and direct arm block for the week outside the WOD days.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s · decompress spine · grip strength</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Wrestling Curls</div><div class="t-item-detail">3×12 · supinated, pull toward opposite shoulder</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tricep Extensions</div><div class="t-item-detail">3×12</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Z-Bar Bicep Curl</div><div class="t-item-detail">3×10 · strict, no swing</div></div>
+      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>1km Ski</li><li>20 BBJ</li><li>1km Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Core — 8 mins</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Engine Builder</span></div>
     <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Plank</div><div class="t-item-detail">3×45–60s</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press</div><div class="t-item-detail">3×12 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hanging Leg Raises</div><div class="t-item-detail">3×12 · controlled, no swing · full range</div></div>
+      <div class="steps-heading">Bookends</div><ul class="steps-list"><li>2×1km Ski</li><li>2×1km Row</li></ul>
+      <div class="steps-heading">8 Rounds (between the bookends)</div><ul class="steps-list"><li>400m Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Sauna + Recovery</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Christmas Time</span></div>
     <div class="t-body">
-      <div class="t-note">→ Sauna, relax, prioritize sleep. This is the day the rest of the week's fatigue gets absorbed.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sauna</div><div class="t-item-detail">15–20 mins · relax</div></div>
+      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>400m Run</li><li>50m Sled Push (250kg)</li><li>30 Walking Lunges</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Elite15</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Set 1</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 20 BBJ + 150m Farmers Carry</li><li>1.5km Run</li></ul>
+      <div class="steps-heading">Set 2</div><ul class="steps-list"><li>5 rounds: 16cal Ski + 16cal Row + 16cal Bike + 200m Run</li></ul>
+      <div class="steps-heading">Set 3</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 40 Lunges + 40 WB's</li><li>1.5km Run</li></ul>
     </div>
   </div>
 
-<!-- ── SUNDAY — RACE SIMULATION ── -->
-  <div class="train-panel" id="ff-panel-day7" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5c842">Sunday — Race Simulation</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Programmed and run at the Hyrox-specific gym — session built and led there, not tracked here.</div>
+  <div class="train-panel" id="ff-panel-day5" style="display:none;">
+    <div class="panel-label">Friday — Upper Body Strength (2)</div>
+    
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="ff">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Trap Bar Deadlift</span><span class="week-detail-inline" data-tab="ff">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Weighted Pull Ups</span><span class="week-detail-inline" data-tab="ff">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">SM Bent Over Row / DB Row</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
+    </div>
+      <div class="block-label">Superset</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">DB Incline Press + Lateral Raises</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Superset</div><div class="t-item-detail">4×8 DB Incline Press + 4×10 Lateral Raises</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Burpee to Box</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
+    </div>
   </div>
+
+  <div class="train-panel" id="ff-panel-day6" style="display:none;">
+    <div class="panel-label">Saturday — Tempo Run</div>
+    <div class="panel-intro">One session from the pool below.</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Threshold Ladder</span></div>
+    <div class="t-body">
+      <ul class="steps-list"><li>Progressive threshold intervals, building toward race pace</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Cruise Intervals</span></div>
+    <div class="t-body">
+      <ul class="steps-list"><li>Sustained intervals just under threshold pace, short float recovery between reps</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Norwegian</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>10min warm-up jog</li><li>4 sets: 4min @ 90–95% max HR + 3min easy jog</li><li>10min cooldown jog</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">T-Volume</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>2km warm-up</li><li>2×1200m (90s rest)</li><li>4×800m (60s rest)</li><li>8×400m (60s rest)</li><li>1km cooldown</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Track Records</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>1km warm-up</li><li>12×1km (60s rest)</li><li>1km cooldown</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The 800's</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>2km warm-up</li><li>10×800m (60s rest)</li><li>1km cooldown</li></ul>
+    </div>
+  </div>
+
+  <div class="train-panel" id="ff-panel-day7" style="display:none;">
+    <div class="panel-label">Sunday — Mobility + Easy Run</div>
+    
+      <div class="block-label">Ankle</div>
+      <div class="t-item"><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s</div></div>
+      <div class="t-item"><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10</div></div>
+      <div class="t-item"><div class="t-item-name">Single Leg Calf Raise</div><div class="t-item-detail">3×12</div></div>
+      <div class="t-item"><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s</div></div>
+      <div class="block-label">Hip</div>
+      <div class="t-item"><div class="t-item-name">90/90 Transitions</div><div class="t-item-detail">2×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">3×8</div></div>
+      <div class="t-item"><div class="t-item-name">Good Mornings / Back Extensions</div><div class="t-item-detail">3×8</div></div>
+      <div class="t-item"><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">2×12</div></div>
+      <div class="t-item"><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10</div></div>
+      <div class="block-label">Neck</div>
+      <div class="t-item"><div class="t-item-name">Neck Isometrics + Chin Tucks</div><div class="t-item-detail">3 directions, 20s holds</div></div>
+      <div class="block-label">Core</div>
+      <div class="t-item"><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Pallof Press</div><div class="t-item-detail">4×10</div></div>
+      <div class="t-item"><div class="t-item-name">Hanging Leg Raises</div><div class="t-item-detail">4×10</div></div>
+      <div class="block-label">Easy Run</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Treadmill Zone 2</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">6min/km pace · 5km</div></div>
+    </div>
+  </div>
+
 </div>
 </div>
 
-<!-- ==================== KB SECTION ==================== -->
+<!-- ==================== HYBRID SECTION ==================== -->
 <div class="section" id="section-kb">
 <div class="t-container">
 
-  <div class="t-header">
-    <div class="t-header-label">Muscle · Speed · Physique</div>
-    <div class="t-header-title">HYBRID <span style="color:#f5a742">PROGRAM</span></div>
+  <div class="t-header-label">Strength · Conditioning · Hybrid athlete</div>
+  <div class="t-header-title">HYBRID <span style="color:var(--hybrid)">PLAN</span></div>
+
+  <div class="week-pool">Mon Tempo Run · Tue Upper Strength (1) · Wed Long Run · Thu Lower Strength · Fri Upper Strength (2) · Sat Hyrox Circuit · Sun Mobility + Cardio</div>
+
+  <div class="day-nav">
+    <button id="kbtab-day1" onclick="showKBTab('day1')" class="active">Mon</button>
+    <button id="kbtab-day2" onclick="showKBTab('day2')">Tue</button>
+    <button id="kbtab-day3" onclick="showKBTab('day3')">Wed</button>
+    <button id="kbtab-day4" onclick="showKBTab('day4')">Thu</button>
+    <button id="kbtab-day5" onclick="showKBTab('day5')">Fri</button>
+    <button id="kbtab-day6" onclick="showKBTab('day6')">Sat</button>
+    <button id="kbtab-day7" onclick="showKBTab('day7')">Sun</button>
   </div>
 
-  <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.8;">Mon: Legs &nbsp;·&nbsp; Tue: Push &nbsp;·&nbsp; Wed: Run (Moderate or Hard, your choice) &nbsp;·&nbsp; Thu: Pull &nbsp;·&nbsp; Fri: Conditioning &nbsp;·&nbsp; Sat: Full Rest &nbsp;·&nbsp; Sun: Long Run</div>
-  <div style="background:#111; border:1px solid #1a1a1a; border-left:3px solid #f5a742; padding:14px 16px; margin-bottom:24px; font-size:12px; color:#666; line-height:1.9;">
-    <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a742; margin-bottom:10px;">Reps In Reserve Guide</div>
-    <div><span style="color:#ccc; font-weight:600;">Strength — Heavy</span> &nbsp;·&nbsp; 2 RIR &nbsp;·&nbsp; you could do 7, you do 5</div>
-    <div><span style="color:#ccc; font-weight:600;">Volume — 65%</span> &nbsp;·&nbsp; 1 RIR &nbsp;·&nbsp; you could do 11, you do 10</div>
-    <div><span style="color:#ccc; font-weight:600;">Second Session — 70%</span> &nbsp;·&nbsp; 2 RIR &nbsp;·&nbsp; real working sets · the week's second touch on that lift</div>
-    <div><span style="color:#ccc; font-weight:600;">Accessory</span> &nbsp;·&nbsp; 2 RIR &nbsp;·&nbsp; controlled · quality over intensity</div>
-    <div><span style="color:#ccc; font-weight:600;">Explosive</span> &nbsp;·&nbsp; max intent · every rep full effort · not to failure</div>
-  </div>
-
-  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; background:#1a1a1a; margin-bottom:24px; max-width:720px; margin-left:auto; margin-right:auto;">
-    <button class="train-tab" id="kbtab-day1" onclick="showKBTab('day1')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Mon</button>
-    <button class="train-tab" id="kbtab-day2" onclick="showKBTab('day2')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Tue</button>
-    <button class="train-tab" id="kbtab-day3" onclick="showKBTab('day3')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Wed</button>
-    <button class="train-tab" id="kbtab-day4" onclick="showKBTab('day4')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Thu</button>
-    <button class="train-tab" id="kbtab-day5" onclick="showKBTab('day5')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Fri</button>
-    <button class="train-tab" id="kbtab-day6" onclick="showKBTab('day6')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sat</button>
-    <button class="train-tab" id="kbtab-day7" onclick="showKBTab('day7')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:11px 2px; cursor:pointer; -webkit-tap-highlight-color:transparent;">Sun</button>
-  </div>
-
-  <!-- ── MONDAY — PUSH ── -->
-  <div class="train-panel" id="kb-panel-day1" style="display:block; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5a742">Monday — Legs</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Warm Up</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Calf Raises</span></div>
+  <div class="train-panel" id="kb-panel-day1" style="display:none;display:block;">
+    <div class="panel-label">Monday — Tempo Run</div>
+    <div class="panel-intro">One session from the pool below.</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Threshold</span></div>
     <div class="t-body">
-      <div class="t-note">→ 3×15 · bodyweight · slow, full range, pause at the top.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Calf Raises</div><div class="t-item-detail">3×15 · bodyweight · full range</div></div>
+      <div class="steps-heading">Race-pace ladder, 2min rest between reps</div><ul class="steps-list"><li>2km @ race pace</li><li>3km @ race pace</li><li>4km @ race pace</li><li>3km @ race pace</li><li>2km @ race pace</li></ul>
     </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Squats</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Norwegian</span></div>
     <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 4×5 · 80% of max · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">4×5 · 80% · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×10 · 65% · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Squats</div><div class="t-item-detail">2×10 · 65% · close to failure</div></div>
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>10min warm-up jog</li><li>4 sets: 4min @ 90–95% max HR + 3min easy jog</li><li>10min cooldown jog</li></ul>
     </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">DB Romanian Deadlift</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">T-Volume</span></div>
     <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 3×8 · controlled eccentric · feel the hamstring stretch · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Romanian Deadlift</div><div class="t-item-detail">3×8 · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×10-12 · lighter · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Romanian Deadlift</div><div class="t-item-detail">2×10-12 · close to failure</div></div>
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>2km warm-up</li><li>2×1200m (90s rest)</li><li>4×800m (60s rest)</li><li>8×400m (60s rest)</li><li>1km cooldown</li></ul>
     </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 1 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Track Records</span></div>
     <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Box Step Ups</div><div class="t-item-detail">10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pull Ups</div><div class="t-item-detail">8-10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Toes to Bar</div><div class="t-item-detail">10</div></div>
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>1km warm-up</li><li>12×1km (60s rest)</li><li>1km cooldown</li></ul>
     </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 2 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The 800's</span></div>
     <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Reverse Lunge</div><div class="t-item-detail">50 reps unbroken · firefighter stairs prep</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Row</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Toes to Bar</div><div class="t-item-detail">10</div></div>
+      <div class="steps-heading">Structure</div><ul class="steps-list"><li>2km warm-up</li><li>10×800m (60s rest)</li><li>1km cooldown</li></ul>
     </div>
   </div>
 
-  <div class="train-panel" id="kb-panel-day2" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5a742">Tuesday — Push</div>
+  <div class="train-panel" id="kb-panel-day2" style="display:none;">
+    <div class="panel-label">Tuesday — Upper Body Strength (1)</div>
+    
 
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Bench Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×5 · 80% of max · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Bench Press</div><div class="t-item-detail">4×5 · 80% · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Strict Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×6 · strict, no leg drive · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Strict Press</div><div class="t-item-detail">4×6 · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Reverse Lunge</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 3×10 each side · controlled · barbell or dumbbells.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Reverse Lunge</div><div class="t-item-detail">3×10 each side</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 1 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Push Press</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Renegade Row (with Push-Up)</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmers Carry</div><div class="t-item-detail">40m · DB or KB</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 2 — 4 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4 rounds · heavier and more controlled than Devil Press — lets the press actually reach muscular fatigue instead of cardio cutting the set short.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Barbell Hang Clean and Press</div><div class="t-item-detail">10 reps</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmers Carry</div><div class="t-item-detail">40m · DB or KB</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Lateral Raises</div><div class="t-item-detail">15</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day3" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5a742">Wednesday — Run (Choose Your Effort)</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Mobility first, zero fatigue · then pick a session based on how you feel that week — moderate or hard, your call · this is your only quality-running day now, so nothing here is off the table.</div>
-
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a742; margin-bottom:16px; margin-top:8px;">🏃 Moderate — Controlled Effort</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Threshold Work</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×2km or 5×1km at race pace · 60–90s rest · sustained, controlled — hard but never max effort.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4×2km or 5×1km at race pace</div><div class="t-item-detail">60–90s rest between efforts</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Cruise Intervals</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 6×1km at 10–15s faster than race pace · 90s rest · teaches your body to hold race pace comfortably because training pace is harder.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">6×1km at 10–15s faster than race pace</div><div class="t-item-detail">90s rest between each · controlled effort</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Progression Run</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8km continuous · no rest · first 3km easy · next 3km at race pace · last 2km faster than race pace · teaches you to negative split and finish strong.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3km easy</div><div class="t-item-detail">conversational pace · warm up</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3km at race pace</div><div class="t-item-detail">controlled · hard but sustainable</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2km faster than race pace</div><div class="t-item-detail">push here · finish strong</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Strong/Cooldown Rounds</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 2km warm up, then 4 rounds of 1km strong pace + 1km cooldown jog · 10km total · the full recovery kilometer between efforts lets you push each strong km harder than a standard interval.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">2km Warm Up</div><div class="t-item-detail">easy, conversational</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4×(1km strong + 1km cooldown)</div><div class="t-item-detail">strong but controlled · full easy km between efforts</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#f5a742; margin-bottom:16px; margin-top:8px;">🔥 Hard — Max Effort, Use When Feeling Strong</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Norwegian 4×4</span></div>
-    <div class="t-body">
-      <div class="t-note">→ The most effective VO2max protocol · used by Norwegian elite athletes · directly builds your aerobic ceiling.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 mins easy warm up jog</div><div class="t-item-detail"></div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">4 mins at 90–95% max HR</div><div class="t-item-detail">very hard to speak · full effort</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">3 mins easy jog</div><div class="t-item-detail">active recovery · bring HR down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Repeat 3 more times</div><div class="t-item-detail">4 intervals total</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">10 mins easy cool down jog</div><div class="t-item-detail"></div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">800m Repeats</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 8×800m at 5km race pace · 90s rest · builds raw speed and VO2max from a different angle than Norwegian 4×4.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">8×800m at 5km pace</div><div class="t-item-detail">90s rest between each · hard but controlled</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">12×1km at 5k Pace</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 12×1km at target 5k pace · 90s rest · high volume at a hard, honest pace · the biggest single stimulus in the rotation, use when feeling strong.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Warm Up Jog</div><div class="t-item-detail">10 mins easy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">12×1km at 5k pace</div><div class="t-item-detail">90s rest between each</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Cool Down Jog</div><div class="t-item-detail">10 mins easy</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:24px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:8px;">Mobility — 35–40 mins</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Ankle → Hip → Neck → Grip · do this before whichever run you pick above.</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ankle — 10 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise — slow eccentric</div><div class="t-item-detail">3×12 each · 4s down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip — 10 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2 mins · slow transitions · internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each side · 2s hold · hip internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10 each side · kneeling hip flexor stretch with posterior tilt</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each side · glute and hip flexor</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Neck — 10 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suboccipital Release</div><div class="t-item-detail">60s · base of skull · finger pressure</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Flexion — Banded</div><div class="t-item-detail">3×15 · band around back of head · flex forward</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Extension — Banded</div><div class="t-item-detail">3×15 · band around forehead · extend back</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Lateral Flexion — Banded</div><div class="t-item-detail">3×12 each side · band on side of head</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Grip — 8 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s · decompress spine · grip strength</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Scapular Pull Ups</div><div class="t-item-detail">3×10 · slow · scapular control</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Farmer Carry</div><div class="t-item-detail">3×40m · moderate weight · grip and posture</div></div>
-    </div>
-  </div>
-
-  <!-- ── SUNDAY — LONG RUN (AEROBIC BASE) ── -->
-  <div class="train-panel" id="kb-panel-day4" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5a742">Thursday — Pull</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:16px;">Strength — Heavy</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Rack Pull or Deadlift</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×5 · your choice each week depending on how you feel · Rack Pull is above the knee, partial range; Deadlift is full range from the floor · straps allowed if grip fails first · 2 reps in reserve · add 2.5kg every week.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Rack Pull or Deadlift</div><div class="t-item-detail">4×5 · 2 RIR</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Weighted Pull Ups</span></div>
-    <div class="t-body">
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Strength</div>
-      <div class="t-note">→ 4×5 · added weight · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">4×5 · 2 RIR</div></div>
-      <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
-      <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:8px;">Volume</div>
-      <div class="t-note">→ 2×8 · lighter weight · close to failure.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Weighted Pull Ups</div><div class="t-item-detail">2×8 · lighter · close to failure</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Incline DB Press</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 4×8-10 · upper chest, distinct emphasis from flat Bench Press · 2 reps in reserve.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Incline DB Press</div><div class="t-item-detail">4×8-10 · 2 RIR</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 1 — 5 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hang Clean</div><div class="t-item-detail">6</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dips</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag Carry or Sled Drag</div><div class="t-item-detail">40m</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 WOD 2 — 5 Rounds</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">KB Power Clean to Push Press</div><div class="t-item-detail">6 each side · single arm, heavy</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Gorilla Row</div><div class="t-item-detail">10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sandbag Carry or Sled Drag</div><div class="t-item-detail">40m</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day5" style="display:none; max-width:720px; margin:0 auto;">
-    <div class="t-cat-label" style="color:#f5a742">Friday — Conditioning</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Two complexes, different energy systems · Power Clean Squat uses the heel-elevation platform for depth.</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 Complex 1 — AMRAP 20</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Log rounds completed and beat it over time.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Power Clean Squat</div><div class="t-item-detail">5 · heel-elevation platform for depth</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Muscle Ups or Chest to Bar</div><div class="t-item-detail">12</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Wall Balls</div><div class="t-item-detail">15</div></div>
-    </div>
-
-    <div style="height:1px; background:#1a1a1a; margin:20px 0;"></div>
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🔥 Complex 2 — 4 Rounds For Time</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Complex</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">DB Snatch</div><div class="t-item-detail">10 · 5 each arm</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Devil Press</div><div class="t-item-detail">10</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Double Unders</div><div class="t-item-detail">30-50</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day6" style="display:none; max-width:720px; margin:0 auto; padding:0 16px;">
-    <div class="t-cat-label" style="color:#f5a742">Saturday — Full Rest</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">True off day, same as Hyrox. No running, no strength or conditioning — this is what makes the rest of the week sustainable.</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#444; margin-bottom:16px;">🧘 Mobility — ~60 mins</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">Still no strength or conditioning · the deep, unhurried version — curated to the most effective drills for your ankle, hip, shoulder, and neck restrictions.</div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Ankle — 10 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Single Leg Calf Raise — slow eccentric</div><div class="t-item-detail">3×12 each · 4s down</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s · checks what ankle + hip work just unlocked</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Hip — 15 mins</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 15 mins · hip mobility and posterior chain.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">90/90 Hip Transitions</div><div class="t-item-detail">2 mins · slow transitions · internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">2×8 each side · 2s hold · hip internal rotation</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">2×20–30s each side · adductor strength and hip stability</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10 each side · kneeling hip flexor stretch with posterior tilt</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s each side · glute and hip flexor</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Neck — 10 mins</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Release first · then all three planes.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Suboccipital Release</div><div class="t-item-detail">60s · base of skull · finger pressure · release tension first</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Flexion — Weighted</div><div class="t-item-detail">3×12 · plate or harness · flex forward · front neck · sternocleidomastoid · add weight over time</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Extension — Weighted</div><div class="t-item-detail">3×12 · plate or harness · extend back · back neck · upper traps tie-in · add weight over time</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Neck Lateral Flexion — Weighted</div><div class="t-item-detail">3×10 each side · plate or harness · pull ear to shoulder · lateral neck thickness · add weight over time</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Arms + Grip — 12 mins</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Consolidated grip and direct arm block for the week outside the WOD days.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s · decompress spine · grip strength</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Banded Wrestling Curls</div><div class="t-item-detail">3×12 · supinated, pull toward opposite shoulder</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Tricep Extensions</div><div class="t-item-detail">3×12</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Z-Bar Bicep Curl</div><div class="t-item-detail">3×10 · strict, no swing</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Core — 8 mins</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Plank</div><div class="t-item-detail">3×45–60s</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Pallof Press</div><div class="t-item-detail">3×12 each side</div></div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Hanging Leg Raises</div><div class="t-item-detail">3×12 · controlled, no swing · full range</div></div>
-    </div>
-
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Sauna + Recovery</span></div>
-    <div class="t-body">
-      <div class="t-note">→ Sauna, relax, prioritize sleep. This is the day the rest of the week's fatigue gets absorbed.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Sauna</div><div class="t-item-detail">15–20 mins · relax</div></div>
-    </div>
-  </div>
-
-  <!-- ── THURSDAY — LEGS ── -->
-  <div class="train-panel" id="kb-panel-day7" style="display:none; max-width:720px; margin:0 auto; padding:0 16px;">
-    <div class="t-cat-label" style="color:#f5a742">Sunday — Long Run (Aerobic Base)</div>
-    <div style="font-size:12px; color:#555; margin-bottom:20px; line-height:1.6;">No rest day this week, so this is deliberately slow · genuine aerobic base building, not a speed session · this is the volume that supports everything else in the week.</div>
-
-    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#f5a742; margin-bottom:16px;">🏃 Long Slow Run</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">▶</span><span class="t-row-label">Very Slow Long Run</span></div>
-    <div class="t-body">
-      <div class="t-note">→ 10–15km · genuinely slow, fully conversational the entire way · heart rate stays low, zone 2 · nasal breathing if possible. Builds aerobic base and mitochondrial density — the foundation VO2max work sits on top of, not a VO2max session itself.</div>
-      <div class="t-item"><div class="t-dot"></div><div class="t-item-name">Long Slow Run</div><div class="t-item-detail">10–15km · very slow, conversational pace</div></div>
-    </div>
-
-    <div style="margin-top:24px; padding:14px 16px; background:#111; border-left:2px solid #f5a742;">
-      <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#444; margin-bottom:8px;">Progressive Overload</div>
-      <div style="font-size:12px; color:#555; line-height:1.8;">
-        Bench Press / Back Squat / Deadlift → add weight when all sets feel solid<br>
-        Pull Ups → add weight once bodyweight sets are easy past 12 reps<br>
-        Strict Press → +2.5kg when 4×8 feels solid<br>
-        Metcons → add 1 round or reduce rest 15s when manageable<br>
-        Wed/Sat runs → rotate sessions weekly, add reps when pace feels controlled<br>
-        Sunday long run → extend distance gradually, pace stays slow<br>
-        Deload every 4th week at 70% load
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="kb">—</div>
       </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Bench Press</span><span class="week-detail-inline" data-tab="kb">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Strict Press</span><span class="week-detail-inline" data-tab="kb">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Weighted Dips</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×8</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Pull Ups</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×5</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Tricep Extensions</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
     </div>
   </div>
+
+  <div class="train-panel" id="kb-panel-day3" style="display:none;">
+    <div class="panel-label">Wednesday — Long Run</div>
+    
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Long Run</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">Zone 2 aerobic base · 60–75 minutes · conversational pace</div></div>
+    </div>
+  </div>
+
+  <div class="train-panel" id="kb-panel-day4" style="display:none;">
+    <div class="panel-label">Thursday — Lower Body Strength</div>
+    
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="kb">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
+    </div>
+      <div class="block-label">Compound</div>
+    <div class="t-row static"><span class="t-row-label">Squat</span><span class="week-detail-inline" data-tab="kb">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Romanian Deadlift</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×8</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hamstring Curls</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Bulgarian Split Squats</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×12</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Abductions</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Calf Raises</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
+    </div>
+  </div>
+
+  <div class="train-panel" id="kb-panel-day5" style="display:none;">
+    <div class="panel-label">Friday — Upper Body Strength (2)</div>
+    
+      <div class="block-label">Power</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hang Clean</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
+    </div>
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="kb">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Trap Bar Deadlift</span><span class="week-detail-inline" data-tab="kb">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Weighted Pull Ups</span><span class="week-detail-inline" data-tab="kb">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">SM Bent Over Row / DB Row</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">DB Incline Press</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
+    </div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Lateral Raises</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
+    </div>
+  </div>
+
+  <div class="train-panel" id="kb-panel-day6" style="display:none;">
+    <div class="panel-label">Saturday — Hyrox Circuit</div>
+    <div class="panel-intro">One session from the pool below.</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Baseline</span></div>
+    <div class="t-body">
+      <ul class="steps-list"><li>4×1km Run (60s rest)</li><li>50 WB's</li><li>4×1km Row (60s rest)</li><li>50 WB's</li><li>4×1km Ski (60s rest)</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Devil's Touch</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>30 WB's</li><li>15 Devil Press</li></ul>
+      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>500m Ski</li><li>50m Sled Push</li><li>20 BBJ</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hail Mary</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>1km Run</li><li>1km Row</li><li>30 Barbell Walking Lunges</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Leg Commitment</span></div>
+    <div class="t-body">
+      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>10 Front Squats</li><li>40m Sled Push</li><li>30 Reverse Lunge</li><li>400m Run</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Burpee Road</span></div>
+    <div class="t-body">
+      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>1km Ski</li><li>20 BBJ</li><li>1km Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Engine Builder</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Bookends</div><ul class="steps-list"><li>2×1km Ski</li><li>2×1km Row</li></ul>
+      <div class="steps-heading">8 Rounds (between the bookends)</div><ul class="steps-list"><li>400m Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Christmas Time</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>400m Run</li><li>50m Sled Push (250kg)</li><li>30 Walking Lunges</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Captain Thrust</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>10 Thrusters</li></ul>
+      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>10 Box Jump Overs</li><li>10 Power Clean</li></ul>
+    </div>
+  </div>
+
+  <div class="train-panel" id="kb-panel-day7" style="display:none;">
+    <div class="panel-label">Sunday — Mobility + Cardio</div>
+    
+      <div class="block-label">Ankle</div>
+      <div class="t-item"><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s</div></div>
+      <div class="t-item"><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10</div></div>
+      <div class="t-item"><div class="t-item-name">Single Leg Calf Raise</div><div class="t-item-detail">3×12</div></div>
+      <div class="t-item"><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s</div></div>
+      <div class="block-label">Hip</div>
+      <div class="t-item"><div class="t-item-name">90/90 Transitions</div><div class="t-item-detail">2×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">3×8</div></div>
+      <div class="t-item"><div class="t-item-name">Good Mornings / Back Extensions</div><div class="t-item-detail">3×8</div></div>
+      <div class="t-item"><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">2×12</div></div>
+      <div class="t-item"><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10</div></div>
+      <div class="block-label">Neck</div>
+      <div class="t-item"><div class="t-item-name">Neck Isometrics + Chin Tucks</div><div class="t-item-detail">3 directions, 20s holds</div></div>
+      <div class="block-label">Core</div>
+      <div class="t-item"><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s</div></div>
+      <div class="t-item"><div class="t-item-name">Pallof Press</div><div class="t-item-detail">4×10</div></div>
+      <div class="t-item"><div class="t-item-name">Hanging Leg Raises</div><div class="t-item-detail">4×10</div></div>
+      <div class="block-label">Cardio</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Bike + Treadmill</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">30 minutes Bike + 5km on the Treadmill</div></div>
+    </div>
+  </div>
+
 </div>
 </div>
 
 <!-- ==================== DIET SECTION ==================== -->
 <div class="section" id="section-diet">
-<div style="max-width:720px; margin:0 auto; padding:24px 16px; background:#0d0d0d; min-height:100vh;">
+<div style="max-width:720px; margin:0 auto; padding:24px 16px; background:var(--bg); min-height:100vh;">
 
   <div style="padding:16px 0 20px;">
-    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#555; margin-bottom:6px;">Nutrition</div>
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:42px; color:#fff; line-height:1;">FUEL <span style="color:#6abf4b;">PLAN</span></div>
+    <div style="font-size:10px; letter-spacing:0.02em; color:var(--muted); margin-bottom:6px;">Nutrition</div>
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--text); line-height:1;">FUEL <span style="color:var(--fuel);">PLAN</span></div>
   </div>
 
-  <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#6abf4b; margin:0 0 12px;">Daily — Every Day</div>
+  <div style="font-size:10px; letter-spacing:0.02em; color:var(--fuel); margin:0 0 12px;">Daily — Every Day</div>
 
-  <div style="background:#111; border-left:3px solid #6abf4b; padding:14px 16px; margin-bottom:8px;">
-    <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#555; margin-bottom:4px;">Pre-Workout · 5:30am</div>
-    <div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Bagel + Honey + Banana</div>
-    <div style="font-size:12px; color:#888; line-height:1.7;">1–2 bagels · honey on top · 1 banana · water with 1 tbsp honey + pinch of salt · fast carbs, easy digestion</div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border-left:3px solid var(--fuel); padding:14px 16px; margin-bottom:8px;">
+    <div style="font-size:10px; letter-spacing:0.02em; color:var(--muted); margin-bottom:4px;">Pre-Workout · 5:30am</div>
+    <div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Bagel + Honey + Banana</div>
+    <div style="font-size:12px; color:var(--muted); line-height:1.7;">1–2 bagels · honey on top · 1 banana · water with 1 tbsp honey + pinch of salt · fast carbs, easy digestion</div>
   </div>
 
-  <div style="background:#111; border-left:3px solid #6abf4b; padding:14px 16px; margin-bottom:8px;">
-    <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#555; margin-bottom:4px;">Post-Workout · Immediately After</div>
-    <div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Protein Shake</div>
-    <div style="font-size:12px; color:#888; line-height:1.7;">30–40g whey protein · water or milk · within 30 mins of finishing</div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border-left:3px solid var(--fuel); padding:14px 16px; margin-bottom:8px;">
+    <div style="font-size:10px; letter-spacing:0.02em; color:var(--muted); margin-bottom:4px;">Post-Workout · Immediately After</div>
+    <div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Protein Shake</div>
+    <div style="font-size:12px; color:var(--muted); line-height:1.7;">30–40g whey protein · water or milk · within 30 mins of finishing</div>
   </div>
 
-  <div style="background:#111; border-left:3px solid #6abf4b; padding:14px 16px; margin-bottom:24px;">
-    <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#555; margin-bottom:4px;">Breakfast · At the Office</div>
-    <div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Oats + Greek Yogurt + Honey + Fruit + Dark Chocolate</div>
-    <div style="font-size:12px; color:#888; line-height:1.7;">80g oats · 200g Greek yogurt · 1 tbsp honey · seasonal fruit · 2–3 squares dark chocolate</div>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border-left:3px solid var(--fuel); padding:14px 16px; margin-bottom:24px;">
+    <div style="font-size:10px; letter-spacing:0.02em; color:var(--muted); margin-bottom:4px;">Breakfast · At the Office</div>
+    <div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Oats + Greek Yogurt + Honey + Fruit + Dark Chocolate</div>
+    <div style="font-size:12px; color:var(--muted); line-height:1.7;">80g oats · 200g Greek yogurt · 1 tbsp honey · seasonal fruit · 2–3 squares dark chocolate</div>
   </div>
 
-  <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#6abf4b; margin-bottom:8px;">Lunch + Dinner — Seasonal</div>
-  <div style="font-size:12px; color:#555; margin-bottom:16px;">Pick one for lunch, one for dinner. Cook double — next day lunch done.</div>
+  <div style="font-size:10px; letter-spacing:0.02em; color:var(--fuel); margin-bottom:8px;">Lunch + Dinner — Seasonal</div>
+  <div style="font-size:12px; color:var(--muted); margin-bottom:16px;">Pick one for lunch, one for dinner. Cook double — next day lunch done.</div>
 
   <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:#1a1a1a; margin-bottom:20px;">
-    <button id="ds-spring" onclick="dShow('spring')" style="background:#1e1e1e; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer;">Spring</button>
-    <button id="ds-summer" onclick="dShow('summer')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer;">Summer</button>
-    <button id="ds-autumn" onclick="dShow('autumn')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer;">Autumn</button>
-    <button id="ds-winter" onclick="dShow('winter')" style="background:#111; border:none; color:#555; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; padding:10px 4px; cursor:pointer;">Winter</button>
+    <button id="ds-spring" onclick="dShow('spring')" style="background:var(--surface-2); border:none; color:var(--text); font-family:'DM Sans',sans-serif; font-size:12px; padding:10px 4px; cursor:pointer; border-radius:6px;">Spring</button>
+    <button id="ds-summer" onclick="dShow('summer')" style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border:none; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; padding:10px 4px; cursor:pointer; border-radius:6px;">Summer</button>
+    <button id="ds-autumn" onclick="dShow('autumn')" style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border:none; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; padding:10px 4px; cursor:pointer; border-radius:6px;">Autumn</button>
+    <button id="ds-winter" onclick="dShow('winter')" style="background:var(--surface); border:1px solid var(--border); border-radius:8px; border:none; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:12px; padding:10px 4px; cursor:pointer; border-radius:6px;">Winter</button>
   </div>
 
   <div id="dp-spring" style="display:block;">
-    <div style="font-size:11px; color:#555; margin-bottom:12px;">Apr – Jun · lighter, fresher</div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Honey Mustard Chicken + White Rice + Asparagus</div><div style="font-size:12px; color:#888; line-height:1.7;">Chicken breast · honey + dijon + garlic · white rice · steamed asparagus</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Salmon + Quinoa + Spinach + Lemon</div><div style="font-size:12px; color:#888; line-height:1.7;">Pan-seared salmon · quinoa · wilted spinach · squeeze of lemon</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Beef Stir Fry + Noodles + Broccoli</div><div style="font-size:12px; color:#888; line-height:1.7;">Thin sliced beef · egg noodles · broccoli · soy + ginger + garlic</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Tuna + Sweet Potato + Green Beans</div><div style="font-size:12px; color:#888; line-height:1.7;">Grilled tuna · roasted sweet potato · steamed green beans · olive oil</div></div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">Apr – Jun · lighter, fresher</div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Honey Mustard Chicken + White Rice + Asparagus</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Chicken breast · honey + dijon + garlic · white rice · steamed asparagus</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Salmon + Quinoa + Spinach + Lemon</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Pan-seared salmon · quinoa · wilted spinach · squeeze of lemon</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Beef Stir Fry + Noodles + Broccoli</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Thin sliced beef · egg noodles · broccoli · soy + ginger + garlic</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Tuna + Sweet Potato + Green Beans</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Grilled tuna · roasted sweet potato · steamed green beans · olive oil</div></div>
   </div>
 
   <div id="dp-summer" style="display:none;">
-    <div style="font-size:11px; color:#555; margin-bottom:12px;">Jul – Sep · easy prep</div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Honey Mustard Chicken + White Rice + Courgette</div><div style="font-size:12px; color:#888; line-height:1.7;">Grilled chicken · honey + dijon glaze · white rice · grilled courgette</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Grilled Beef + Sweet Potato + Salad</div><div style="font-size:12px; color:#888; line-height:1.7;">Beef steak · roasted sweet potato · tomato + cucumber + olive oil</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Prawns + Pasta + Tomato + Basil</div><div style="font-size:12px; color:#888; line-height:1.7;">King prawns · pasta · cherry tomatoes · fresh basil · olive oil + garlic</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Mackerel + Brown Rice + Cucumber</div><div style="font-size:12px; color:#888; line-height:1.7;">Grilled mackerel · brown rice · sliced cucumber · soy + sesame</div></div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">Jul – Sep · easy prep</div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Honey Mustard Chicken + White Rice + Courgette</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Grilled chicken · honey + dijon glaze · white rice · grilled courgette</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Grilled Beef + Sweet Potato + Salad</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Beef steak · roasted sweet potato · tomato + cucumber + olive oil</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Prawns + Pasta + Tomato + Basil</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">King prawns · pasta · cherry tomatoes · fresh basil · olive oil + garlic</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Mackerel + Brown Rice + Cucumber</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Grilled mackerel · brown rice · sliced cucumber · soy + sesame</div></div>
   </div>
 
   <div id="dp-autumn" style="display:none;">
-    <div style="font-size:11px; color:#555; margin-bottom:12px;">Oct – Dec · heartier, warming</div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Slow Cooked Beef + Sweet Potato + Spinach</div><div style="font-size:12px; color:#888; line-height:1.7;">Beef chunks · sweet potato mash · wilted spinach · pressure cooker 45 mins</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Chicken Thighs + Rice + Mushrooms + Garlic</div><div style="font-size:12px; color:#888; line-height:1.7;">Bone-in chicken thighs · white rice · pan-fried mushrooms · lots of garlic</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Salmon + Lentils + Roasted Veg</div><div style="font-size:12px; color:#888; line-height:1.7;">Baked salmon · green lentils · roasted peppers + courgette + red onion</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Turkey Mince + Pasta + Tomato + Peppers</div><div style="font-size:12px; color:#888; line-height:1.7;">Turkey mince bolognese · pasta · roasted peppers · tomato sauce</div></div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">Oct – Dec · heartier, warming</div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Slow Cooked Beef + Sweet Potato + Spinach</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Beef chunks · sweet potato mash · wilted spinach · pressure cooker 45 mins</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Chicken Thighs + Rice + Mushrooms + Garlic</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Bone-in chicken thighs · white rice · pan-fried mushrooms · lots of garlic</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Salmon + Lentils + Roasted Veg</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Baked salmon · green lentils · roasted peppers + courgette + red onion</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Turkey Mince + Pasta + Tomato + Peppers</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Turkey mince bolognese · pasta · roasted peppers · tomato sauce</div></div>
   </div>
 
   <div id="dp-winter" style="display:none;">
-    <div style="font-size:11px; color:#555; margin-bottom:12px;">Jan – Mar · dense, warming</div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Beef Stew + Potatoes + Carrots</div><div style="font-size:12px; color:#888; line-height:1.7;">Beef chunks · potatoes · carrots · onion · beef stock · slow cook 1-2hrs</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Chicken + White Rice + Broccoli + Ginger</div><div style="font-size:12px; color:#888; line-height:1.7;">Chicken breast · white rice · steamed broccoli · ginger + soy + sesame</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Lentil Soup + Sourdough</div><div style="font-size:12px; color:#888; line-height:1.7;">Red lentils · carrot · celery · cumin + paprika · sourdough slice</div></div>
-    <div style="background:#111; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:#fff; font-weight:600; margin-bottom:4px;">Baked Salmon + Sweet Potato + Kale</div><div style="font-size:12px; color:#888; line-height:1.7;">Salmon fillet · roasted sweet potato · sautéed kale + garlic</div></div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">Jan – Mar · dense, warming</div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Beef Stew + Potatoes + Carrots</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Beef chunks · potatoes · carrots · onion · beef stock · slow cook 1-2hrs</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Chicken + White Rice + Broccoli + Ginger</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Chicken breast · white rice · steamed broccoli · ginger + soy + sesame</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Lentil Soup + Sourdough</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Red lentils · carrot · celery · cumin + paprika · sourdough slice</div></div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:8px;"><div style="font-size:15px; color:var(--text); font-weight:600; margin-bottom:4px;">Baked Salmon + Sweet Potato + Kale</div><div style="font-size:12px; color:var(--muted); line-height:1.7;">Salmon fillet · roasted sweet potato · sautéed kale + garlic</div></div>
   </div>
 
 </div>
 </div>
 
+
 <script>
-  // ─── SESSION COMPOUND MOVEMENTS ────────────────────────────
-  var SESSIONS = {
-    // ── Hyrox ──
-    hx1: { name:'Hyrox Mon — Push',        moves:[{name:'Barbell Bench Press', sets:4},{name:'DB Incline Press', sets:4},{name:'Barbell Strict Press', sets:4},{name:'DB Lateral Raise', sets:4}] },
-    hx2: { name:'Hyrox Tue — Pull',        moves:[{name:'Deadlift', sets:4},{name:'Pull Ups', sets:4},{name:'Barbell Row', sets:4}] },
-    hx3: { name:'Hyrox Thu — Legs',        moves:[{name:'Back Squat', sets:4},{name:'Leg Press or Hack Squat', sets:4},{name:'Hamstring Curls', sets:4}] },
-    hx4: { name:'Hyrox Wed — Conditioning',moves:[{name:'Ski Erg 400m', sets:4},{name:'Barbell Push Press', sets:4},{name:'Row 500m', sets:4}] },
-    hx5: { name:'Hyrox Fri — Race Sim',    moves:[{name:'Row 500m', sets:4},{name:'Walking Lunges', sets:4}] },
-    // ── Hybrid ──
-    hy1: { name:'Hybrid Mon — Legs',       moves:[{name:'Hamstring Curls', sets:4},{name:'Leg Extensions', sets:4},{name:'Back Squat', sets:4},{name:'Cable Zercher Squat', sets:4},{name:'Calf Raises', sets:4}] },
-    hy2: { name:'Hybrid Tue — Push',       moves:[{name:'Bench Press', sets:4},{name:'DB Incline Press', sets:4},{name:'Barbell Strict Press', sets:4},{name:'Lateral Raises', sets:4},{name:'Tricep Extensions', sets:4}] },
-    hy3: { name:'Hybrid Thu — Pull',       moves:[{name:'Deadlift', sets:4},{name:'Pull Ups', sets:4},{name:'Barbell Row', sets:4}] },
-    hy4: { name:'Hybrid Fri — Conditioning',moves:[{name:'Hang Clean and Press', sets:4},{name:'Row 500m', sets:4}] },
-  };
+  var WK_FF = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4:{s:6,r:6,p:80,n:''},5:{s:4,r:3,p:80,n:'Deload week'},6:{s:5,r:5,p:85,n:''},7:{s:4,r:4,p:90,n:''},8:{s:3,r:3,p:95,n:''},9:{s:2,r:2,p:100,n:''},10:{s:1,r:1,p:105,n:'New PR — new cycle starts'}};
+var WK_KB = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4:{s:6,r:6,p:80,n:''},5:{s:4,r:3,p:80,n:'Deload week'},6:{s:5,r:5,p:85,n:''},7:{s:4,r:4,p:90,n:''},8:{s:3,r:3,p:95,n:''},9:{s:2,r:2,p:100,n:''},10:{s:1,r:1,p:105,n:'New PR — new cycle starts'}};
 
-  function showTrackerTab(tab) {
-    ['hyrox','hybrid'].forEach(function(t) {
-      var el = document.getElementById('tr-' + t);
-      var btn = document.getElementById('trtab-' + t);
-      if (el) el.style.display = 'none';
-      if (btn) { btn.style.background = '#111'; btn.style.color = '#555'; }
+
+  function shortDetail(wk) {
+    return wk.s + ' × ' + wk.r + ' @ ' + wk.p + '%';
+  }
+
+  function detailHtml(wk) {
+    var parts = [shortDetail(wk)];
+    var extra = '';
+    if (wk.n === 'Deload week') extra = ' <span class="deload">· ' + wk.n + '</span>';
+    else if (wk.n) extra = ' <span class="pr">· ' + wk.n + '</span>';
+    return parts[0] + extra;
+  }
+
+  function setWeek(tab, week) {
+    localStorage.setItem('ironplan_week_' + tab, week);
+    renderWeek(tab);
+  }
+
+  function renderWeek(tab) {
+    var week = parseInt(localStorage.getItem('ironplan_week_' + tab) || '1', 10);
+    var table = tab === 'ff' ? WK_FF : WK_KB;
+    var wk = table[week];
+    document.querySelectorAll('.wk-pill[data-tab="' + tab + '"]').forEach(function(p) {
+      p.classList.toggle('active', parseInt(p.getAttribute('data-week'), 10) === week);
     });
-    var panel = document.getElementById('tr-' + tab);
-    var active = document.getElementById('trtab-' + tab);
+    document.querySelectorAll('.week-detail[data-tab="' + tab + '"]').forEach(function(d) {
+      d.innerHTML = 'Week ' + week + ' of 10 · ' + detailHtml(wk);
+    });
+    document.querySelectorAll('.week-detail-inline[data-tab="' + tab + '"]').forEach(function(d) {
+      d.textContent = shortDetail(wk);
+    });
+  }
+
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('section-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function showFFTab(tab) {
+    document.querySelectorAll('[id^="ff-panel-"]').forEach(function(p) { p.style.display = 'none'; });
+    document.querySelectorAll('[id^="fftab-"]').forEach(function(b) { b.classList.remove('active'); });
+    var panel = document.getElementById('ff-panel-' + tab);
+    var btn = document.getElementById('fftab-' + tab);
     if (panel) panel.style.display = 'block';
-    if (active) { active.style.background = '#1e1e1e'; active.style.color = '#fff'; }
+    if (btn) btn.classList.add('active');
   }
 
-  var currentSession = null;
-
-  function selectSession(id) {
-    currentSession = id;
-    var sess = SESSIONS[id];
-    document.getElementById('tr-select').style.display = 'none';
-    document.getElementById('tr-log').style.display = 'block';
-    document.getElementById('tr-session-title').textContent = sess.name;
-    document.getElementById('tr-session-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    var lastSession = hist.filter(function(h){ return h.id === id; }).pop();
-    var container = document.getElementById('tr-movements');
-    container.innerHTML = '';
-    var inp = 'width:100%;background:#0f0f0f;border:1px solid #222;color:#fff;font-size:16px;padding:8px 10px;box-sizing:border-box;-webkit-appearance:none;';
-
-    sess.moves.forEach(function(move, i) {
-      var moveName = typeof move === 'object' ? move.name : move;
-      var numSets  = typeof move === 'object' ? move.sets : 1;
-      var lastMove = lastSession ? lastSession.moves[i] : null;
-      var rows = '';
-      for (var j = 0; j < numSets; j++) {
-        var ls    = lastMove && lastMove.sets ? lastMove.sets[j] : null;
-        var lkg   = ls ? ls.kg   : '';
-        var lreps = ls ? ls.reps : '';
-        rows += '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">'
-          + '<div style="font-size:10px;color:#555;text-align:center;">S'+(j+1)+'</div>'
-          + '<div><input type="number" id="kg_'+i+'_'+j+'" placeholder="'+(lkg||'kg')+'" step="0.5" min="0" style="'+inp+'"></div>'
-          + '<div><input type="number" id="rp_'+i+'_'+j+'" placeholder="'+(lreps||'reps')+'" min="0" style="'+inp+'"></div>'
-          + '</div>';
-      }
-      container.innerHTML +=
-        '<div style="background:#141414;border:1px solid #1f1f1f;border-left:2px solid #2a2a2a;padding:16px;margin-bottom:2px;">'
-        + '<div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">'+moveName+'</div>'
-        + '<div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:6px;margin-bottom:6px;">'
-        + '<div></div>'
-        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">kg</div>'
-        + '<div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#333;">reps</div>'
-        + '</div>'+rows+'</div>';
-    });
-  }
-
-  function saveSession() {
-    var sess = SESSIONS[currentSession];
-    var moves = sess.moves.map(function(move, i) {
-      var moveName = typeof move === 'object' ? move.name : move;
-      var numSets  = typeof move === 'object' ? move.sets : 1;
-      var sets = [];
-      for (var j = 0; j < numSets; j++) {
-        var ke = document.getElementById('kg_'+i+'_'+j);
-        var re = document.getElementById('rp_'+i+'_'+j);
-        sets.push({ kg: ke ? (parseFloat(ke.value)||0) : 0, reps: re ? (parseInt(re.value)||0) : 0 });
-      }
-      return { name: moveName, sets: sets };
-    });
-    var entry = { id: currentSession, name: sess.name, date: new Date().toISOString(), moves: moves };
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    hist.push(entry);
-    localStorage.setItem('ironplan_history', JSON.stringify(hist));
-    showHistory();
-    backToSelect();
-    alert('Session logged ✓');
-  }
-
-  function backToSelect() {
-    document.getElementById('tr-log').style.display = 'none';
-    document.getElementById('tr-select').style.display = 'block';
-    currentSession = null;
-  }
-
-  function showHistory() {
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    if (!hist.length) return;
-    document.getElementById('tr-history').style.display = 'block';
-    var list = document.getElementById('tr-history-list');
-    list.innerHTML = '';
-    hist.slice().reverse().slice(0, 10).forEach(function(entry) {
-      var date = new Date(entry.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
-      var movesHtml = entry.moves.map(function(m) {
-        var moveName = m.name || '';
-        var detail = '';
-        if (m.sets && m.sets.length) {
-          detail = m.sets.map(function(s, j) { return 'S'+(j+1)+': '+s.kg+'kg x '+s.reps; }).join(' | ');
-        } else if (m.kg !== undefined) {
-          detail = m.kg+'kg x '+m.reps;
-        }
-        return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #111;font-size:12px;">'
-          +'<span style="color:#888;">'+moveName+'</span>'
-          +'<span style="color:#fff;font-weight:500;">'+detail+'</span></div>';
-      }).join('');
-      list.innerHTML += '<div style="background:#141414;border:1px solid #1f1f1f;padding:14px 16px;margin-bottom:4px;">'
-        +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">'
-        +'<div style="font-size:14px;font-weight:600;color:#fff;">'+entry.name+'</div>'
-        +'<div style="font-size:11px;color:#444;">'+date+'</div></div>'
-        +movesHtml+'</div>';
-    });
-  }
-
-  function getAdvice(last, moveIndex) {
-    if (!last) return '';
-    var hist = JSON.parse(localStorage.getItem('ironplan_history') || '[]');
-    var sessions = hist.filter(function(h) { return h.id === currentSession; });
-    var count = sessions.length;
-    var prev = sessions.length ? sessions[sessions.length-1] : null;
-    var prevMove = prev && prev.moves[moveIndex] ? prev.moves[moveIndex] : null;
-    if (!prevMove) return '';
-    var prevKg = prevMove.sets ? prevMove.sets[0].kg : prevMove.kg;
-    var prevReps = prevMove.sets ? prevMove.sets[0].reps : prevMove.reps;
-    if (count >= 2) return 'Add 1-2kg or 1 rep today';
-    return 'Match: '+prevKg+'kg x '+prevReps+' reps';
+  function showKBTab(tab) {
+    document.querySelectorAll('[id^="kb-panel-"]').forEach(function(p) { p.style.display = 'none'; });
+    document.querySelectorAll('[id^="kbtab-"]').forEach(function(b) { b.classList.remove('active'); });
+    var panel = document.getElementById('kb-panel-' + tab);
+    var btn = document.getElementById('kbtab-' + tab);
+    if (panel) panel.style.display = 'block';
+    if (btn) btn.classList.add('active');
   }
 
   function dShow(season) {
@@ -2024,57 +783,7 @@
     var panel = document.getElementById('dp-' + season);
     var btn = document.getElementById('ds-' + season);
     if (panel) panel.style.display = 'block';
-    if (btn) { btn.style.background = '#1e1e1e'; btn.style.color = '#fff'; }
-  }
-
-    function showSection(id, btn) {
-    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-    document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
-    document.getElementById('section-' + id).classList.add('active');
-    btn.classList.add('active');
-  }
-
-  function showFFTab(tab) {
-    document.querySelectorAll('[id^="ff-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="fftab-"]').forEach(function(b) { b.style.background='#111'; b.style.color='#555'; });
-    var panel = document.getElementById('ff-panel-' + tab);
-    var btn = document.getElementById('fftab-' + tab);
-    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
-    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
-  }
-
-  function showFFTab_init() {
-    showFFTab('day1');
-  }
-
-  function showKBTab(tab) {
-    document.querySelectorAll('[id^="kb-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="kbtab-"]').forEach(function(b) { b.style.background='#111'; b.style.color='#555'; });
-    var panel = document.getElementById('kb-panel-' + tab);
-    var btn = document.getElementById('kbtab-' + tab);
-    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
-    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
-  }
-
-  function showGymTab(tab) {
-    document.querySelectorAll('[id^="gym-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="gymtab-"]').forEach(function(b) { b.style.background='#111'; b.style.color='#555'; });
-    var panel = document.getElementById('gym-panel-' + tab);
-    var btn = document.getElementById('gymtab-' + tab);
-    if (panel) { panel.style.display = 'block'; panel.style.maxWidth = '720px'; panel.style.margin = '0 auto'; }
-    if (btn) { btn.style.background='#1e1e1e'; btn.style.color='#fff'; }
-  }
-
-  function showSeason(id, btn) {
-    ['spring','summer','autumn','winter'].forEach(function(s) {
-      var el = document.getElementById('fuel-' + s);
-      var b = document.getElementById('season-' + s);
-      if (el) el.style.display = 'none';
-      if (b) { b.style.background = '#111'; b.style.color = '#555'; }
-    });
-    var panel = document.getElementById('fuel-' + id);
-    if (panel) panel.style.display = 'block';
-    if (btn) { btn.style.background = '#1e1e1e'; btn.style.color = '#fff'; }
+    if (btn) { btn.style.background = 'var(--fuel)'; btn.style.color = '#0b0c0e'; }
   }
 
   function toggleRow(el) {
@@ -2083,22 +792,14 @@
     if (next && next.classList.contains('t-body')) next.classList.toggle('open');
   }
 
-  function toggleCat(el) {
-    el.classList.toggle('open');
-    var next = el.nextElementSibling;
-    if (next && next.classList.contains('cat-body')) next.classList.toggle('open');
-  }
-
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    showKBTab('day1');
+    renderWeek('ff');
+    renderWeek('kb');
   });
-
-  // ─── TRACKER CSS ───────────────────────────────────────────
-
 </script>
 
 </body>
