@@ -23,6 +23,7 @@
     --accent: #c9a24a;
     --hyrox: #c9a24a;
     --hybrid: #c7cad0;
+    --train: #e4e7eb;
     --fuel: #6abf4b;
     --good: #6fae6f;
   }
@@ -67,7 +68,7 @@
   }
   .nav-btn.active { color: var(--text); }
   .nav-btn[data-tab="ff"].active { border-bottom-color: var(--hyrox); }
-  .nav-btn[data-tab="kb"].active { border-bottom-color: var(--hybrid); }
+  .nav-btn[data-tab="tr"].active { border-bottom-color: var(--train); }
   .nav-btn[data-tab="diet"].active { border-bottom-color: var(--fuel); }
   .nav-dot { width: 7px; height: 7px; border-radius: 50%; }
 
@@ -118,7 +119,8 @@
   .row-sub { font-size: 11px; color: var(--faint); }
 
   .t-row.static { cursor: default; justify-content: space-between; }
-  .week-detail-inline { font-size: 12.5px; color: var(--muted); }
+  .week-detail-inline { font-size: 12.5px; color: var(--muted); text-align: right; max-width: 62%; }
+  .progression-note { font-size: 11px; color: var(--faint); }
 
   .steps-heading { font-size: 10.5px; color: var(--muted); font-weight: 600; margin: 10px 0 4px; }
   .steps-heading:first-child { margin-top: 0; }
@@ -146,20 +148,20 @@
   }
   .progression-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap:10px; flex-wrap: wrap; }
   .progression-label { font-size: 11px; color: var(--muted); font-weight: 600; }
-  .wk-pills { display: grid; grid-template-columns: repeat(10,1fr); gap: 4px; margin-bottom: 0; }
+  .wk-pills { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 10px; }
   .wk-pill {
     background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
     font-size: 11px;
-    padding: 7px 0;
-    border-radius: 5px;
+    padding: 9px 0;
+    border-radius: 6px;
     cursor: pointer;
   }
   .wk-pill.active { font-weight: 600; }
   .wk-pill[data-tab="ff"].active { background: var(--hyrox); color: #0b0c0e; border-color: var(--hyrox); }
-  .wk-pill[data-tab="kb"].active { background: var(--hybrid); color: #0b0c0e; border-color: var(--hybrid); }
+  .wk-pill[data-tab="tr"].active { background: var(--train); color: #0b0c0e; border-color: var(--train); }
   .week-detail { font-size: 14px; font-weight: 500; }
   .week-detail .deload { color: var(--muted); font-weight: 400; }
   .week-detail .pr { color: var(--good); font-weight: 400; }
@@ -168,13 +170,9 @@
 <body>
 
 <div class="top-nav">
-  <button class="nav-btn active" data-tab="ff" onclick="showSection('ff', this)">
-    <div class="nav-dot" style="background:var(--hyrox)"></div>
-    Hyrox
-  </button>
-  <button class="nav-btn" data-tab="kb" onclick="showSection('kb', this)">
-    <div class="nav-dot" style="background:var(--hybrid)"></div>
-    Hybrid
+  <button class="nav-btn active" data-tab="tr" onclick="showSection('tr', this)">
+    <div class="nav-dot" style="background:var(--train)"></div>
+    Training
   </button>
   <button class="nav-btn" data-tab="diet" onclick="showSection('diet', this)">
     <div class="nav-dot" style="background:var(--fuel)"></div>
@@ -182,175 +180,27 @@
   </button>
 </div>
 
-<!-- ==================== HYROX SECTION ==================== -->
-<div class="section active" id="section-ff">
+<!-- ==================== TRAINING SECTION ==================== -->
+<div class="section active" id="section-tr">
 <div class="t-container">
 
-  <div class="t-header-label">Strength · Conditioning · Hyrox prep</div>
-  <div class="t-header-title">HYROX <span style="color:var(--hyrox)">PLAN</span></div>
+  <div class="t-header-label">Strength · Running · Hyrox</div>
+  <div class="t-header-title">TRAINING <span style="color:var(--train)">PLAN</span></div>
 
-  <div class="week-pool">Mon Lower Strength · Tue Upper Strength (1) · Wed Long Run · Thu Hyrox Circuit · Fri Upper Strength (2) · Sat Tempo Run · Sun Mobility + Easy Run</div>
+  <div class="week-pool">Mon Intervals · Tue Push + Quads · Wed Pull + Posterior · Thu Long Run · Fri Upper Hypertrophy · Sat Hyrox-Specific · Sun Mobility + Easy Run</div>
 
   <div class="day-nav">
-    <button id="fftab-day1" onclick="showFFTab('day1')" class="active">Mon</button>
-    <button id="fftab-day2" onclick="showFFTab('day2')">Tue</button>
-    <button id="fftab-day3" onclick="showFFTab('day3')">Wed</button>
-    <button id="fftab-day4" onclick="showFFTab('day4')">Thu</button>
-    <button id="fftab-day5" onclick="showFFTab('day5')">Fri</button>
-    <button id="fftab-day6" onclick="showFFTab('day6')">Sat</button>
-    <button id="fftab-day7" onclick="showFFTab('day7')">Sun</button>
+    <button id="trtab-day1" onclick="showTRTab('day1')" class="active">Mon</button>
+    <button id="trtab-day2" onclick="showTRTab('day2')">Tue</button>
+    <button id="trtab-day3" onclick="showTRTab('day3')">Wed</button>
+    <button id="trtab-day4" onclick="showTRTab('day4')">Thu</button>
+    <button id="trtab-day5" onclick="showTRTab('day5')">Fri</button>
+    <button id="trtab-day6" onclick="showTRTab('day6')">Sat</button>
+    <button id="trtab-day7" onclick="showTRTab('day7')">Sun</button>
   </div>
 
-  <div class="train-panel" id="ff-panel-day1" style="display:none;display:block;">
-    <div class="panel-label">Monday — Lower Body Strength</div>
-    
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="ff">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
-    </div>
-      <div class="block-label">Compound</div>
-    <div class="t-row static"><span class="t-row-label">Squat</span><span class="week-detail-inline" data-tab="ff">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Romanian Deadlift</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hamstring Curls</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Reverse Lunge</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Abductions</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Calf Raises</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day2" style="display:none;">
-    <div class="panel-label">Tuesday — Upper Body Strength (1)</div>
-    
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="ff">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
-    </div>
-      <div class="block-label">Compounds</div>
-    <div class="t-row static"><span class="t-row-label">Bench Press</span><span class="week-detail-inline" data-tab="ff">—</span></div>
-    <div class="t-row static"><span class="t-row-label">Strict Press</span><span class="week-detail-inline" data-tab="ff">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Weighted Dips</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×8</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Pull Ups</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×5</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Tricep Extensions</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day3" style="display:none;">
-    <div class="panel-label">Wednesday — Long Run</div>
-    
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Long Run</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">Zone 2 aerobic base · 60–75 minutes · conversational pace</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day4" style="display:none;">
-    <div class="panel-label">Thursday — Hyrox Circuit</div>
-    <div class="panel-intro">One session from the pool below.</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Baseline</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>4×1km Run (60s rest)</li><li>50 WB's</li><li>4×1km Row (60s rest)</li><li>50 WB's</li><li>4×1km Ski (60s rest)</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Devil's Touch</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>30 WB's</li><li>15 Devil Press</li></ul>
-      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>500m Ski</li><li>50m Sled Push</li><li>20 BBJ</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hail Mary</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>1km Run</li><li>1km Row</li><li>30 Barbell Walking Lunges</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Leg Commitment</span></div>
-    <div class="t-body">
-      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>10 Front Squats</li><li>40m Sled Push</li><li>30 Reverse Lunge</li><li>400m Run</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Burpee Road</span></div>
-    <div class="t-body">
-      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>1km Ski</li><li>20 BBJ</li><li>1km Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Engine Builder</span></div>
-    <div class="t-body">
-      <div class="steps-heading">Bookends</div><ul class="steps-list"><li>2×1km Ski</li><li>2×1km Row</li></ul>
-      <div class="steps-heading">8 Rounds (between the bookends)</div><ul class="steps-list"><li>400m Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Christmas Time</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>400m Run</li><li>50m Sled Push (250kg)</li><li>30 Walking Lunges</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Elite15</span></div>
-    <div class="t-body">
-      <div class="steps-heading">Set 1</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 20 BBJ + 150m Farmers Carry</li><li>1.5km Run</li></ul>
-      <div class="steps-heading">Set 2</div><ul class="steps-list"><li>5 rounds: 16cal Ski + 16cal Row + 16cal Bike + 200m Run</li></ul>
-      <div class="steps-heading">Set 3</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 40 Lunges + 40 WB's</li><li>1.5km Run</li></ul>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day5" style="display:none;">
-    <div class="panel-label">Friday — Upper Body Strength (2)</div>
-    
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="ff">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="ff" data-week="1" onclick="setWeek('ff',1)">1</button><button class="wk-pill" data-tab="ff" data-week="2" onclick="setWeek('ff',2)">2</button><button class="wk-pill" data-tab="ff" data-week="3" onclick="setWeek('ff',3)">3</button><button class="wk-pill" data-tab="ff" data-week="4" onclick="setWeek('ff',4)">4</button><button class="wk-pill" data-tab="ff" data-week="5" onclick="setWeek('ff',5)">5</button><button class="wk-pill" data-tab="ff" data-week="6" onclick="setWeek('ff',6)">6</button><button class="wk-pill" data-tab="ff" data-week="7" onclick="setWeek('ff',7)">7</button><button class="wk-pill" data-tab="ff" data-week="8" onclick="setWeek('ff',8)">8</button><button class="wk-pill" data-tab="ff" data-week="9" onclick="setWeek('ff',9)">9</button><button class="wk-pill" data-tab="ff" data-week="10" onclick="setWeek('ff',10)">10</button></div>
-    </div>
-      <div class="block-label">Compounds</div>
-    <div class="t-row static"><span class="t-row-label">Trap Bar Deadlift</span><span class="week-detail-inline" data-tab="ff">—</span></div>
-    <div class="t-row static"><span class="t-row-label">Weighted Pull Ups</span><span class="week-detail-inline" data-tab="ff">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">SM Bent Over Row / DB Row</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
-    </div>
-      <div class="block-label">Superset</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">DB Incline Press + Lateral Raises</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Superset</div><div class="t-item-detail">4×8 DB Incline Press + 4×10 Lateral Raises</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Burpee to Box</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="ff-panel-day6" style="display:none;">
-    <div class="panel-label">Saturday — Tempo Run</div>
+  <div class="train-panel" id="tr-panel-day1" style="display:none;display:block;">
+    <div class="panel-label">Monday — Intervals</div>
     <div class="panel-intro">One session from the pool below.</div>
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Norwegian</span></div>
     <div class="t-body">
@@ -368,7 +218,7 @@
     </div>
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Track Records</span></div>
     <div class="t-body">
-      <ul class="steps-list"><li>1km warm-up</li><li>12×1km (60s rest)</li><li>1km cooldown</li></ul>
+      <ul class="steps-list"><li>1km warm-up</li><li>10×1km (60s rest)</li><li>1km cooldown</li></ul>
     </div>
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The 800's</span></div>
     <div class="t-body">
@@ -376,7 +226,134 @@
     </div>
   </div>
 
-  <div class="train-panel" id="ff-panel-day7" style="display:none;">
+  <div class="train-panel" id="tr-panel-day2" style="display:none;">
+    <div class="panel-label">Tuesday — Push + Quads</div>
+    
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="tr">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="tr" data-week="1" onclick="setWeek(1)">1</button><button class="wk-pill" data-tab="tr" data-week="2" onclick="setWeek(2)">2</button><button class="wk-pill" data-tab="tr" data-week="3" onclick="setWeek(3)">3</button><button class="wk-pill" data-tab="tr" data-week="4" onclick="setWeek(4)">4</button></div>
+      <div class="progression-note">After week 4, start a new cycle from the week 3 weight.</div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Back Squat (heels elevated)</span><span class="week-detail-inline lift-detail" data-lift="sq">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Bench Press</span><span class="week-detail-inline lift-detail" data-lift="bp">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row static"><span class="t-row-label">Strict Press</span><span class="week-detail-inline">3 × 5–6</span></div>
+    <div class="t-row static"><span class="t-row-label">Bulgarian Split Squat</span><span class="week-detail-inline">3 × 8 per leg</span></div>
+    <div class="t-row static"><span class="t-row-label">Leg Extension</span><span class="week-detail-inline">3 × 12–15</span></div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row static"><span class="t-row-label">Triceps Pushdown</span><span class="week-detail-inline">2 × 10</span></div>
+  </div>
+
+  <div class="train-panel" id="tr-panel-day3" style="display:none;">
+    <div class="panel-label">Wednesday — Pull + Posterior</div>
+    <div class="panel-intro">Keep the Romanian Deadlift moderate: Thursday's long run follows.</div>
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Compound progression</div>
+        <div class="week-detail" data-tab="tr">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="tr" data-week="1" onclick="setWeek(1)">1</button><button class="wk-pill" data-tab="tr" data-week="2" onclick="setWeek(2)">2</button><button class="wk-pill" data-tab="tr" data-week="3" onclick="setWeek(3)">3</button><button class="wk-pill" data-tab="tr" data-week="4" onclick="setWeek(4)">4</button></div>
+      <div class="progression-note">After week 4, start a new cycle from the week 3 weight.</div>
+    </div>
+      <div class="block-label">Compounds</div>
+    <div class="t-row static"><span class="t-row-label">Romanian Deadlift</span><span class="week-detail-inline lift-detail" data-lift="rdl">—</span></div>
+    <div class="t-row static"><span class="t-row-label">Weighted Pull-ups</span><span class="week-detail-inline lift-detail" data-lift="wp">—</span></div>
+      <div class="block-label">Secondary</div>
+    <div class="t-row static"><span class="t-row-label">Bent Over Row</span><span class="week-detail-inline">3 × 6–8</span></div>
+    <div class="t-row static"><span class="t-row-label">Hamstring Curl</span><span class="week-detail-inline">3 × 10</span></div>
+      <div class="block-label">Accessory</div>
+    <div class="t-row static"><span class="t-row-label">Biceps Curl</span><span class="week-detail-inline">3 × 8–10</span></div>
+    <div class="t-row static"><span class="t-row-label">Calf Raises</span><span class="week-detail-inline">3 × 10–12</span></div>
+  </div>
+
+  <div class="train-panel" id="tr-panel-day4" style="display:none;">
+    <div class="panel-label">Thursday — Long Run</div>
+    
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Long Run</span></div>
+    <div class="t-body">
+      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">Zone 2 aerobic base · 60–75 minutes · conversational pace</div></div>
+    </div>
+  </div>
+
+  <div class="train-panel" id="tr-panel-day5" style="display:none;">
+    <div class="panel-label">Friday — Upper Hypertrophy</div>
+    <div class="panel-intro">Superset the last four exercises to stay inside an hour.</div>
+    <div class="t-row static"><span class="t-row-label">Incline DB Press</span><span class="week-detail-inline">3 × 8</span></div>
+    <div class="t-row static"><span class="t-row-label">Chest-Supported Row</span><span class="week-detail-inline">4 × 8</span></div>
+      <div class="block-label">Superset A</div>
+    <div class="t-row static"><span class="t-row-label">Dips</span><span class="week-detail-inline">3 × 6–8</span></div>
+    <div class="t-row static"><span class="t-row-label">High Row</span><span class="week-detail-inline">3 × 10</span></div>
+      <div class="block-label">Superset B</div>
+    <div class="t-row static"><span class="t-row-label">DB Shrugs</span><span class="week-detail-inline">3 × 10–12</span></div>
+    <div class="t-row static"><span class="t-row-label">Lateral Raises</span><span class="week-detail-inline">3 × 12</span></div>
+  </div>
+
+  <div class="train-panel" id="tr-panel-day6" style="display:none;">
+    <div class="panel-label">Saturday — Hyrox-Specific</div>
+    <div class="panel-intro">One Lunge Block, then one circuit. Keep the whole session to 60–75 minutes.</div>
+
+    <div class="progression">
+      <div class="progression-head">
+        <div class="progression-label">Cycle week</div>
+        <div class="week-detail" data-tab="tr">—</div>
+      </div>
+      <div class="wk-pills"><button class="wk-pill" data-tab="tr" data-week="1" onclick="setWeek(1)">1</button><button class="wk-pill" data-tab="tr" data-week="2" onclick="setWeek(2)">2</button><button class="wk-pill" data-tab="tr" data-week="3" onclick="setWeek(3)">3</button><button class="wk-pill" data-tab="tr" data-week="4" onclick="setWeek(4)">4</button></div>
+      <div class="progression-note">After week 4, start a new cycle from the week 3 weight.</div>
+    </div>
+      <div class="block-label">Part 1 · Lunge Block (about 15 min)</div>
+    <div class="t-note" style="padding:2px 2px 10px;">Sandbag at race weight. Skip it on days when your circuit already has lunges.</div>
+    <div class="t-row static"><span class="t-row-label">Lunge Block</span><span class="week-detail-inline sat-detail" data-sat="lunge">—</span></div>
+      <div class="block-label">Part 2 · One circuit</div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Baseline</span></div>
+    <div class="t-body">
+      <ul class="steps-list"><li>3×1km Run (60s rest)</li><li>50 WB's</li><li>3×1km Row (60s rest)</li><li>50 WB's</li><li>3×1km Ski (60s rest)</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Devil's Touch</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 20 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>30 WB's</li><li>15 Devil Press</li></ul>
+      <div class="steps-heading">AMRAP 20 — Block 2</div><ul class="steps-list"><li>500m Ski</li><li>50m Sled Push</li><li>20 BBJ</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Burpee Road</span></div>
+    <div class="t-body">
+      <div class="steps-heading">4 Rounds</div><ul class="steps-list"><li>1km Ski</li><li>20 BBJ</li><li>1km Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Engine Builder</span></div>
+    <div class="t-body">
+      <div class="steps-heading">Bookends</div><ul class="steps-list"><li>2×1km Ski</li><li>2×1km Row</li></ul>
+      <div class="steps-heading">5 Rounds (between the bookends)</div><ul class="steps-list"><li>400m Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Captain Thrust</span></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 20 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>10 Thrusters</li></ul>
+      <div class="steps-heading">AMRAP 20 — Block 2</div><ul class="steps-list"><li>10 Box Jump Overs</li><li>10 Power Clean</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hail Mary</span><div class="row-sub">has lunges</div></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 40</div><ul class="steps-list"><li>1km Run</li><li>1km Row</li><li>30 Barbell Walking Lunges</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Leg Commitment</span><div class="row-sub">has lunges</div></div>
+    <div class="t-body">
+      <div class="steps-heading">5 Rounds</div><ul class="steps-list"><li>10 Front Squats</li><li>40m Sled Push</li><li>20 Reverse Lunge</li><li>400m Run</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Christmas Time</span><div class="row-sub">has lunges</div></div>
+    <div class="t-body">
+      <div class="steps-heading">AMRAP 40</div><ul class="steps-list"><li>400m Run</li><li>50m Sled Push (go lighter than 250kg if needed)</li><li>30 Walking Lunges</li></ul>
+    </div>
+    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Elite15</span><div class="row-sub">has lunges</div></div>
+    <div class="t-body">
+      <div class="steps-heading">Set 1</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 20 BBJ + 150m Farmers Carry</li><li>1.5km Run</li></ul>
+      <div class="steps-heading">Set 2</div><ul class="steps-list"><li>5 rounds: 16cal Ski + 16cal Row + 16cal Bike + 200m Run</li></ul>
+      <div class="steps-heading">Set 3</div><ul class="steps-list"><li>1.5km Run</li><li>3 rounds: 40 Lunges + 40 WB's</li><li>1.5km Run</li></ul>
+    </div>
+  </div>
+
+  <div class="train-panel" id="tr-panel-day7" style="display:none;">
     <div class="panel-label">Sunday — Mobility + Easy Run</div>
     
       <div class="block-label">Ankle</div>
@@ -401,234 +378,6 @@
     <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Treadmill Zone 2</span></div>
     <div class="t-body">
       <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">6min/km pace · 5km</div></div>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<!-- ==================== HYBRID SECTION ==================== -->
-<div class="section" id="section-kb">
-<div class="t-container">
-
-  <div class="t-header-label">Strength · Conditioning · Hybrid athlete</div>
-  <div class="t-header-title">HYBRID <span style="color:var(--hybrid)">PLAN</span></div>
-
-  <div class="week-pool">Mon Tempo Run · Tue Upper Strength (1) · Wed Long Run · Thu Lower Strength · Fri Upper Strength (2) · Sat Hyrox Circuit · Sun Mobility + Cardio</div>
-
-  <div class="day-nav">
-    <button id="kbtab-day1" onclick="showKBTab('day1')" class="active">Mon</button>
-    <button id="kbtab-day2" onclick="showKBTab('day2')">Tue</button>
-    <button id="kbtab-day3" onclick="showKBTab('day3')">Wed</button>
-    <button id="kbtab-day4" onclick="showKBTab('day4')">Thu</button>
-    <button id="kbtab-day5" onclick="showKBTab('day5')">Fri</button>
-    <button id="kbtab-day6" onclick="showKBTab('day6')">Sat</button>
-    <button id="kbtab-day7" onclick="showKBTab('day7')">Sun</button>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day1" style="display:none;display:block;">
-    <div class="panel-label">Monday — Tempo Run</div>
-    <div class="panel-intro">One session from the pool below.</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Norwegian</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>10min warm-up jog</li></ul>
-      <div class="steps-heading">4 sets</div><ul class="steps-list"><li>4min at 90–95% max HR</li><li>3min easy jog</li></ul>
-      <ul class="steps-list"><li>10min easy cooldown jog</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Threshold</span></div>
-    <div class="t-body">
-      <div class="steps-heading">All at race pace, 2min rest between</div><ul class="steps-list"><li>2km</li><li>3km</li><li>4km</li><li>3km</li><li>2km</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">T-Volume</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>2km warm-up</li><li>2×1200m (90s rest)</li><li>4×800m (60s rest)</li><li>8×400m (60s rest)</li><li>1km cooldown</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Track Records</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>1km warm-up</li><li>12×1km (60s rest)</li><li>1km cooldown</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The 800's</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>2km warm-up</li><li>10×800m (60s rest)</li><li>1km cooldown</li></ul>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day2" style="display:none;">
-    <div class="panel-label">Tuesday — Upper Body Strength (1)</div>
-    
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="kb">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
-    </div>
-      <div class="block-label">Compounds</div>
-    <div class="t-row static"><span class="t-row-label">Bench Press</span><span class="week-detail-inline" data-tab="kb">—</span></div>
-    <div class="t-row static"><span class="t-row-label">Strict Press</span><span class="week-detail-inline" data-tab="kb">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Weighted Dips</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×8</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Pull Ups</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">5×5</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Tricep Extensions</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×15</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day3" style="display:none;">
-    <div class="panel-label">Wednesday — Long Run</div>
-    
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Long Run</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">Zone 2 aerobic base · 60–75 minutes · conversational pace</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day4" style="display:none;">
-    <div class="panel-label">Thursday — Lower Body Strength</div>
-    
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="kb">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
-    </div>
-      <div class="block-label">Compound</div>
-    <div class="t-row static"><span class="t-row-label">Squat</span><span class="week-detail-inline" data-tab="kb">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Romanian Deadlift</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×8</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hamstring Curls</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×12</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Bulgarian Split Squats</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×12</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Abductions</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Calf Raises</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day5" style="display:none;">
-    <div class="panel-label">Friday — Upper Body Strength (2)</div>
-    
-      <div class="block-label">Power</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hang Clean</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">3×10</div></div>
-    </div>
-
-    <div class="progression">
-      <div class="progression-head">
-        <div class="progression-label">Compound progression</div>
-        <div class="week-detail" data-tab="kb">—</div>
-      </div>
-      <div class="wk-pills"><button class="wk-pill" data-tab="kb" data-week="1" onclick="setWeek('kb',1)">1</button><button class="wk-pill" data-tab="kb" data-week="2" onclick="setWeek('kb',2)">2</button><button class="wk-pill" data-tab="kb" data-week="3" onclick="setWeek('kb',3)">3</button><button class="wk-pill" data-tab="kb" data-week="4" onclick="setWeek('kb',4)">4</button><button class="wk-pill" data-tab="kb" data-week="5" onclick="setWeek('kb',5)">5</button><button class="wk-pill" data-tab="kb" data-week="6" onclick="setWeek('kb',6)">6</button><button class="wk-pill" data-tab="kb" data-week="7" onclick="setWeek('kb',7)">7</button><button class="wk-pill" data-tab="kb" data-week="8" onclick="setWeek('kb',8)">8</button><button class="wk-pill" data-tab="kb" data-week="9" onclick="setWeek('kb',9)">9</button><button class="wk-pill" data-tab="kb" data-week="10" onclick="setWeek('kb',10)">10</button></div>
-    </div>
-      <div class="block-label">Compounds</div>
-    <div class="t-row static"><span class="t-row-label">Trap Bar Deadlift</span><span class="week-detail-inline" data-tab="kb">—</span></div>
-    <div class="t-row static"><span class="t-row-label">Weighted Pull Ups</span><span class="week-detail-inline" data-tab="kb">—</span></div>
-      <div class="block-label">Secondary</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">SM Bent Over Row / DB Row</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">DB Incline Press</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×8</div></div>
-    </div>
-      <div class="block-label">Accessory</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Lateral Raises</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Load</div><div class="t-item-detail">4×10</div></div>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day6" style="display:none;">
-    <div class="panel-label">Saturday — Hyrox Circuit</div>
-    <div class="panel-intro">One session from the pool below.</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Baseline</span></div>
-    <div class="t-body">
-      <ul class="steps-list"><li>4×1km Run (60s rest)</li><li>50 WB's</li><li>4×1km Row (60s rest)</li><li>50 WB's</li><li>4×1km Ski (60s rest)</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Devil's Touch</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>30 WB's</li><li>15 Devil Press</li></ul>
-      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>500m Ski</li><li>50m Sled Push</li><li>20 BBJ</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Hail Mary</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>1km Run</li><li>1km Row</li><li>30 Barbell Walking Lunges</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Leg Commitment</span></div>
-    <div class="t-body">
-      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>10 Front Squats</li><li>40m Sled Push</li><li>30 Reverse Lunge</li><li>400m Run</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Burpee Road</span></div>
-    <div class="t-body">
-      <div class="steps-heading">6 Rounds</div><ul class="steps-list"><li>1km Ski</li><li>20 BBJ</li><li>1km Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">The Engine Builder</span></div>
-    <div class="t-body">
-      <div class="steps-heading">Bookends</div><ul class="steps-list"><li>2×1km Ski</li><li>2×1km Row</li></ul>
-      <div class="steps-heading">8 Rounds (between the bookends)</div><ul class="steps-list"><li>400m Run</li><li>20 BBJ</li><li>30 WB's</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Christmas Time</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 60</div><ul class="steps-list"><li>400m Run</li><li>50m Sled Push (250kg)</li><li>30 Walking Lunges</li></ul>
-    </div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Captain Thrust</span></div>
-    <div class="t-body">
-      <div class="steps-heading">AMRAP 30 — Block 1</div><ul class="steps-list"><li>400m Run</li><li>10 Thrusters</li></ul>
-      <div class="steps-heading">AMRAP 30 — Block 2</div><ul class="steps-list"><li>10 Box Jump Overs</li><li>10 Power Clean</li></ul>
-    </div>
-  </div>
-
-  <div class="train-panel" id="kb-panel-day7" style="display:none;">
-    <div class="panel-label">Sunday — Mobility + Cardio</div>
-    
-      <div class="block-label">Ankle</div>
-      <div class="t-item"><div class="t-item-name">Banded Ankle Distraction</div><div class="t-item-detail">2×45s</div></div>
-      <div class="t-item"><div class="t-item-name">Kneeling Ankle Rocks</div><div class="t-item-detail">3×10</div></div>
-      <div class="t-item"><div class="t-item-name">Single Leg Calf Raise</div><div class="t-item-detail">3×12</div></div>
-      <div class="t-item"><div class="t-item-name">Deep Squat Hold</div><div class="t-item-detail">2×60s</div></div>
-      <div class="block-label">Hip</div>
-      <div class="t-item"><div class="t-item-name">90/90 Transitions</div><div class="t-item-detail">2×60s</div></div>
-      <div class="t-item"><div class="t-item-name">Hip Airplanes</div><div class="t-item-detail">3×8</div></div>
-      <div class="t-item"><div class="t-item-name">Good Mornings / Back Extensions</div><div class="t-item-detail">3×8</div></div>
-      <div class="t-item"><div class="t-item-name">Copenhagen Plank</div><div class="t-item-detail">2×12</div></div>
-      <div class="t-item"><div class="t-item-name">Pigeon Stretch</div><div class="t-item-detail">2×60s</div></div>
-      <div class="t-item"><div class="t-item-name">Hip Flexor Crunch</div><div class="t-item-detail">2×10</div></div>
-      <div class="block-label">Neck</div>
-      <div class="t-item"><div class="t-item-name">Neck Isometrics + Chin Tucks</div><div class="t-item-detail">3 directions, 20s holds</div></div>
-      <div class="block-label">Core</div>
-      <div class="t-item"><div class="t-item-name">Dead Hang</div><div class="t-item-detail">3×60s</div></div>
-      <div class="t-item"><div class="t-item-name">Pallof Press</div><div class="t-item-detail">4×10</div></div>
-      <div class="t-item"><div class="t-item-name">Hanging Leg Raises</div><div class="t-item-detail">4×10</div></div>
-      <div class="block-label">Cardio</div>
-    <div class="t-row" onclick="toggleRow(this)"><span class="t-row-arrow">›</span><span class="t-row-label">Bike + Treadmill</span></div>
-    <div class="t-body">
-      <div class="t-item"><div class="t-item-name">Target</div><div class="t-item-detail">30 minutes Bike + 5km on the Treadmill</div></div>
     </div>
   </div>
 
@@ -711,39 +460,55 @@
 
 
 <script>
-  var WK_FF = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4:{s:6,r:6,p:80,n:''},5:{s:4,r:3,p:80,n:'Deload week'},6:{s:5,r:5,p:85,n:''},7:{s:4,r:4,p:90,n:''},8:{s:3,r:3,p:95,n:''},9:{s:2,r:2,p:100,n:''},10:{s:1,r:1,p:105,n:'New PR — new cycle starts'}};
-var WK_KB = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4:{s:6,r:6,p:80,n:''},5:{s:4,r:3,p:80,n:'Deload week'},6:{s:5,r:5,p:85,n:''},7:{s:4,r:4,p:90,n:''},8:{s:3,r:3,p:95,n:''},9:{s:2,r:2,p:100,n:''},10:{s:1,r:1,p:105,n:'New PR — new cycle starts'}};
+  var CYCLE = {
+    1: {s:4, r:4, t:'Start weight · stop 2 reps short of failure'},
+    2: {s:4, r:5, t:'Same weight, one more rep'},
+    3: {s:4, r:5, t:'Add load: +5 kg lower body, +2.5 kg upper body'},
+    4: {s:3, r:4, t:'Deload: week 1 weight, fewer sets'}
+  };
+  var INC = {sq:5, bp:2.5, wp:2.5, rdl:5};
+  var SAT = {
+    lunge: {1:'4 × 25m · 90s rest', 2:'5 × 25m · 90s rest', 3:'6 × 25m · 75s rest', 4:'Deload: 3 × 25m · 90s rest'}
+  };
 
-
-  function shortDetail(wk) {
-    return wk.s + ' × ' + wk.r + ' @ ' + wk.p + '%';
+  function liftText(lift, week) {
+    var inc = INC[lift];
+    if (lift === 'rdl') {
+      if (week === 3) return '3 × 8 · +' + inc + ' kg';
+      if (week === 4) return '2 × 8 · deload';
+      return '3 × 8';
+    }
+    var c = CYCLE[week];
+    var txt = c.s + ' × ' + c.r;
+    if (week === 3) txt += ' · +' + inc + ' kg';
+    if (week === 4) txt += ' · deload';
+    return txt;
   }
 
-  function detailHtml(wk) {
-    var parts = [shortDetail(wk)];
-    var extra = '';
-    if (wk.n === 'Deload week') extra = ' <span class="deload">· ' + wk.n + '</span>';
-    else if (wk.n) extra = ' <span class="pr">· ' + wk.n + '</span>';
-    return parts[0] + extra;
+  function getWeek() {
+    var w = 1;
+    try { w = parseInt(localStorage.getItem('ironplan_week_tr') || '1', 10); } catch (e) {}
+    return (w >= 1 && w <= 4) ? w : 1;
   }
 
-  function setWeek(tab, week) {
-    localStorage.setItem('ironplan_week_' + tab, week);
-    renderWeek(tab);
+  function setWeek(week) {
+    try { localStorage.setItem('ironplan_week_tr', week); } catch (e) {}
+    renderWeek();
   }
 
-  function renderWeek(tab) {
-    var week = parseInt(localStorage.getItem('ironplan_week_' + tab) || '1', 10);
-    var table = tab === 'ff' ? WK_FF : WK_KB;
-    var wk = table[week];
-    document.querySelectorAll('.wk-pill[data-tab="' + tab + '"]').forEach(function(p) {
+  function renderWeek() {
+    var week = getWeek();
+    document.querySelectorAll('.wk-pill').forEach(function(p) {
       p.classList.toggle('active', parseInt(p.getAttribute('data-week'), 10) === week);
     });
-    document.querySelectorAll('.week-detail[data-tab="' + tab + '"]').forEach(function(d) {
-      d.innerHTML = 'Week ' + week + ' of 10 · ' + detailHtml(wk);
+    document.querySelectorAll('.week-detail').forEach(function(d) {
+      d.textContent = 'Week ' + week + ' of 4 · ' + CYCLE[week].t;
     });
-    document.querySelectorAll('.week-detail-inline[data-tab="' + tab + '"]').forEach(function(d) {
-      d.textContent = shortDetail(wk);
+    document.querySelectorAll('.lift-detail').forEach(function(d) {
+      d.textContent = liftText(d.getAttribute('data-lift'), week);
+    });
+    document.querySelectorAll('.sat-detail').forEach(function(d) {
+      d.textContent = SAT[d.getAttribute('data-sat')][week];
     });
   }
 
@@ -754,20 +519,11 @@ var WK_KB = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4
     btn.classList.add('active');
   }
 
-  function showFFTab(tab) {
-    document.querySelectorAll('[id^="ff-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="fftab-"]').forEach(function(b) { b.classList.remove('active'); });
-    var panel = document.getElementById('ff-panel-' + tab);
-    var btn = document.getElementById('fftab-' + tab);
-    if (panel) panel.style.display = 'block';
-    if (btn) btn.classList.add('active');
-  }
-
-  function showKBTab(tab) {
-    document.querySelectorAll('[id^="kb-panel-"]').forEach(function(p) { p.style.display = 'none'; });
-    document.querySelectorAll('[id^="kbtab-"]').forEach(function(b) { b.classList.remove('active'); });
-    var panel = document.getElementById('kb-panel-' + tab);
-    var btn = document.getElementById('kbtab-' + tab);
+  function showTRTab(tab) {
+    document.querySelectorAll('[id^="tr-panel-"]').forEach(function(p) { p.style.display = 'none'; });
+    document.querySelectorAll('[id^="trtab-"]').forEach(function(b) { b.classList.remove('active'); });
+    var panel = document.getElementById('tr-panel-' + tab);
+    var btn = document.getElementById('trtab-' + tab);
     if (panel) panel.style.display = 'block';
     if (btn) btn.classList.add('active');
   }
@@ -793,13 +549,10 @@ var WK_KB = {1:{s:6,r:3,p:80,n:''},2:{s:6,r:4,p:80,n:''},3:{s:6,r:5,p:80,n:''},4
   }
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
+    navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); }).catch(function() {});
   }
 
-  window.addEventListener('DOMContentLoaded', function() {
-    renderWeek('ff');
-    renderWeek('kb');
-  });
+  window.addEventListener('DOMContentLoaded', renderWeek);
 </script>
 
 </body>
